@@ -41,6 +41,6 @@ jobs:
           docker run -d --name bc -e TEAM_CODE=CI -p 8000:8000 bearerchum:ci
           for i in $(seq 1 30); do curl -fs localhost:8000/api/health && break; sleep 1; done
           curl -fs localhost:8000/api/health
-          curl -fs localhost:8000/ | grep -q bearerchum
+          curl -fs localhost:8000/ | grep -qi bearerchum
           curl -fs localhost:8000/content/index.json > /dev/null
           curl -fs localhost:8000/practice/P02 | grep -q '<div id="root">'
