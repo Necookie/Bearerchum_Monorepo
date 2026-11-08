@@ -4,7 +4,7 @@ export type Theme = "dark" | "light";
 const KEY = "bearerchum.theme";
 
 export function currentTheme(): Theme {
-  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
 const listeners = new Set<(t: Theme) => void>();

@@ -2,7 +2,7 @@
 .dash-greeting { padding: 28px 0 20px; }
 .dash-greeting h1 { font-size: var(--fs-2xl); }
 .dash-greeting p { color: var(--text-2); margin: 6px 0 0; }
-.dash-greeting .count { color: var(--accent); font-weight: 600; }
+.dash-greeting .count { color: var(--text); font-weight: 600; }
 .ring-wrap { display: flex; align-items: center; gap: 18px; padding: 16px; }
 .ring-legend { display: grid; gap: 8px; flex: 1; font-size: var(--fs-sm); }
 .ring-legend .row { gap: 8px; flex-wrap: nowrap; }
@@ -57,7 +57,7 @@
          font-weight: 600; font-size: var(--fs-md); color: var(--text); }
 .grade small { font-weight: 400; font-size: var(--fs-xs); color: var(--text-3); }
 .grade:hover { background: var(--surface-3); }
-.grade.g1 { color: var(--red); } .grade.g2 { color: var(--medium); } .grade.g3 { color: var(--green); } .grade.g4 { color: var(--blue); }
+.grade.g1 { color: var(--red); }
 .grade.suggested { border-color: currentColor; }
 @media (max-width: 560px) { .grades { grid-template-columns: repeat(2, 1fr); } }
 
@@ -73,9 +73,9 @@
 .tech { border-top: 1px solid var(--border); padding: 22px 0; scroll-margin-top: 70px; }
 .tech:first-of-type { border-top: 0; padding-top: 0; }
 .tech-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.tech-head .tid { font: 600 var(--fs-sm) var(--mono); color: var(--accent); }
+.tech-head .tid { font: 600 var(--fs-sm) var(--mono); color: var(--text-3); }
 .tech-head h2 { font-size: var(--fs-lg); }
-.tech.focus .tech-head h2 { color: var(--accent); }
+.tech.focus .tech-head h2 { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ------------------------------------------------------------ account */
 .auth { max-width: 380px; margin: 56px auto 0; }

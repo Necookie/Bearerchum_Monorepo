@@ -1,93 +1,93 @@
-/* Bearerchum v2 tokens — a contest workbench.
-   Dark by default (warm espresso-black), light theme on toggle.
-   Color budget: honey = brand/focus/active, green = pass/submit, red = fail, difficulty colors,
-   blue = links. Everything else is neutral. */
-:root, :root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #13100d;
-  --surface: #1b1714;
-  --surface-2: #221d19;
-  --surface-3: #2b2520;
-  --hover: #2f2823;
-  --border: #322a24;
-  --border-strong: #463c34;
+/* Bearerchum tokens — monochrome.
+   Light (default): white surfaces, black ink, neutral greys. Dark (optional): the same, inverted.
+   The only hues are functional: green = accepted / easy, red = failed / hard, amber = medium. */
+:root, :root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f7f7f7;
+  --surface-3: #efefef;
+  --hover: #e8e8e8;
+  --border: #e4e4e4;
+  --border-strong: #c9c9c9;
 
-  --text: #ede6dd;
-  --text-2: #b8ac9f;
-  --text-3: #85796d;
+  --text: #0a0a0a;
+  --text-2: #4a4a4a;
+  --text-3: #8a8a8a;
 
-  --accent: #e8913a;
-  --accent-hover: #f0a052;
-  --accent-ink: #1a1108;
-  --accent-soft: rgba(232, 145, 58, .14);
+  --accent: #0a0a0a;          /* primary actions, focus, active states */
+  --accent-hover: #2b2b2b;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(0, 0, 0, .06);
 
-  --green: #3fbf88;
-  --green-strong: #2ea773;
-  --green-soft: rgba(63, 191, 136, .13);
-  --red: #f06b6b;
-  --red-soft: rgba(240, 107, 107, .13);
-  --blue: #73adff;
-  --violet: #b598ff;
+  --green: #15803d;
+  --green-strong: #0a0a0a;    /* Submit is a black button, not a green one */
+  --green-soft: rgba(21, 128, 61, .08);
+  --red: #c62828;
+  --red-soft: rgba(198, 40, 40, .07);
+  --blue: #0a0a0a;            /* links are black + underline on hover */
+  --violet: #0a0a0a;
 
-  --easy: #3fbf88;
-  --medium: #e8c25a;
-  --hard: #f06b6b;
+  --easy: #15803d;
+  --medium: #a16207;
+  --hard: #c62828;
 
-  --code-bg: #171310;
-  --tk-kw: #d39bf0;
-  --tk-bi: #7fb6ff;
-  --tk-str: #e8b27a;
-  --tk-com: #7d7166;
-  --tk-num: #f2856f;
+  --code-bg: #fafafa;
+  --tk-kw: #000000;
+  --tk-bi: #000000;
+  --tk-str: #555555;
+  --tk-com: #9a9a9a;
+  --tk-num: #000000;
+  --tk-kw-weight: 600;
 
-  --shadow-pop: 0 8px 28px rgba(0, 0, 0, .45);
+  --shadow-pop: 0 6px 24px rgba(0, 0, 0, .10);
 }
 
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #f2f2f1;
-  --surface: #ffffff;
-  --surface-2: #f7f7f6;
-  --surface-3: #eeedeb;
-  --hover: #eceae7;
-  --border: #e2e0dc;
-  --border-strong: #cfccc6;
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface-2: #171717;
+  --surface-3: #212121;
+  --hover: #2a2a2a;
+  --border: #262626;
+  --border-strong: #3d3d3d;
 
-  --text: #1d1b19;
-  --text-2: #57514a;
-  --text-3: #8b847b;
+  --text: #f5f5f5;
+  --text-2: #b3b3b3;
+  --text-3: #7a7a7a;
 
-  --accent: #c2690f;
-  --accent-hover: #a95a0b;
-  --accent-ink: #ffffff;
-  --accent-soft: rgba(194, 105, 15, .10);
+  --accent: #f5f5f5;
+  --accent-hover: #ffffff;
+  --accent-ink: #0a0a0a;
+  --accent-soft: rgba(255, 255, 255, .08);
 
-  --green: #17915e;
-  --green-strong: #12804f;
-  --green-soft: rgba(23, 145, 94, .10);
-  --red: #d24343;
-  --red-soft: rgba(210, 67, 67, .09);
-  --blue: #1f63c4;
-  --violet: #6b46c1;
+  --green: #4ade80;
+  --green-strong: #f5f5f5;
+  --green-soft: rgba(74, 222, 128, .10);
+  --red: #f87171;
+  --red-soft: rgba(248, 113, 113, .10);
+  --blue: #f5f5f5;
+  --violet: #f5f5f5;
 
-  --easy: #17915e;
-  --medium: #b7860b;
-  --hard: #d24343;
+  --easy: #4ade80;
+  --medium: #facc15;
+  --hard: #f87171;
 
-  --code-bg: #fafaf9;
-  --tk-kw: #8a2f9a;
-  --tk-bi: #1f62a6;
-  --tk-str: #a24d0b;
-  --tk-com: #8b8178;
-  --tk-num: #b4232c;
+  --code-bg: #0e0e0e;
+  --tk-kw: #ffffff;
+  --tk-bi: #ffffff;
+  --tk-str: #a3a3a3;
+  --tk-com: #6b6b6b;
+  --tk-num: #ffffff;
+  --tk-kw-weight: 600;
 
-  --shadow-pop: 0 8px 28px rgba(0, 0, 0, .12);
+  --shadow-pop: 0 8px 28px rgba(0, 0, 0, .5);
 }
 
 :root {
   --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
-  /* type scale (px): 12 · 13 · 14 base · 16 · 20 · 26 */
   --fs-xs: 12px; --fs-sm: 13px; --fs-md: 14px; --fs-lg: 16px; --fs-xl: 20px; --fs-2xl: 26px;
   --r-sm: 4px; --r-md: 6px; --r-lg: 8px;
   --nav-h: 48px;

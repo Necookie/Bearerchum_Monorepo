@@ -75,7 +75,7 @@
 .table tbody tr:nth-child(odd) td { background: var(--surface-2); }
 .table tbody tr:hover td { background: var(--surface-3); }
 .table td.title a { color: var(--text); font-weight: 500; }
-.table td.title a:hover { color: var(--accent); text-decoration: none; }
+.table td.title a:hover { color: var(--text); }
 .table .num { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-2); }
 .table-wrap { overflow-x: auto; }
 .list-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-top: 1px solid var(--border); color: var(--text); text-decoration: none !important; }
@@ -128,12 +128,12 @@ a.tag:hover { color: var(--text); background: var(--hover); }
 /* ------------------------------------------------------------ bars, ring, heat */
 .bar { height: 6px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
 .bar > i { display: block; height: 100%; background: var(--accent); border-radius: 99px; transition: width .3s; }
-.bar.green > i { background: var(--green); } .bar.easy > i { background: var(--easy); } .bar.medium > i { background: var(--medium); } .bar.hard > i { background: var(--hard); }
+.bar.green > i { background: var(--text); } .bar.easy > i { background: var(--easy); } .bar.medium > i { background: var(--medium); } .bar.hard > i { background: var(--hard); }
 .heat { display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; }
 .heat i { aspect-ratio: 1; border-radius: 3px; background: var(--surface-3); }
-.heat i.l1 { background: color-mix(in srgb, var(--green) 35%, var(--surface-3)); }
-.heat i.l2 { background: color-mix(in srgb, var(--green) 65%, var(--surface-3)); }
-.heat i.l3 { background: var(--green); }
+.heat i.l1 { background: color-mix(in srgb, var(--text) 25%, var(--surface-3)); }
+.heat i.l2 { background: color-mix(in srgb, var(--text) 60%, var(--surface-3)); }
+.heat i.l3 { background: var(--text); }
 .heat i.today { outline: 1px solid var(--text-3); outline-offset: 1px; }
 
 /* ------------------------------------------------------------ rich content */
@@ -149,13 +149,14 @@ a.tag:hover { color: var(--text); background: var(--hover); }
 .prose > :first-child { margin-top: 0; }
 .prose sup { font-size: .72em; }
 .prose b, .prose strong { font-weight: 600; }
+.prose a, .guide a, .table td.title a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 .code-block, .prose pre, .guide pre {
   background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--r-lg);
   padding: 12px 14px; overflow-x: auto; font: 13px/1.6 var(--mono); margin: 8px 0 12px; color: var(--text);
 }
 .code-block code, .prose pre code { background: none; padding: 0; color: inherit; font-size: inherit; white-space: pre; }
-.tk-kw, pre .k { color: var(--tk-kw); }
+.tk-kw, pre .k { color: var(--tk-kw); font-weight: var(--tk-kw-weight); }
 .tk-bi, pre .b { color: var(--tk-bi); }
 .tk-str, pre .s { color: var(--tk-str); }
 .tk-com, pre .c { color: var(--tk-com); font-style: italic; }
@@ -164,9 +165,9 @@ a.tag:hover { color: var(--text); background: var(--hover); }
 /* examples in statements (LeetCode-style) */
 .example { margin: 14px 0 0; }
 .example-h { font-weight: 600; font-size: var(--fs-md); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-.example pre { margin: 0; background: var(--surface-2); border: 0; border-left: 2px solid var(--border-strong); border-radius: 0 var(--r-md) var(--r-md) 0;
-               padding: 10px 14px; font: 13px/1.6 var(--mono); white-space: pre-wrap; word-break: break-word; color: var(--text-2); }
-.typed { color: var(--accent); font-weight: 500; }
+.example pre { margin: 0; background: var(--surface-2); border: 0; border-left: 2px solid var(--text); border-radius: 0 var(--r-md) var(--r-md) 0;
+               padding: 10px 14px; font: 13px/1.6 var(--mono); white-space: pre-wrap; word-break: break-word; color: var(--text-3); }
+.typed { color: var(--text); font-weight: 600; }
 
 /* guide pages (HTML shared with the PDF reviewer) */
 .guide { font-size: var(--fs-md); line-height: 1.65; max-width: 860px; }

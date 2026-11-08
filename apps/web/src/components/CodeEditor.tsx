@@ -8,7 +8,7 @@ import { useTheme } from "../lib/theme";
 
 // Colours come from CSS variables so both themes stay in sync with the rest of the app.
 const highlight = HighlightStyle.define([
-  { tag: [t.keyword, t.controlKeyword, t.operatorKeyword, t.definitionKeyword, t.moduleKeyword, t.bool, t.null], color: "var(--tk-kw)" },
+  { tag: [t.keyword, t.controlKeyword, t.operatorKeyword, t.definitionKeyword, t.moduleKeyword, t.bool, t.null], color: "var(--tk-kw)", fontWeight: "600" },
   { tag: [t.string, t.special(t.string)], color: "var(--tk-str)" },
   { tag: [t.number], color: "var(--tk-num)" },
   { tag: [t.comment, t.lineComment], color: "var(--tk-com)", fontStyle: "italic" },
