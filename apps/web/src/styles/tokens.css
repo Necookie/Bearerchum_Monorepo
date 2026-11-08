@@ -1,65 +1,96 @@
-/* Bearerchum design tokens.
-   Own palette (espresso + honey on cream). Layout language: pill buttons, pastel-mesh hero
-   atmospherics, tight display tracking, one filled primary per view. */
+/* Bearerchum v2 tokens — a contest workbench.
+   Dark by default (warm espresso-black), light theme on toggle.
+   Color budget: honey = brand/focus/active, green = pass/submit, red = fail, difficulty colors,
+   blue = links. Everything else is neutral. */
+:root, :root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #13100d;
+  --surface: #1b1714;
+  --surface-2: #221d19;
+  --surface-3: #2b2520;
+  --hover: #2f2823;
+  --border: #322a24;
+  --border-strong: #463c34;
+
+  --text: #ede6dd;
+  --text-2: #b8ac9f;
+  --text-3: #85796d;
+
+  --accent: #e8913a;
+  --accent-hover: #f0a052;
+  --accent-ink: #1a1108;
+  --accent-soft: rgba(232, 145, 58, .14);
+
+  --green: #3fbf88;
+  --green-strong: #2ea773;
+  --green-soft: rgba(63, 191, 136, .13);
+  --red: #f06b6b;
+  --red-soft: rgba(240, 107, 107, .13);
+  --blue: #73adff;
+  --violet: #b598ff;
+
+  --easy: #3fbf88;
+  --medium: #e8c25a;
+  --hard: #f06b6b;
+
+  --code-bg: #171310;
+  --tk-kw: #d39bf0;
+  --tk-bi: #7fb6ff;
+  --tk-str: #e8b27a;
+  --tk-com: #7d7166;
+  --tk-num: #f2856f;
+
+  --shadow-pop: 0 8px 28px rgba(0, 0, 0, .45);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f2f2f1;
+  --surface: #ffffff;
+  --surface-2: #f7f7f6;
+  --surface-3: #eeedeb;
+  --hover: #eceae7;
+  --border: #e2e0dc;
+  --border-strong: #cfccc6;
+
+  --text: #1d1b19;
+  --text-2: #57514a;
+  --text-3: #8b847b;
+
+  --accent: #c2690f;
+  --accent-hover: #a95a0b;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(194, 105, 15, .10);
+
+  --green: #17915e;
+  --green-strong: #12804f;
+  --green-soft: rgba(23, 145, 94, .10);
+  --red: #d24343;
+  --red-soft: rgba(210, 67, 67, .09);
+  --blue: #1f63c4;
+  --violet: #6b46c1;
+
+  --easy: #17915e;
+  --medium: #b7860b;
+  --hard: #d24343;
+
+  --code-bg: #fafaf9;
+  --tk-kw: #8a2f9a;
+  --tk-bi: #1f62a6;
+  --tk-str: #a24d0b;
+  --tk-com: #8b8178;
+  --tk-num: #b4232c;
+
+  --shadow-pop: 0 8px 28px rgba(0, 0, 0, .12);
+}
+
 :root {
-  /* brand */
-  --primary: #2f1c14;          /* espresso — filled CTAs, footer band, wordmark */
-  --primary-press: #4a2c1f;
-  --primary-tint: #5c3a29;
-  --honey: #e9a23b;            /* sparing accent: streak flame, highlights */
-  --honey-soft: #fff1d6;
-  --link: #1764a8;
-  --link-hover: #2b5fc4;
-
-  /* surfaces */
-  --canvas: #ffffff;
-  --cream: #f6efe6;
-  --latte: #f1e6da;            /* secondary pill + soft bands */
-  --sand: #fbf7f1;
-  --surface-primary: var(--primary);
-  --hairline: #e9e2d9;
-  --hairline-strong: #d8cdbf;
-
-  /* text */
-  --ink: #1d1d1d;
-  --ink-mute: #6b645d;
-  --on-primary: #ffffff;
-  --on-primary-mute: #d9c6b8;
-
-  /* semantic */
-  --success: #0f7a55;
-  --success-soft: #e3f4ec;
-  --error: #c8431d;
-  --error-soft: #fbe9e3;
-  --warn: #a66a00;
-  --warn-soft: #fff4dc;
-  --easy: #0f7a55;
-  --medium: #a66a00;
-  --hard: #b4232c;
-
-  /* type */
-  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
-
-  /* radius */
-  --r-xs: 2px; --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px; --r-xxl: 48px; --r-pill: 90px;
-
-  /* spacing */
-  --s-xs: 4px; --s-sm: 8px; --s-md: 12px; --s-lg: 16px; --s-xl: 20px; --s-xxl: 24px; --s-huge: 28px;
-
-  /* elevation */
-  --e1: rgba(0, 0, 0, .10) 0 5px 20px 0;
-  --e2: rgba(0, 0, 0, .10) 0 0 32px 0;
-  --e3: rgba(0, 0, 0, .20) 0 1px 10px 0;
-  --focus: 0 0 0 3px rgba(233, 162, 59, .45);
-
-  /* pastel mesh */
-  --mesh:
-    radial-gradient(42% 60% at 12% 18%, #ffe3cf 0%, transparent 70%),
-    radial-gradient(38% 55% at 88% 12%, #e6e0ff 0%, transparent 70%),
-    radial-gradient(45% 60% at 72% 92%, #dcefdf 0%, transparent 70%),
-    radial-gradient(35% 45% at 30% 85%, #fff0c9 0%, transparent 70%),
-    var(--cream);
-
-  --container: 1240px;
+  --font: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+  /* type scale (px): 12 · 13 · 14 base · 16 · 20 · 26 */
+  --fs-xs: 12px; --fs-sm: 13px; --fs-md: 14px; --fs-lg: 16px; --fs-xl: 20px; --fs-2xl: 26px;
+  --r-sm: 4px; --r-md: 6px; --r-lg: 8px;
+  --nav-h: 48px;
+  --container: 1200px;
+  --focus: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 }

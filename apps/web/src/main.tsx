@@ -14,6 +14,7 @@ import "./styles/tokens.css";
 import "./styles/base.css";
 import "./styles/components.css";
 import "./styles/pages.css";
+import "./styles/workspace.css";
 
 function ContentGate({ children }: { children: React.ReactNode }) {
   const { contentError } = useStore();
@@ -22,7 +23,7 @@ function ContentGate({ children }: { children: React.ReactNode }) {
 }
 
 function NotFound() {
-  return <div className="container empty"><div style={{ fontSize: 48 }}>🐻</div><h2 className="heading-lg">Page not found</h2><Link to="/">Back to today</Link></div>;
+  return <div className="container empty"><h2>Page not found</h2><p>That address does not match any page.</p><Link to="/">Go to Today</Link></div>;
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

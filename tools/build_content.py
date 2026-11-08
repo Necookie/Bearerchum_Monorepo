@@ -210,7 +210,7 @@ def build_problem(p, legacy):
 
 
 def starter_code(p, tests):
-    return (f"# {p['id']} · {p['title']}\n# Read the input exactly like the samples, then print the answer.\n\n")
+    return (f"# {p['id']}. {p['title']}\n# Read the input exactly like the examples, then print the answer.\n\n")
 
 
 # ------------------------------------------------------------------ cards

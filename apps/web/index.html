@@ -1,15 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bearerchum — CodeChum NPC study camp</title>
-    <meta name="description" content="Spaced repetition, an in-browser Python judge and explained solutions for the CodeChum National Programming Challenge." />
-    <meta name="theme-color" content="#2f1c14" />
+    <title>Bearerchum — practice for the CodeChum NPC</title>
+    <meta name="description" content="Python practice for the CodeChum National Programming Challenge: a judge that checks output like CodeChum, spaced-repetition review and explained solutions." />
+    <meta name="theme-color" content="#13100d" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      try { var t = localStorage.getItem("bearerchum.theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>

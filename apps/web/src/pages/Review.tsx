@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { Check, X } from "lucide-react";
 import { useStore } from "../lib/store";
 import { Card, DECK_NAMES } from "../lib/content";
 import { buildQueue, techName } from "../lib/learning";
 import { Grade, humanDelay, previewLabel, schedule } from "../lib/srs";
 import { contestTime } from "../lib/time";
-import { Html, Loading, TagChips } from "../components/ui";
+import { Html, Loading } from "../components/ui";
 
 type Item = { id: string; isNew: boolean };
 
@@ -14,20 +15,16 @@ export default function Review() {
   const [params, setParams] = useSearchParams();
   const deck = params.get("deck") || undefined;
   const tag = params.get("tag") || undefined;
-
   const [session, setSession] = useState<Item[] | null>(null);
-  const [pos, setPos] = useState(0);
   const [done, setDone] = useState({ count: 0, again: 0 });
   const [, setNow] = useState(Date.now());
 
   const cardsById = useMemo(() => new Map((content?.cards || []).map((c) => [c.id, c])), [content]);
   const q = content ? buildQueue(content, progress, settings, { deck, tag }) : null;
 
-  // (re)start a session whenever the filter changes
   const start = useCallback(() => {
     if (!q) return;
     setSession([...q.due.map((c) => ({ id: c.id, isNew: false })), ...q.fresh.map((c) => ({ id: c.id, isNew: true }))]);
-    setPos(0);
     setDone({ count: 0, again: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, deck, tag]);
@@ -36,13 +33,10 @@ export default function Review() {
 
   if (!content || !q || !session) return <Loading />;
   const contest = contestTime(content.contestDate);
-
-  // the next card that is due now (learning cards re-enter the queue when their step is due)
-  const remaining = session.slice(pos);
   const nowTs = Date.now();
-  const readyIdx = remaining.findIndex((it) => { const s = progress.cards[it.id]; return it.isNew || !s || s.due <= nowTs + 15_000; });
-  const current = readyIdx >= 0 ? remaining[readyIdx] : null;
-  const waiting = remaining.length - (readyIdx >= 0 ? 1 : 0);
+  const readyIdx = session.findIndex((it) => { const s = progress.cards[it.id]; return it.isNew || !s || s.due <= nowTs + 15_000; });
+  const current = readyIdx >= 0 ? session[readyIdx] : null;
+  const waiting = session.length - (current ? 1 : 0);
 
   const onGrade = (item: Item, g: Grade) => {
     const prev = progress.cards[item.id];
@@ -51,86 +45,81 @@ export default function Review() {
     setDone((d) => ({ count: d.count + 1, again: d.again + (g === 1 ? 1 : 0) }));
     setSession((s) => {
       if (!s) return s;
-      const absolute = pos + readyIdx;
       const copy = s.slice();
-      copy.splice(absolute, 1);
-      if (next.due - Date.now() < 20 * 60_000) copy.push({ id: item.id, isNew: false }); // comes back this session
-      // keep `pos` pointing at the first unreviewed item
-      return [...copy.slice(0, pos), ...copy.slice(pos)];
+      copy.splice(readyIdx, 1);
+      if (next.due - Date.now() < 20 * 60_000) copy.push({ id: item.id, isNew: false });   // learning step: comes back this session
+      return copy;
     });
   };
 
   const total = session.length + done.count;
-  const pct = total ? done.count / total : 0;
-  const filterLabel = tag ? `${tag} · ${techName(content, tag)}` : deck ? DECK_NAMES[deck] : "All decks";
+  const nextWait = () => {
+    const ds = session.map((i) => progress.cards[i.id]?.due).filter(Boolean) as number[];
+    return ds.length ? humanDelay(Math.max(1000, Math.min(...ds) - Date.now())) : "a moment";
+  };
 
   return (
-    <div className="container" style={{ paddingTop: 36 }}>
-      <div className="review-shell">
-        <div className="review-top">
-          <h1 className="heading-lg">Daily review</h1>
-          <div className="spacer" />
-          <span className="caption">{q.due.length} due · {q.fresh.length} new{!deck && !tag ? ` (${settings.newPerDay}/day)` : ""}</span>
+    <div className="container page">
+      <div className="review">
+        <div className="page-head" style={{ marginBottom: 12 }}>
+          <div><h1>Review</h1><p>{q.due.length} due and {q.fresh.length} new{!deck && !tag ? `, out of a daily budget of ${settings.newPerDay} new cards` : ""}.</p></div>
         </div>
-        <div className="filters" style={{ margin: "0 0 18px" }}>
-          <button className={`chip ${!deck && !tag ? "chip-on" : "chip-outline"}`} onClick={() => setParams({})}>All decks</button>
-          {Object.entries(DECK_NAMES).map(([id, name]) => (
-            <button key={id} className={`chip ${deck === id ? "chip-on" : "chip-outline"}`} onClick={() => setParams({ deck: id })}>{name}</button>
-          ))}
-          {tag && <Link className="chip chip-on" to="/review" title="Clear filter">{filterLabel} ✕</Link>}
+        <div className="row" style={{ gap: 6 }}>
+          <div className="seg" role="tablist">
+            <button className={!deck && !tag ? "on" : ""} onClick={() => setParams({})}>All</button>
+            {Object.entries(DECK_NAMES).map(([id, name]) => (
+              <button key={id} className={deck === id ? "on" : ""} onClick={() => setParams({ deck: id })}>{name}</button>
+            ))}
+          </div>
+          {tag && <Link className="tag on" to="/review" title="Clear the technique filter">{techName(content, tag)} <X style={{ width: 12, height: 12, marginLeft: 4 }} /></Link>}
         </div>
-
-        <div className="row" style={{ marginBottom: 14 }}>
-          <div className="progress-line"><i style={{ width: `${pct * 100}%` }} /></div>
-          <span className="caption">{done.count} done{done.again ? ` · ${done.again} again` : ""}</span>
+        <div className="review-bar">
+          <div className="review-progress"><i style={{ width: `${total ? (done.count / total) * 100 : 0}%` }} /></div>
+          <span className="xs t3 tabular">{done.count} reviewed{done.again ? `, ${done.again} to relearn` : ""}</span>
         </div>
 
         {current ? (
           <Flashcard key={`${current.id}-${done.count}`} card={cardsById.get(current.id)!} isNew={current.isNew && !progress.cards[current.id]}
             labels={([1, 2, 3, 4] as Grade[]).map((g) => previewLabel(progress.cards[current.id], g, Date.now(), contest))}
             onGrade={(g) => onGrade(current, g)} />
-        ) : waiting > 0 ? (
-          <div className="flash" style={{ alignItems: "center", justifyContent: "center", textAlign: "center" }}>
-            <h2 className="heading-lg">Short break ☕</h2>
-            <p className="mute">{waiting} learning card{waiting > 1 ? "s" : ""} will come back in {nextWait(session.slice(pos), progress.cards)}.</p>
-            <button className="btn btn-secondary" onClick={() => setNow(Date.now() + 1)}>Check again</button>
-          </div>
         ) : (
-          <div className="flash" style={{ alignItems: "center", justifyContent: "center", textAlign: "center" }}>
-            <div style={{ fontSize: 42 }}>🐻</div>
-            <h2 className="heading-lg" style={{ marginTop: 8 }}>{done.count ? "Session complete!" : "Nothing due here right now"}</h2>
-            <p className="mute" style={{ maxWidth: 440 }}>
-              {done.count ? `You reviewed ${done.count} card${done.count > 1 ? "s" : ""}. ` : ""}
-              {q.nextDue ? `Next card is due in ${humanDelay(q.nextDue - Date.now())}.` : "Come back tomorrow for more."}
-            </p>
-            <div className="row" style={{ justifyContent: "center", marginTop: 8 }}>
-              <Link to="/practice" className="btn btn-primary">Practice a problem</Link>
-              <button className="btn btn-secondary" onClick={start}>Refresh queue</button>
-            </div>
-          </div>
+          <div className="flash"><div className="empty" style={{ margin: "auto" }}>
+            {waiting > 0 ? (
+              <>
+                <h2>Waiting for learning cards</h2>
+                <p>{waiting} card{waiting > 1 ? "s" : ""} will come back in {nextWait()}. Short gaps are how new cards stick.</p>
+                <button className="btn" onClick={() => setNow(Date.now() + 1)}>Check again</button>
+              </>
+            ) : (
+              <>
+                <h2>{done.count ? "Queue cleared" : "Nothing to review here"}</h2>
+                <p>{done.count ? `You reviewed ${done.count} card${done.count > 1 ? "s" : ""}. ` : ""}{q.nextDue ? `The next card is due in ${humanDelay(q.nextDue - Date.now())}.` : "New cards unlock tomorrow."}</p>
+                <div className="row" style={{ justifyContent: "center" }}>
+                  <Link to="/practice" className="btn btn-accent">Solve a problem</Link>
+                  <button className="btn" onClick={start}>Reload queue</button>
+                </div>
+              </>
+            )}
+          </div></div>
         )}
-        <p className="caption" style={{ textAlign: "center", marginTop: 16 }}>
-          Shortcuts: <kbd>Space</kbd> reveal · <kbd>1</kbd>–<kbd>4</kbd> grade (or pick an answer)
+        <p className="xs t3" style={{ textAlign: "center", marginTop: 12 }}>
+          <kbd>Space</kbd> shows the answer. <kbd>1</kbd> to <kbd>4</kbd> grade it, or pick a choice.
         </p>
       </div>
     </div>
   );
 }
 
-function nextWait(items: Item[], cards: Record<string, { due: number }>) {
-  const ds = items.map((i) => cards[i.id]?.due).filter(Boolean) as number[];
-  return ds.length ? humanDelay(Math.max(1000, Math.min(...ds) - Date.now())) : "a moment";
-}
-
 const norm = (s: string) => s.replace(/\r\n/g, "\n").split("\n").map((l) => l.replace(/\s+$/, "")).join("\n").trim();
+const GRADES = ["Again", "Hard", "Good", "Easy"] as const;
 
 function Flashcard({ card, isNew, labels, onGrade }: { card: Card; isNew: boolean; labels: string[]; onGrade: (g: Grade) => void }) {
+  const { content } = useStore();
   const [shown, setShown] = useState(false);
   const [pick, setPick] = useState<number | null>(null);
   const [typed, setTyped] = useState("");
   const taRef = useRef<HTMLTextAreaElement>(null);
 
-  const reveal = () => setShown(true);
   const choose = (i: number) => { if (!shown) { setPick(i); setShown(true); } };
   const correct = card.type === "mcq" ? pick === card.answer
     : card.type === "output" && typed.trim() ? norm(typed) === norm(card.backRaw || "") : null;
@@ -138,79 +127,73 @@ function Flashcard({ card, isNew, labels, onGrade }: { card: Card; isNew: boolea
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (document.activeElement === taRef.current && !(e.key === "Enter" && (e.ctrlKey || e.metaKey))) return;
+      if (document.activeElement === taRef.current) return;
       if (!shown) {
-        if (e.key === " " || e.key === "Enter") { e.preventDefault(); reveal(); }
+        if (e.key === " " || e.key === "Enter") { e.preventDefault(); setShown(true); }
         if (card.type === "mcq" && /^[1-4]$/.test(e.key) && card.choices && +e.key <= card.choices.length) choose(+e.key - 1);
-      } else if (/^[1-4]$/.test(e.key)) {
-        onGrade(+e.key as Grade);
-      }
+      } else if (/^[1-4]$/.test(e.key)) onGrade(+e.key as Grade);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   });
 
+  const tags = card.tags.filter((t) => t !== card.deck);
   return (
     <div className="flash">
       <div className="flash-meta">
-        <span className="chip">{DECK_NAMES[card.deck] || card.deck}</span>
-        {isNew && <span className="chip" style={{ background: "var(--honey-soft)" }}>new</span>}
-        <TagChips tags={card.tags.filter((t) => t !== card.deck)} link={false} />
-        {card.refs.map((r) => <Link key={r} to={`/practice/${r}`} className="chip chip-outline">{r}</Link>)}
+        <span>{DECK_NAMES[card.deck] || card.deck}</span>
+        {isNew && <span className="tag on">New</span>}
+        {content && tags.map((t) => <span key={t} className="tag">{techName(content, t)}</span>)}
+        {card.refs.map((r) => <Link key={r} to={`/practice/${r}`} className="tag">{r}</Link>)}
       </div>
+      <div className="flash-main">
+        <Html className="flash-front prose" html={card.front} />
+        {card.code && <pre className="code-block"><code dangerouslySetInnerHTML={{ __html: card.code }} /></pre>}
 
-      <Html className="flash-front prose" html={card.front} />
-      {card.code && <pre className="code-block py"><code dangerouslySetInnerHTML={{ __html: card.code }} /></pre>}
+        {card.type === "mcq" && card.choices?.map((c, i) => (
+          <button key={i} className={`choice ${shown ? (i === card.answer ? "right" : i === pick ? "wrong" : "") : ""}`} onClick={() => choose(i)} disabled={shown}>
+            <kbd>{i + 1}</kbd><span dangerouslySetInnerHTML={{ __html: c }} />
+          </button>
+        ))}
 
-      {card.type === "mcq" && card.choices && (
-        <div>
-          {card.choices.map((c, i) => {
-            const cls = shown ? (i === card.answer ? "right" : i === pick ? "wrong" : "") : "";
-            return (
-              <button key={i} className={`choice ${cls}`} onClick={() => choose(i)} disabled={shown}>
-                <kbd>{i + 1}</kbd><span dangerouslySetInnerHTML={{ __html: c }} />
-              </button>
-            );
-          })}
-        </div>
-      )}
+        {(card.type === "code" || card.type === "output") && !shown && (
+          <textarea ref={taRef} className="input" rows={card.type === "code" ? 3 : 2} value={typed} onChange={(e) => setTyped(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) setShown(true); }}
+            placeholder={card.type === "code" ? "Type it from memory, then press Ctrl+Enter" : "What exactly does it print? Ctrl+Enter to check"}
+            style={{ width: "100%", marginTop: 6 }} />
+        )}
 
-      {(card.type === "code" || card.type === "output") && !shown && (
-        <textarea ref={taRef} className="input typed-answer" rows={card.type === "code" ? 3 : 2} value={typed}
-          onChange={(e) => setTyped(e.target.value)}
-          placeholder={card.type === "code" ? "Type the code from memory (optional), then reveal…" : "What exactly does it print? (optional)"}
-          style={{ marginTop: 6 }} />
-      )}
-
-      {shown && (
-        <div className="flash-answer">
-          {card.type !== "mcq" && (
-            <>
-              {typed.trim() && (
-                <div style={{ marginBottom: 8 }}>
-                  <div className="micro-cap mute" style={{ marginBottom: 6 }}>
-                    You wrote {correct === true ? "✓ exact match" : correct === false ? "✗ not exact" : ""}
+        {shown && (
+          <div className="flash-answer">
+            {card.type !== "mcq" && (
+              <>
+                {typed.trim() && (
+                  <div style={{ marginBottom: 10 }}>
+                    <div className="flash-label row" style={{ gap: 4 }}>
+                      Your answer {correct === true && <><Check style={{ width: 14, color: "var(--green)" }} /> exact match</>}
+                      {correct === false && <><X style={{ width: 14, color: "var(--red)" }} /> not an exact match</>}
+                    </div>
+                    <pre className="code-block" style={{ margin: 0 }}><code>{typed}</code></pre>
                   </div>
-                  <pre className="code-block" style={{ margin: 0 }}><code>{typed}</code></pre>
-                </div>
-              )}
-              <div className="micro-cap mute" style={{ marginBottom: 6 }}>Answer</div>
-              <Html html={card.back || ""} className="prose" />
-            </>
-          )}
-          {card.explain && <Html className="prose callout" html={card.explain} />}
-        </div>
-      )}
-
+                )}
+                <div className="flash-label">Answer</div>
+                <Html html={card.back || ""} className="prose" />
+              </>
+            )}
+            {card.explain && <Html className="flash-explain prose" html={card.explain} />}
+          </div>
+        )}
+      </div>
       <div className="flash-foot">
         {!shown ? (
-          card.type !== "mcq" && <button className="btn btn-primary" style={{ width: "100%" }} onClick={reveal}>Show answer</button>
+          card.type !== "mcq"
+            ? <button className="btn btn-accent" style={{ width: "100%" }} onClick={() => setShown(true)}>Show answer</button>
+            : <div className="xs t3" style={{ textAlign: "center" }}>Pick an answer</div>
         ) : (
           <div className="grades">
-            {(["Again", "Hard", "Good", "Easy"] as const).map((name, i) => (
-              <button key={name} className={`grade g${i + 1}`} onClick={() => onGrade((i + 1) as Grade)}
-                style={suggested === i + 1 ? { outline: "2px solid currentColor" } : undefined}>
-                {name}<small>{labels[i]} · {i + 1}</small>
+            {GRADES.map((name, i) => (
+              <button key={name} className={`grade g${i + 1} ${suggested === i + 1 ? "suggested" : ""}`} onClick={() => onGrade((i + 1) as Grade)}>
+                {name}<small>{labels[i]}</small>
               </button>
             ))}
           </div>

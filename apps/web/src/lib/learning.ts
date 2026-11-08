@@ -81,7 +81,7 @@ export function buildQueue(content: ContentIndex, progress: Progress, settings: 
 // ------------------------------------------------------------------ recommendations
 export interface Recommendation {
   kind: "review" | "learn" | "problem" | "technique" | "rest";
-  title: string; detail: string; to: string; icon: string;
+  title: string; detail: string; to: string;
 }
 
 export function recommend(content: ContentIndex, progress: Progress, settings: Settings): Recommendation[] {
@@ -90,11 +90,11 @@ export function recommend(content: ContentIndex, progress: Progress, settings: S
   const m = masteryByTag(content, progress.cards, progress.problems);
 
   if (q.due.length) {
-    recs.push({ kind: "review", icon: "🔁", to: "/review", title: `Review ${q.due.length} due card${q.due.length > 1 ? "s" : ""}`,
-      detail: `About ${Math.max(1, Math.round(q.due.length * 0.25))} min. Due cards first — that's where forgetting happens.` });
+    recs.push({ kind: "review", to: "/review", title: `Review ${q.due.length} due card${q.due.length > 1 ? "s" : ""}`,
+      detail: `About ${Math.max(1, Math.round(q.due.length * 0.25))} min. These are the cards you are about to forget.` });
   }
   if (q.fresh.length) {
-    recs.push({ kind: "learn", icon: "✨", to: "/review", title: `Learn ${q.fresh.length} new card${q.fresh.length > 1 ? "s" : ""}`,
+    recs.push({ kind: "learn", to: "/review", title: `Learn ${q.fresh.length} new card${q.fresh.length > 1 ? "s" : ""}`,
       detail: `Today's new-card budget. Next up: ${deckLabel(q.fresh[0].deck)}.` });
   }
 
@@ -109,8 +109,8 @@ export function recommend(content: ContentIndex, progress: Progress, settings: S
   const pick = started || [...window].sort((a, b) => avgTag(a) - avgTag(b))[0];
   if (pick) {
     const st = progress.problems[pick.id];
-    recs.push({ kind: "problem", icon: "🧩", to: `/practice/${pick.id}`,
-      title: `${st ? "Finish" : "Solve"} ${pick.id} · ${pick.title}`,
+    recs.push({ kind: "problem", to: `/practice/${pick.id}`,
+      title: `${st ? "Finish" : "Solve"} ${pick.title} (${pick.id})`,
       detail: st ? `You passed ${st.bestPassed}/${st.total} tests — the hidden cases are waiting.`
                  : `${pick.level}. Trains ${pick.tags.map((t) => techName(content, t)).join(", ") || "the basics"}.` });
   }
@@ -122,11 +122,11 @@ export function recommend(content: ContentIndex, progress: Progress, settings: S
   const untouched = content.techniques.find((t) => !m[t.id] || m[t.id].coverage === 0);
   const tech = weakest && (weakest.s as number) < 0.6 ? weakest.t : untouched;
   if (tech) {
-    recs.push({ kind: "technique", icon: "🧠", to: `/learn/techniques#${tech.id}`,
+    recs.push({ kind: "technique", to: `/learn/techniques#${tech.id}`,
       title: `${weakest && tech === weakest.t ? "Shore up" : "Meet"} ${tech.id}: ${tech.name}`,
-      detail: weakest && tech === weakest.t ? "Your weakest technique right now. Re-read the template, then drill its cards." : "You haven't touched this technique yet." });
+      detail: weakest && tech === weakest.t ? "Your weakest technique right now. Re-read the template, then review its cards." : "You haven't touched this technique yet." });
   }
-  if (!recs.length) recs.push({ kind: "rest", icon: "☕", to: "/practice", title: "All caught up", detail: "Nothing due. Try a drill under a 15-minute timer." });
+  if (!recs.length) recs.push({ kind: "rest", to: "/practice", title: "Nothing due right now", detail: "Pick a drill and solve it with the timer running." });
   return recs;
 }
 
