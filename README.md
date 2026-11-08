@@ -63,13 +63,20 @@ Production-like run: `docker compose up --build`, then open http://localhost:808
 
 ## Deployment (Coolify on `necore`)
 
-- One Coolify project, **Bearerchum**, with a single application built from this repo's `Dockerfile`.
-- The container listens on port 8000. Coolify's proxy routes `bearerchum.necookie.dev` to it.
-  No host ports are published, so it can't clash with other projects.
-- Persistent storage: a volume mounted at `/data` holds the SQLite database `bearerchum.db`.
-- Environment: `TEAM_CODE` (required to create an account). See `.env.example`.
-- DNS: `bearerchum.necookie.dev` is a public hostname on the existing Cloudflare Tunnel, pointing
-  at the Coolify proxy.
+Same isolation pattern as the other stacks on `necore`: one Coolify project (**Bearerchum**) with
+one "Docker Compose" application. Use Base Directory `/infra/coolify` and Compose file
+`/docker-compose.yml`.
+
+| Service | What it does |
+|---|---|
+| `bearerchum-web` | FastAPI + built site on :8000 (internal only, no host port) |
+| `bearerchum-tunnel` | dedicated Cloudflare Tunnel: `bearerchum.necookie.dev` → `http://bearerchum-web:8000` |
+| `bearerchum-backup` | nightly SQLite online backup to `/data/backups` (03:00 Manila, keeps 14 days) |
+
+- Volume `bearerchum-data` (mounted at `/data`) holds `bearerchum.db` and its backups.
+- Coolify environment variables: `TEAM_CODE` and `CLOUDFLARE_TUNNEL_TOKEN`. Never commit them.
+- The shared Coolify proxy isn't used, and nothing listens on host ports, so it can't clash with
+  other projects.
 
 ---
 Independent study tool by CodeBearers. Not affiliated with CodeChum.
