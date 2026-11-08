@@ -59,6 +59,13 @@ export default function Account() {
                 <button className="btn btn-secondary btn-sm" onClick={exportData}>Export progress (JSON)</button>
                 <button className="btn btn-outline btn-sm" onClick={async () => { await signOut(); toast("Signed out"); }}>Sign out</button>
               </div>
+              <div className="hr" />
+              <button className="btn btn-ghost btn-sm" style={{ color: "var(--error)" }} onClick={async () => {
+                const p = prompt("This permanently deletes your account and all synced progress. Enter your PIN to confirm:");
+                if (!p) return;
+                try { await api("/me/delete", { body: { pin: p } }); await signOut(); toast("Account deleted"); }
+                catch (e: any) { toast(e.message || "Could not delete account"); }
+              }}>Delete my account</button>
             </div>
           </div>
         </div>

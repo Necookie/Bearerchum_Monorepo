@@ -20,8 +20,8 @@
     "not_found_handling": "single-page-application",
     "run_worker_first": ["/api/*"]
   },
-  // Workers VPC service -> dedicated tunnel "bearerchum-api" -> bearerchum-web:8000 (Docker DNS).
-  // Uncomment once the tunnel + VPC service exist (see infra/cloudflare/README.md):
-  // "vpc_services": [{ "binding": "API", "service_id": "<vpc-service-id>" }],
+  // Workers VPC service "bearerchum-api" -> private tunnel "bearerchum-api"
+  // (3befdfb5-8685-49ff-a936-2fdca69d7837) -> bearerchum-web:8000 (Docker DNS on the Coolify stack).
+  "vpc_services": [{ "binding": "API", "service_id": "01a1ba99-e38a-7992-bb29-19321fca5193" }],
   "observability": { "enabled": true }
 }

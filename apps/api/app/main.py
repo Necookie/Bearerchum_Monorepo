@@ -114,6 +114,20 @@ def me(user=Depends(current_user)):
     return {"user": _public_user(user), "teamCodeRequired": bool(TEAM_CODE)}
 
 
+class DeleteBody(BaseModel):
+    pin: str = Field(min_length=4, max_length=32)
+
+
+@app.post("/api/me/delete")
+def delete_me(body: DeleteBody, user=Depends(current_user)):
+    """Permanently delete the signed-in account and all its progress (PIN required)."""
+    if not verify_pin(body.pin, user["pin_hash"], user["salt"]):
+        raise HTTPException(403, "Wrong PIN")
+    with db.connect() as c:
+        c.execute("DELETE FROM users WHERE id = ?", (user["id"],))      # cascades to all progress tables
+    return {"ok": True}
+
+
 @app.get("/api/config")
 def config():
     return {"teamCodeRequired": bool(TEAM_CODE)}
