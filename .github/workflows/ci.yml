@@ -28,3 +28,19 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           npm run build
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the production image (same Dockerfile Coolify uses)
+        run: docker build -t bearerchum:ci .
+      - name: Smoke-test the container
+        run: |
+          docker run -d --name bc -e TEAM_CODE=CI -p 8000:8000 bearerchum:ci
+          for i in $(seq 1 30); do curl -fs localhost:8000/api/health && break; sleep 1; done
+          curl -fs localhost:8000/api/health
+          curl -fs localhost:8000/ | grep -q bearerchum
+          curl -fs localhost:8000/content/index.json > /dev/null
+          curl -fs localhost:8000/practice/P02 | grep -q '<div id="root">'
