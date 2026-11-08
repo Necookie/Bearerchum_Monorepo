@@ -1,0 +1,43 @@
+{
+  "file": "P06_round_to_nearest_ten.py",
+  "summary": "Rounding to the nearest ten with \"5 rounds up\" is pure integer math: add 5, then chop off the last digit (T1 — direct formula). We avoid Python's `round()`, which uses a different rule.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read N",
+      "text": "We need a real number for the math, so `int()` it."
+    },
+    {
+      "lines": [
+        3,
+        4
+      ],
+      "title": "Add 5, then chop the last digit",
+      "text": "Adding 5 pushes any last digit 5–9 over the next ten. `// 10` drops the last digit and `* 10` puts a zero back: 247 → 252 → 25 → 250, and 5 → 10 → 1 → 10. Python's `round(25, -1)` gives 20 (it rounds halves to the even side), so it would fail the `5` cases."
+    },
+    {
+      "lines": [
+        6,
+        8
+      ],
+      "title": "The same rule written the long way",
+      "text": "These comments show the statement's version: look at `N % 10` (the last digit) and either go up to the next ten or down. Useful if you find the trick hard to trust in the contest."
+    },
+    {
+      "lines": [
+        9,
+        9
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Rounded: 250`."
+    }
+  ],
+  "complexity": "Time O(1) — one calculation.",
+  "pitfalls": [
+    "Using `round()` — round-half-to-even makes `round(5, -1)` equal 0.",
+    "Forgetting the final `* 10` and printing 25 instead of 250."
+  ]
+}

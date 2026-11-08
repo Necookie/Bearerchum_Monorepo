@@ -1,0 +1,19 @@
+{
+  "samples": [
+    ["5", "2", "L", "1 2 3 4 5"],
+    ["5", "2", "R", "1 2 3 4 5"],
+    ["7", "10", "L", "-5 0 12 34 -99 100 7"]
+  ],
+  "hidden": [
+    {"name": "K = 0: array unchanged", "input": ["3", "0", "R", "1 2 3"]},
+    {"name": "K a multiple of N: array unchanged", "input": ["4", "8", "L", "4 3 2 1"]},
+    {"name": "right shift with K larger than N", "input": ["5", "13", "R", "1 2 3 4 5"]},
+    {"name": "N = 1", "input": ["1", "5", "L", "42"]},
+    {"name": "K = 10^18 (too big to shift one step at a time)", "input": ["6", "1000000000000000000", "R", "1 2 3 4 5 6"]},
+    {"name": "extreme values -10^9 and 10^9", "input": ["3", "1", "L", "-1000000000 0 1000000000"]},
+    {"name": "K = N - 1 to the right", "input": ["4", "3", "R", "10 20 30 40"]}
+  ],
+  "generated": [
+    {"name": "N = 100000 with K = 10^18, shift left", "gen": "n = 100000\nlines = [str(n), str(10**18), 'L', ' '.join(str(random.randint(0, 9)) for _ in range(n))]"}
+  ]
+}

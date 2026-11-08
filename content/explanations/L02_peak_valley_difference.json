@@ -1,0 +1,59 @@
+{
+  "file": "L02_peak_valley_difference.py",
+  "summary": "A peak is strictly bigger than both neighbours, a valley strictly smaller. We check every element except the two ends, add peaks and valleys separately, and print the difference (T5 — neighbour comparison).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the array",
+      "text": "N on one line, then all N numbers on the next line, split and turned into `int`s."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Two running sums",
+      "text": "`peaks = valleys = 0` starts both totals at 0 in one line (safe for numbers)."
+    },
+    {
+      "lines": [
+        5,
+        5
+      ],
+      "title": "Skip the first and last element",
+      "text": "`range(1, N - 1)` visits indexes 1 to N-2, the only ones with BOTH neighbours. Including index 0 would compare with `arr[-1]`, the last element."
+    },
+    {
+      "lines": [
+        6,
+        7
+      ],
+      "title": "Peak: bigger than both sides",
+      "text": "Strict `>` on both sides — an element equal to a neighbour (a plateau) is not a peak."
+    },
+    {
+      "lines": [
+        8,
+        9
+      ],
+      "title": "Valley: smaller than both sides",
+      "text": "`elif` because an element can't be both. Again strict `<`."
+    },
+    {
+      "lines": [
+        11,
+        11
+      ],
+      "title": "Print the difference",
+      "text": "Exact format: `Result: 170` (peaks minus valleys)."
+    }
+  ],
+  "complexity": "Time O(N) with N ≤ 100 — instant.",
+  "pitfalls": [
+    "Using `>=` / `<=` — plateaus would count.",
+    "Including the first or last element."
+  ]
+}

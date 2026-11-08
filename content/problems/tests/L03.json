@@ -1,0 +1,16 @@
+{
+  "samples": [
+    ["1 10"],
+    ["11 20"],
+    ["100 200"]
+  ],
+  "hidden": [
+    {"name": "L = R = 1 (1 is not prime)", "input": ["1 1"]},
+    {"name": "L = R = 2", "input": ["2 2"]},
+    {"name": "L = R = 11", "input": ["11 11"]},
+    {"name": "range with no palindromic primes", "input": ["12 100"]},
+    {"name": "full range 1 to 100000", "input": ["1 100000"]},
+    {"name": "five-digit range 10000 to 100000", "input": ["10000 100000"]},
+    {"name": "L = R = 100000", "input": ["100000 100000"]}
+  ]
+}

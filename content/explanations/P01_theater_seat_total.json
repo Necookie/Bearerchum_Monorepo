@@ -1,0 +1,44 @@
+{
+  "file": "P01_theater_seat_total.py",
+  "summary": "Every row has 2 more seats than the row in front, so the rows hold S, S+2, S+4, … seats — an arithmetic sequence. We simply walk through the R rows and add them up (T1 — direct formula / simple loop).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read S first, then R",
+      "text": "The two numbers come on two separate lines, so we need two `input()` calls. Order matters: the judge types S first, so reading R first would swap the values. `int()` turns the typed text into a number we can do math with."
+    },
+    {
+      "lines": [
+        4,
+        6
+      ],
+      "title": "Set up the running total",
+      "text": "`total` starts at 0 and `seats` holds the size of the row we are looking at, starting with the first row S. The comment reminds us the pattern is S, S+2, S+4, …"
+    },
+    {
+      "lines": [
+        7,
+        9
+      ],
+      "title": "Add one row at a time",
+      "text": "`range(R)` runs exactly R times — one pass per row. We add the current row first, then grow `seats` by 2 for the next row. If you swapped these two lines, the first row would be counted as S+2. `range(R + 1)` would add one row too many."
+    },
+    {
+      "lines": [
+        11,
+        12
+      ],
+      "title": "Formula check and output",
+      "text": "The comment gives the closed form `S*R + R*(R-1)`, great for checking a sample by hand (10, 4 → 40 + 12 = 52). The f-string prints exactly `Total seats: 52` — keep the space after the colon, the judge compares character by character."
+    }
+  ],
+  "complexity": "Time O(R) with R ≤ 1000 → at most 1,000 additions, instant.",
+  "pitfalls": [
+    "Reading R before S — the prompts ask for S first.",
+    "`range(R + 1)` adds an extra row.",
+    "Printing `Total seats:52` without the space."
+  ]
+}

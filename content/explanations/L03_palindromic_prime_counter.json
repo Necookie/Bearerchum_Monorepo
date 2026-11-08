@@ -1,0 +1,60 @@
+{
+  "file": "L03_palindromic_prime_counter.py",
+  "summary": "Build a Sieve of Eratosthenes up to R once, so \"is x prime?\" becomes a list lookup (T11). Then count the numbers in [L, R] that are prime and read the same backwards (T2).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read L and R from one line",
+      "text": "Both numbers are typed on ONE line, so `split()` + `map(int, …)`. Two `input()` calls would hang."
+    },
+    {
+      "lines": [
+        3,
+        4
+      ],
+      "title": "Start with everything marked prime",
+      "text": "`is_prime[x]` will say whether x is prime. The list has R + 1 slots so that index R itself exists."
+    },
+    {
+      "lines": [
+        5,
+        7
+      ],
+      "title": "0 and 1 are not prime",
+      "text": "1 is NOT prime — a classic hidden test with L = 1. The `if R >= 1` guard avoids an `IndexError` if the list only has one slot."
+    },
+    {
+      "lines": [
+        8,
+        11
+      ],
+      "title": "Cross out multiples",
+      "text": "For each prime `i`, all its multiples are not prime. We only need `i` up to √R, because any composite number ≤ R has a factor that small. We start at `i * i` since smaller multiples were already crossed out by smaller primes."
+    },
+    {
+      "lines": [
+        13,
+        16
+      ],
+      "title": "Count prime palindromes in the range",
+      "text": "`range(L, R + 1)` includes R. `str(x) == str(x)[::-1]` checks the palindrome by comparing the text with its reverse. The prime check is just a lookup now."
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Count: 4`."
+    }
+  ],
+  "complexity": "Sieve time O(R log log R); with R ≤ 100,000 that is a few hundred thousand steps (~0.05 s).",
+  "pitfalls": [
+    "Treating 1 as prime.",
+    "`range(L, R)` misses R.",
+    "Trial-dividing every number in the range — much slower."
+  ]
+}

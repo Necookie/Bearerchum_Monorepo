@@ -1,0 +1,15 @@
+{
+  "samples": [
+    ["3", "1 2 3", "4 5 6", "7 8 9"],
+    ["1", "5"]
+  ],
+  "hidden": [
+    {"name": "2x2 matrix", "input": ["2", "1 2", "3 4"]},
+    {"name": "negative values", "input": ["2", "-1 -2", "-3 -4"]},
+    {"name": "4x4 matrix", "input": ["4", "1 2 3 4", "5 6 7 8", "9 10 11 12", "13 14 15 16"]},
+    {"name": "all values equal", "input": ["3", "0 0 0", "0 0 0", "0 0 0"]}
+  ],
+  "generated": [
+    {"name": "N = 100", "gen": "n = 100\nlines = [str(n)] + [' '.join(str(random.randint(-99, 99)) for _ in range(n)) for _ in range(n)]"}
+  ]
+}

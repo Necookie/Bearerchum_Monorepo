@@ -1,0 +1,43 @@
+{
+  "file": "drills/D08_most_frequent_word.py",
+  "summary": "Count every word with `Counter`, then pick the word with the highest count, breaking ties alphabetically with one sort key. Lowercasing first makes `Hello` and `hello` the same word.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Import Counter",
+      "text": "`Counter` counts how many times each item appears in one line of code."
+    },
+    {
+      "lines": [
+        3,
+        4
+      ],
+      "title": "Lowercase, split and count",
+      "text": "`.lower()` before `.split()` merges different cases of the same word. `cnt` maps each word to its count, e.g. `{'the': 3, 'and': 2, …}`."
+    },
+    {
+      "lines": [
+        6,
+        7
+      ],
+      "title": "Highest count, then alphabetical",
+      "text": "`min` with the key `(-count, word)`: the minus sign makes the biggest count the smallest key, and on a tie the word itself decides, so the alphabetically first wins. `most_common(1)` would NOT break ties alphabetically."
+    },
+    {
+      "lines": [
+        9,
+        9
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Most frequent: the (3)`."
+    }
+  ],
+  "complexity": "Time O(W) to count the words plus one pass to pick the best — instant.",
+  "pitfalls": [
+    "Using `most_common(1)` — ties go to the first word seen, not the alphabetical one.",
+    "Not lowercasing → `Hello` and `hello` counted separately."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "samples": [
+    ["14"],
+    ["0"],
+    ["10"]
+  ],
+  "hidden": [
+    {"name": "U = 1", "input": ["1"]},
+    {"name": "U = 9, below the second tier", "input": ["9"]},
+    {"name": "U = 11, first cubic meter at 25 pesos", "input": ["11"]},
+    {"name": "U = 20", "input": ["20"]},
+    {"name": "largest U = 1000000", "input": ["1000000"]}
+  ]
+}

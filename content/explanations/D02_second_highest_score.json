@@ -1,0 +1,43 @@
+{
+  "file": "drills/D02_second_highest_score.py",
+  "summary": "Remove duplicates with a set, sort from biggest to smallest, and take the second item if it exists. \"Second highest DISTINCT\" means repeats of the top score don't count.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the scores",
+      "text": "N on one line, the scores on the next, as `int`s (they may be negative)."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Distinct scores, biggest first",
+      "text": "`set(scores)` drops repeats, so `90 85 90` becomes `{90, 85}`. `sorted(…, reverse=True)` lists them from highest to lowest. Without the set, the second item could just be another 90."
+    },
+    {
+      "lines": [
+        5,
+        6
+      ],
+      "title": "Not enough different scores",
+      "text": "If everyone has the same score (or N = 1), there is no second highest, so we print `Second highest: None`. Reading `distinct[1]` here would crash."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Print the second item",
+      "text": "Index 1 is the second highest distinct score."
+    }
+  ],
+  "complexity": "Time O(N log N) for the sort with N ≤ 1000 — instant.",
+  "pitfalls": [
+    "Forgetting the set → a repeated top score is reported as second.",
+    "No check for fewer than 2 distinct scores → `IndexError`."
+  ]
+}

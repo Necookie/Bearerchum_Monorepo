@@ -1,0 +1,68 @@
+{
+  "file": "P02_fix_one_street_lamp.py",
+  "summary": "We are allowed to repair exactly one broken lamp, so we try every broken lamp and keep the best result (T6 — try every option). For a repaired lamp, the lit stretch is: lit lamps on its left + 1 (itself) + lit lamps on its right.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the lamps as text",
+      "text": "Keep the row as a **string** like `'0011'`. `int()` would turn it into `11` and silently delete the broken lamps at the front. `.strip()` removes stray spaces around the input so they are not counted as lamps."
+    },
+    {
+      "lines": [
+        2,
+        3
+      ],
+      "title": "Remember the length and the best so far",
+      "text": "`n` is used by the right-hand walk to know where the row ends. `best` starts at 0 and is raised by every repair we try."
+    },
+    {
+      "lines": [
+        5,
+        6
+      ],
+      "title": "Try repairing each broken lamp",
+      "text": "We visit every position, but only a `'0'` can be repaired, so the `if` skips lit lamps. Inside the `if` we pretend lamp `i` is fixed and measure how long the lit stretch becomes."
+    },
+    {
+      "lines": [
+        7,
+        11
+      ],
+      "title": "Count lit lamps to the left",
+      "text": "Start just left of the repaired lamp (`j = i - 1`) and step left while lamps are lit. The `j >= 0` check must come **first**: without it, `j` reaches -1 and `lamps[-1]` silently reads the LAST lamp, so lamps from the far end get counted. Because `and` stops early, `lamps[j]` is never read once `j` is out of range."
+    },
+    {
+      "lines": [
+        12,
+        16
+      ],
+      "title": "Count lit lamps to the right",
+      "text": "The same walk going right from `i + 1`. Here `j < n` stops us at the end of the row — without it the program would crash with `IndexError`."
+    },
+    {
+      "lines": [
+        17,
+        17
+      ],
+      "title": "Score this repair and keep the best",
+      "text": "The new stretch is `left + 1 + right`: the `+ 1` is the lamp we just fixed. Forgetting it makes every answer one too small. `max` keeps the best repair seen so far."
+    },
+    {
+      "lines": [
+        19,
+        19
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Longest lit stretch: 6`."
+    }
+  ],
+  "complexity": "Time O(N²) in the worst case with N ≤ 100 → about 10,000 steps, instant.",
+  "pitfalls": [
+    "`int(input())` destroys leading zeros — keep it a string.",
+    "No `j >= 0` check → `lamps[-1]` wraps around to the last lamp.",
+    "Forgetting the `+ 1` for the repaired lamp."
+  ]
+}

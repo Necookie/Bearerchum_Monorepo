@@ -1,0 +1,14 @@
+{
+  "samples": [
+    ["Programming 101!"],
+    ["AEIOU xyz"],
+    ["2026!!"]
+  ],
+  "hidden": [
+    {"name": "a single vowel", "input": ["a"]},
+    {"name": "y counts as a consonant", "input": ["y"]},
+    {"name": "only spaces and symbols", "input": [" ,.;!? "]},
+    {"name": "uppercase and lowercase mixed", "input": ["HeLLo WoRLD"]},
+    {"name": "1000 letters", "input": ["abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab"]}
+  ]
+}

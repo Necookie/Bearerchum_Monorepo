@@ -1,0 +1,20 @@
+{
+  "samples": [
+    ["4 5", "##..#", "#...#", "..#..", "....."],
+    ["2 2", "..", ".."],
+    ["3 3", "#.#", ".#.", "#.#"]
+  ],
+  "hidden": [
+    {"name": "1x1 land", "input": ["1 1", "#"]},
+    {"name": "1x1 water", "input": ["1 1", "."]},
+    {"name": "single row with gaps", "input": ["1 7", "##.#..#"]},
+    {"name": "U-shaped island counts once", "input": ["3 3", "#.#", "#.#", "###"]},
+    {"name": "ring of land around water", "input": ["3 3", "###", "#.#", "###"]},
+    {"name": "single column", "input": ["5 1", "#", ".", "#", "#", "."]}
+  ],
+  "generated": [
+    {"name": "100x100 all land", "gen": "lines = ['100 100'] + ['#' * 100 for _ in range(100)]"},
+    {"name": "100x100 checkerboard (5000 islands)", "gen": "lines = ['100 100'] + [''.join('#' if (r + c) % 2 == 0 else '.' for c in range(100)) for r in range(100)]"},
+    {"name": "100x100 random map", "gen": "lines = ['100 100'] + [''.join(random.choice('#..') for _ in range(100)) for _ in range(100)]"}
+  ]
+}

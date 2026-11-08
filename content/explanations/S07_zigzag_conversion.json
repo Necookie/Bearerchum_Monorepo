@@ -1,0 +1,67 @@
+{
+  "file": "S07_zigzag_conversion.py",
+  "summary": "Simulate a pen writing the characters down and up across the rows: the row index bounces between the top and the bottom (T14 — bouncing index). At the end, read the rows one after another.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the text and the row count",
+      "text": "Two lines: the string stays text, the row count becomes an `int`."
+    },
+    {
+      "lines": [
+        4,
+        5
+      ],
+      "title": "Special case: no zigzag",
+      "text": "With 1 row the bounce logic breaks: row 0 is both the top and the bottom, `step` becomes 1, and `rows[1]` crashes with `IndexError`. With at least as many rows as characters, the pen only goes straight down, so the text is unchanged."
+    },
+    {
+      "lines": [
+        6,
+        8
+      ],
+      "title": "One string per row, pen at the top",
+      "text": "`rows` holds the text of each row. `r` is the current row and `step` is the direction (+1 down, −1 up)."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Write the character in the current row",
+      "text": "Each character goes to the row the pen is on."
+    },
+    {
+      "lines": [
+        11,
+        14
+      ],
+      "title": "Bounce at the edges",
+      "text": "At the top row we go down; at the bottom row we go up. In between, `step` keeps its direction."
+    },
+    {
+      "lines": [
+        15,
+        16
+      ],
+      "title": "Move the pen and read the rows",
+      "text": "`r += step` moves to the next row. After the loop, `\"\".join(rows)` reads the rows top to bottom."
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Converted string: PAHNAPLSIIGYIR`."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 1000 characters — instant.",
+  "pitfalls": [
+    "No special case for 1 row → `IndexError`.",
+    "Changing direction one step too late, so the pen leaves the grid."
+  ]
+}

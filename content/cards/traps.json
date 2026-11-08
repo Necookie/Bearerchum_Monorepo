@@ -1,0 +1,361 @@
+[
+  {
+    "id": "traps-001",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "2 4",
+    "code": "print(round(2.5), round(3.5))",
+    "explain": "Python's `round` uses round-half-to-**even** (banker's rounding): 2.5 → 2, 3.5 → 4. For a \"5 rounds up\" rule, use integer math.",
+    "refs": [
+      "P06"
+    ]
+  },
+  {
+    "id": "traps-002",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "20 0 30",
+    "code": "print(round(25, -1), round(5, -1), (25 + 5) // 10 * 10)",
+    "explain": "Same half-to-even rule at the tens: 25 → 20, 5 → 0. Safe \"round to nearest ten\": `(n + 5) // 10 * 10`.",
+    "refs": [
+      "P06"
+    ]
+  },
+  {
+    "id": "traps-003",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "ds"
+    ],
+    "front": "What does this print?",
+    "back": "[[1, 0, 0], [1, 0, 0]]",
+    "code": "g = [[0] * 3] * 2\ng[0][0] = 1\nprint(g)",
+    "explain": "`[[0]*3]*2` makes two references to the **same** row, so changing one changes both. Build grids with `[[0]*m for _ in range(n)]`."
+  },
+  {
+    "id": "traps-004",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps"
+    ],
+    "front": "What does this print?",
+    "back": "30",
+    "code": "a = [10, 20, 30]\ni = 0\nprint(a[i - 1])",
+    "explain": "`a[-1]` is the last element, so `i - 1` with `i = 0` gives no error — just a wrong neighbour. Start neighbour loops at 1 or check `i > 0`.",
+    "refs": [
+      "P07"
+    ]
+  },
+  {
+    "id": "traps-005",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "11 4 2",
+    "code": "print(int(\"0011\"), len(\"0011\"), len(str(int(\"0011\"))))",
+    "explain": "`int()` drops leading zeros. If the input is a row of digits/lamps/bits, keep it as a string.",
+    "refs": [
+      "P02"
+    ]
+  },
+  {
+    "id": "traps-006",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "['a', '', 'b'] ['a', 'b']",
+    "code": "s = \"a  b\"\nprint(s.split(\" \"), s.split())",
+    "explain": "`split(\" \")` produces an empty string for every extra space; `split()` with no argument splits on any run of whitespace.",
+    "refs": [
+      "P05"
+    ]
+  },
+  {
+    "id": "traps-007",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "-4 1",
+    "code": "print(-7 // 2, -7 % 2)",
+    "explain": "`//` floors toward −∞, so `-7 // 2` is `-4`, not `-3`. `%` then matches it: `-7 % 2` is `1`."
+  },
+  {
+    "id": "traps-008",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "T4"
+    ],
+    "front": "What does this print?",
+    "back": "25 y",
+    "code": "print(-1 % 26, chr((ord('b') - ord('a') - 3) % 26 + ord('a')))",
+    "explain": "In Python, `x % 26` is never negative, so shifting a letter backwards wraps correctly with no `+ 26` needed (C needs it).",
+    "refs": [
+      "S03"
+    ]
+  },
+  {
+    "id": "traps-009",
+    "deck": "traps",
+    "type": "mcq",
+    "tags": [
+      "traps",
+      "io"
+    ],
+    "front": "What happens when Python runs `int(\"2.0\")`?",
+    "choices": [
+      "returns `0`",
+      "returns `2`",
+      "returns `2.0`",
+      "raises `ValueError`"
+    ],
+    "answer": 3,
+    "explain": "`int()` only parses integer text. Read a float with `float()` (and `int(float(s))` if you really need an int).",
+    "refs": [
+      "L07"
+    ]
+  },
+  {
+    "id": "traps-010",
+    "deck": "traps",
+    "type": "mcq",
+    "tags": [
+      "traps",
+      "python"
+    ],
+    "front": "Earlier in your program you wrote `sum = 0`. Later you call `sum(scores)`. What happens?",
+    "choices": [
+      "It works normally",
+      "`TypeError: 'int' object is not callable`",
+      "It returns 0",
+      "SyntaxError"
+    ],
+    "answer": 1,
+    "explain": "Assigning to `sum` hides the built-in function. Never name variables `sum`, `max`, `min`, `list`, `str`, `input` — use `total`, `best`, `arr`, `s`."
+  },
+  {
+    "id": "traps-011",
+    "deck": "traps",
+    "type": "mcq",
+    "tags": [
+      "traps",
+      "ds"
+    ],
+    "front": "N = 100,000. Inside a loop over all N values you test `if x in seen_list:`. What is the problem?",
+    "choices": [
+      "Nothing — `in` is O(1)",
+      "It is O(N²) overall → too slow; use a `set`",
+      "It crashes for large lists",
+      "It gives wrong answers for duplicates"
+    ],
+    "answer": 1,
+    "explain": "`x in list` scans the whole list: N checks × N items = 10^10 steps. A `set` lookup is O(1).",
+    "refs": [
+      "S06"
+    ]
+  },
+  {
+    "id": "traps-012",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "False True",
+    "code": "print(0.1 + 0.2 == 0.3, abs(0.1 + 0.2 - 0.3) < 1e-9)",
+    "explain": "Floats are binary approximations. Compare with a tolerance (`abs(a - b) < 1e-9`) or keep everything in integers."
+  },
+  {
+    "id": "traps-013",
+    "deck": "traps",
+    "type": "mcq",
+    "tags": [
+      "traps",
+      "T9"
+    ],
+    "front": "Your flood-fill uses recursion and works on small grids, but crashes on a 100×100 grid of all land. Why, and what is the fix?",
+    "choices": [
+      "RecursionError (~1000 calls) → use a loop with a `deque`/stack",
+      "Integer overflow → use floats",
+      "Grid too big for a list → use a dict",
+      "Timeout → use `sys.stdin`"
+    ],
+    "answer": 0,
+    "explain": "Python's default recursion limit is about 1000 calls; a long chain of cells exceeds it. A queue/stack loop has no such limit."
+  },
+  {
+    "id": "traps-014",
+    "deck": "traps",
+    "type": "mcq",
+    "tags": [
+      "traps",
+      "io"
+    ],
+    "front": "You read `d = input()` and test `if d == \"L\":`. It passes the samples but fails a hidden test where the line is `\"L \"` (trailing space). Best fix?",
+    "choices": [
+      "`if \"L\" in d:`",
+      "`if d[0] == \"L\":`",
+      "`d = input().strip().upper()`",
+      "`d = input().split()`"
+    ],
+    "answer": 2,
+    "explain": "Hidden test lines may carry trailing spaces or `\\r`. `strip()` removes whitespace at both ends; `upper()` also handles lowercase.",
+    "refs": [
+      "L05"
+    ]
+  },
+  {
+    "id": "traps-015",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "1 8",
+    "code": "print(2 ^ 3, 2 ** 3)",
+    "explain": "`^` is bitwise XOR in Python, not power. Power is `**`.",
+    "refs": [
+      "S04"
+    ]
+  },
+  {
+    "id": "traps-016",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "T3"
+    ],
+    "front": "What does this print?",
+    "back": "False True",
+    "code": "print(\"A\" in \"aeiou\", \"A\".lower() in \"aeiou\")",
+    "explain": "Membership on strings is case-sensitive. Lower-case the character first: `ch.lower() in \"aeiou\"`.",
+    "refs": [
+      "L01"
+    ]
+  },
+  {
+    "id": "traps-017",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "abc",
+    "code": "s = \"abc\"\ns.upper()\nprint(s)",
+    "explain": "Strings are immutable: `upper()` returns a NEW string. Without `s = s.upper()` nothing changes."
+  },
+  {
+    "id": "traps-018",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "None",
+    "code": "a = [3, 1, 2]\nb = a.sort()\nprint(b)",
+    "explain": "`list.sort()` sorts in place and returns `None`. Use `b = sorted(a)` for a sorted copy."
+  },
+  {
+    "id": "traps-019",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "[1, 2, 3, 4]",
+    "code": "print(list(range(1, 5)))",
+    "explain": "`range` excludes its end. For L..R inclusive write `range(L, R + 1)`.",
+    "refs": [
+      "L03"
+    ]
+  },
+  {
+    "id": "traps-020",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "3.5 3 3.0",
+    "code": "print(7 / 2, 7 // 2, 6 / 2)",
+    "explain": "`/` always returns a float — even `6 / 2` prints `3.0`, which fails an expected `3`. Use `//` for whole-number results."
+  },
+  {
+    "id": "traps-021",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "[1, 2, 3, 4]",
+    "code": "a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)",
+    "explain": "`b = a` does not copy — both names point to one list. Copy with `a[:]` or `list(a)`."
+  },
+  {
+    "id": "traps-022",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "True False 9",
+    "code": "print(\"10\" < \"9\", 10 < 9, max([\"10\", \"9\"]))",
+    "explain": "Strings compare character by character: `\"1\" < \"9\"`, so `\"10\" < \"9\"`. Forgetting `int()` on input silently breaks comparisons and `max`."
+  },
+  {
+    "id": "traps-023",
+    "deck": "traps",
+    "type": "output",
+    "tags": [
+      "traps",
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "2.67 0.12",
+    "code": "print(f\"{2.675:.2f}\", f\"{0.125:.2f}\")",
+    "explain": "`2.675` is stored as 2.67499999…, and `0.125` is an exact tie that rounds to even. If exact half-up matters, work in integers (e.g. cents)."
+  }
+]

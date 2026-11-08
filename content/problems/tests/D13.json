@@ -1,0 +1,14 @@
+{
+  "samples": [
+    ["100 500"],
+    ["1 9"],
+    ["10 99"]
+  ],
+  "hidden": [
+    {"name": "L = R = 153", "input": ["153 153"]},
+    {"name": "L = R = 10: none", "input": ["10 10"]},
+    {"name": "L = R = 1", "input": ["1 1"]},
+    {"name": "four-digit Armstrong numbers", "input": ["1000 9999"]},
+    {"name": "full range 1 to 100000", "input": ["1 100000"]}
+  ]
+}

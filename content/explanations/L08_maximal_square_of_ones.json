@@ -1,0 +1,76 @@
+{
+  "file": "L08_maximal_square_of_ones.py",
+  "summary": "`dp[i][j]` stores the side of the biggest all-1 square whose bottom-right corner is (i, j). It equals 1 + the smallest of the three neighbours above, left and above-left (T13 — DP on a grid). The answer is the biggest value in the table.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the size",
+      "text": "Rows and columns on one line: `split()` + `map(int, …)`."
+    },
+    {
+      "lines": [
+        2,
+        3
+      ],
+      "title": "Print the header and read the matrix",
+      "text": "The program prints `Enter the matrix:` itself, then reads N lines without a prompt. Each line holds space-separated 0/1 values, so we split it and convert to `int`."
+    },
+    {
+      "lines": [
+        5,
+        7
+      ],
+      "title": "Set up the DP table",
+      "text": "`dp` starts all zeros — a 0 cell can't be the corner of any square. `best = 0` matters: an all-zero matrix must print 0, not 1."
+    },
+    {
+      "lines": [
+        8,
+        10
+      ],
+      "title": "Visit every 1-cell, top to bottom",
+      "text": "Going row by row, left to right, guarantees the top, left and top-left neighbours are already filled when we reach (i, j)."
+    },
+    {
+      "lines": [
+        11,
+        12
+      ],
+      "title": "First row or first column",
+      "text": "A cell on the top edge or left edge has no room for anything bigger than 1. Without this case, `dp[i - 1]` with i = 0 would silently read the LAST row."
+    },
+    {
+      "lines": [
+        13,
+        14
+      ],
+      "title": "Grow from the three neighbours",
+      "text": "A k×k square ending here needs (k−1)-squares ending above, to the left and diagonally. The smallest of the three limits how far we can grow."
+    },
+    {
+      "lines": [
+        15,
+        15
+      ],
+      "title": "Track the largest square",
+      "text": "Update `best` as we go, so we don't need a second pass over the table."
+    },
+    {
+      "lines": [
+        17,
+        17
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Largest square side: 3`."
+    }
+  ],
+  "complexity": "Time O(N·M); with 500×500 that is 250,000 cells (~0.15 s). Checking every square directly would be around 10¹⁰ steps.",
+  "pitfalls": [
+    "Reading rows as strings when they are space-separated numbers.",
+    "Missing the first-row/first-column case → `dp[-1]` wraps around.",
+    "Starting `best` at 1."
+  ]
+}

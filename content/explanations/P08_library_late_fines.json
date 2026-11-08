@@ -1,0 +1,59 @@
+{
+  "file": "P08_library_late_fines.py",
+  "summary": "Each book's fine is \"5 pesos per late day, never below 0, never above 50\". We compute it per book with `max` for the floor and `min` for the cap, then add them up (T7 — clamping).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the books",
+      "text": "N on the first line, then all the day counts on one line, split and converted to `int`."
+    },
+    {
+      "lines": [
+        4,
+        5
+      ],
+      "title": "Go through each book",
+      "text": "`total` collects the fines. We loop over the day counts directly — we do not need the index."
+    },
+    {
+      "lines": [
+        6,
+        6
+      ],
+      "title": "Late days, never negative",
+      "text": "`d - 7` is the number of days beyond the 7th. For a book returned early, `d - 7` is negative, and `max(0, …)` turns that into 0 — otherwise an early book would *lower* the total."
+    },
+    {
+      "lines": [
+        7,
+        7
+      ],
+      "title": "Cap each book at 50",
+      "text": "`min(fine, 50)` applies the cap to **this book**, not to the total. Capping the total instead is a classic mistake."
+    },
+    {
+      "lines": [
+        8,
+        8
+      ],
+      "title": "Add to the total",
+      "text": "The book's clamped fine joins the running total."
+    },
+    {
+      "lines": [
+        10,
+        10
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Total fine: 85`."
+    }
+  ],
+  "complexity": "Time O(N) with N ≤ 100 — instant.",
+  "pitfalls": [
+    "`(d - 7) * 5` without `max(0, …)` gives negative fines.",
+    "Capping the total instead of each book."
+  ]
+}

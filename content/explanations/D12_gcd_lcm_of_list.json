@@ -1,0 +1,51 @@
+{
+  "file": "drills/D12_gcd_lcm_of_list.py",
+  "summary": "GCD and LCM of a list are built two numbers at a time: keep a running value and combine it with each next number. The LCM uses `lcm(a, b) = a × b / gcd(a, b)`.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Import gcd",
+      "text": "`math.gcd` gives the greatest common divisor of two numbers."
+    },
+    {
+      "lines": [
+        3,
+        4
+      ],
+      "title": "Read the numbers",
+      "text": "N, then N positive integers on one line."
+    },
+    {
+      "lines": [
+        6,
+        7
+      ],
+      "title": "Start with the first number",
+      "text": "The GCD and LCM of a single number are that number, so both start at `nums[0]`. If N = 1 the loop doesn't run and both are printed as is."
+    },
+    {
+      "lines": [
+        8,
+        10
+      ],
+      "title": "Fold in each next number",
+      "text": "`gcd(g, x)` shrinks the common divisor; `l * x // gcd(l, x)` grows the common multiple. `//` keeps it an `int` (`/` would make a float and can lose digits on big numbers)."
+    },
+    {
+      "lines": [
+        12,
+        13
+      ],
+      "title": "Print two lines",
+      "text": "Exact format: `GCD: 6` and `LCM: 72` on separate lines."
+    }
+  ],
+  "complexity": "Time O(N log M) with N ≤ 100 — instant.",
+  "pitfalls": [
+    "Using `/` instead of `//` → a float like `72.0`.",
+    "Starting the LCM at 0 — every product would be 0."
+  ]
+}

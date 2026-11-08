@@ -1,0 +1,20 @@
+{
+  "samples": [
+    ["{[()()]}"],
+    ["([)]"],
+    ["((a+b)"],
+    ["x = (y + 3) * [z]"]
+  ],
+  "hidden": [
+    {"name": "no brackets at all", "input": ["abc"]},
+    {"name": "closing bracket comes first", "input": [")("]},
+    {"name": "only opening brackets", "input": ["((("]},
+    {"name": "mismatched pair", "input": ["{]"]},
+    {"name": "three pairs side by side", "input": ["[]{}()"]},
+    {"name": "extra closing bracket at the end", "input": ["(a)]"]}
+  ],
+  "generated": [
+    {"name": "length 10000, deeply nested", "gen": "lines = ['(' * 2500 + '[' * 2500 + ']' * 2500 + ')' * 2500]"},
+    {"name": "length 10000, nested but last bracket wrong", "gen": "lines = ['{' * 5000 + '}' * 4999 + ')']"}
+  ]
+}

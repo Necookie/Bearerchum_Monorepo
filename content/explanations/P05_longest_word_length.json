@@ -1,0 +1,35 @@
+{
+  "file": "P05_longest_word_length.py",
+  "summary": "Split the sentence into words and take the biggest length (T3 — string processing). `split()` does all the hard work of finding where words start and end.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the whole sentence",
+      "text": "A plain `input()` keeps the spaces, which we need to find the words."
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "title": "Find the longest word",
+      "text": "`split()` with no argument breaks on any run of spaces and never returns empty strings. `max(len(word) for word in …)` checks every word, including the last one — the one a hand-written space counter usually forgets."
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Longest word length: 11`."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 200 characters — instant.",
+  "pitfalls": [
+    "`split(' ')` returns empty strings when there are double spaces.",
+    "Counting letters by hand and missing the last word (it has no space after it)."
+  ]
+}

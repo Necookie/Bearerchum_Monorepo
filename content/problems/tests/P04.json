@@ -1,0 +1,15 @@
+{
+  "samples": [
+    ["40507"],
+    ["1000000000"],
+    ["98765"]
+  ],
+  "hidden": [
+    {"name": "single digit, no zeros", "input": ["7"]},
+    {"name": "smallest N = 1", "input": ["1"]},
+    {"name": "zeros only at the end", "input": ["1200"]},
+    {"name": "long run of zeros in the middle", "input": ["100000001"]},
+    {"name": "zeros alternating with nines", "input": ["9090909"]},
+    {"name": "nine nines (no zeros, large N)", "input": ["999999999"]}
+  ]
+}

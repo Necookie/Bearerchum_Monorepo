@@ -1,0 +1,17 @@
+{
+  "samples": [
+    ["3 3", "FFF", "FFF", "RFF"],
+    ["2 2", "RF", "FF"],
+    ["2 3", "FFF", "FFF"]
+  ],
+  "hidden": [
+    {"name": "every fruit already rotten", "input": ["3 3", "RRR", "RRR", "RRR"]},
+    {"name": "1x1 crate with one fresh fruit", "input": ["1 1", "F"]},
+    {"name": "1x1 crate with one rotten fruit", "input": ["1 1", "R"]},
+    {"name": "single row, rot starts at the left end", "input": ["1 10", "RFFFFFFFFF"]},
+    {"name": "single column, rot starts in the middle", "input": ["10 1", "F", "F", "F", "F", "R", "F", "F", "F", "F", "F"]},
+    {"name": "two rotten fruits spread at the same time and meet", "input": ["1 7", "RFFFFFR"]},
+    {"name": "10x10, one rotten fruit in a corner (18 minutes)", "input": ["10 10", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFR"]},
+    {"name": "10x10, rotten fruits in opposite corners", "input": ["10 10", "RFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFF", "FFFFFFFFFR"]}
+  ]
+}

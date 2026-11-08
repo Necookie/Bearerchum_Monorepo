@@ -1,0 +1,457 @@
+[
+  {
+    "id": "techniques-001",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T7"
+    ],
+    "front": "**Problem excerpt:** “A parking garage charges ₱40 for each of the first 3 hours and ₱20 for every hour after that, but never more than ₱200 per day.”\n\nWhich technique fits best?",
+    "choices": [
+      "T1 Direct formula / simple loop",
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T6 Runs / streaks & “try every option”",
+      "T7 Clamping & tiers"
+    ],
+    "answer": 3,
+    "explain": "\"First 3 at…, the rest at…\" = tiers; \"never more than\" = cap. `min(200, min(h, 3) * 40 + max(h - 3, 0) * 20)`."
+  },
+  {
+    "id": "techniques-002",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T6"
+    ],
+    "front": "**Problem excerpt:** “Given a fitness tracker's daily step counts, find the largest number of consecutive days with at least 10,000 steps.”\n\nWhich technique fits best?",
+    "choices": [
+      "T10 Simulate until stable",
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T6 Runs / streaks & “try every option”",
+      "T5 Neighbour comparison"
+    ],
+    "answer": 2,
+    "explain": "\"Largest number of consecutive days\" = longest run: grow `cur` while the condition holds, reset to 0 otherwise, track `best`."
+  },
+  {
+    "id": "techniques-003",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T4"
+    ],
+    "front": "**Problem excerpt:** “A spy encodes a message by moving every letter 3 places forward in the alphabet (`x` becomes `a`). Uppercase stays uppercase. Decode the message.”\n\nWhich technique fits best?",
+    "choices": [
+      "T14 Rotation, wrap-around & bouncing indexes",
+      "T3 String processing & classification",
+      "T2 Digit manipulation",
+      "T4 Character shifting (ciphers)"
+    ],
+    "answer": 3,
+    "explain": "Letter shift with wrap-around = cipher: `chr((ord(ch) - base - 3) % 26 + base)`."
+  },
+  {
+    "id": "techniques-004",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T9",
+      "T8"
+    ],
+    "front": "**Problem excerpt:** “A forest is an R×C grid. Fire starts at every `F` cell at the same time and each minute spreads to the trees directly above, below, left and right. Print the minutes until every tree is burning.”\n\nWhich technique fits best?",
+    "choices": [
+      "T9 Multi-source BFS (spreading)",
+      "T13 Dynamic programming on a grid / table",
+      "T15 Brute force + pruning",
+      "T8 Grid neighbours with bounds"
+    ],
+    "answer": 0,
+    "explain": "Spreading from several places at once, counting minutes = multi-source BFS: put every `F` in the queue at distance 0."
+  },
+  {
+    "id": "techniques-005",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T11"
+    ],
+    "front": "**Problem excerpt:** “Print how many prime numbers lie between 1 and N, where N ≤ 1,000,000.”\n\nWhich technique fits best?",
+    "choices": [
+      "T11 Primes: sieve",
+      "T2 Digit manipulation",
+      "T1 Direct formula / simple loop",
+      "T15 Brute force + pruning"
+    ],
+    "answer": 0,
+    "explain": "Many primes up to 10^6 → Sieve of Eratosthenes (O(N log log N)). Trial division of every number would be far too slow."
+  },
+  {
+    "id": "techniques-006",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T5"
+    ],
+    "front": "**Problem excerpt:** “A hiker records N altitudes along a trail. A point is a summit if it is strictly higher than the points right before and right after it. Count the summits.”\n\nWhich technique fits best?",
+    "choices": [
+      "T5 Neighbour comparison",
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T6 Runs / streaks & “try every option”",
+      "T8 Grid neighbours with bounds"
+    ],
+    "answer": 0,
+    "explain": "\"Higher than both neighbours\" = neighbour comparison: loop `i` from 1 to N-2 and compare `a[i-1]`, `a[i]`, `a[i+1]`."
+  },
+  {
+    "id": "techniques-007",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T2"
+    ],
+    "front": "**Problem excerpt:** “Given N (1 ≤ N ≤ 10^18), print the product of its non-zero digits.”\n\nWhich technique fits best?",
+    "choices": [
+      "T11 Primes: sieve",
+      "T2 Digit manipulation",
+      "T1 Direct formula / simple loop",
+      "T14 Rotation, wrap-around & bouncing indexes"
+    ],
+    "answer": 1,
+    "explain": "\"Digits of N\" = digit manipulation. Easiest: loop over `str(n)`, skip `'0'`, multiply `int(d)`."
+  },
+  {
+    "id": "techniques-008",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T3"
+    ],
+    "front": "**Problem excerpt:** “A password checker counts how many uppercase letters, lowercase letters, digits and symbols a password contains.”\n\nWhich technique fits best?",
+    "choices": [
+      "T3 String processing & classification",
+      "T6 Runs / streaks & “try every option”",
+      "T4 Character shifting (ciphers)",
+      "T2 Digit manipulation"
+    ],
+    "answer": 0,
+    "explain": "Classify each character with `isupper()`, `islower()`, `isdigit()`; anything else is a symbol."
+  },
+  {
+    "id": "techniques-009",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T14"
+    ],
+    "front": "**Problem excerpt:** “A music player has N songs in a circle. Press \"next\" K times (K ≤ 10^12). Print the playlist starting from the song that is now playing.”\n\nWhich technique fits best?",
+    "choices": [
+      "T6 Runs / streaks & “try every option”",
+      "T14 Rotation, wrap-around & bouncing indexes",
+      "T10 Simulate until stable",
+      "T1 Direct formula / simple loop"
+    ],
+    "answer": 1,
+    "explain": "Cyclic + huge K → `k %= n`, then slice `a[k:] + a[:k]`. Never step K times."
+  },
+  {
+    "id": "techniques-010",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T12"
+    ],
+    "front": "**Problem excerpt:** “A shop has N daily sales (N ≤ 10^5). The owner asks Q questions (Q ≤ 10^5): \"What was the total from day L to day R?\"”\n\nWhich technique fits best?",
+    "choices": [
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T5 Neighbour comparison",
+      "T13 Dynamic programming on a grid / table",
+      "T15 Brute force + pruning"
+    ],
+    "answer": 0,
+    "explain": "Many range-sum questions → prefix sums: build `pre` once, answer each query in O(1)."
+  },
+  {
+    "id": "techniques-011",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T13"
+    ],
+    "front": "**Problem excerpt:** “A robot starts at the top-left of an R×C warehouse and may only move right or down. Some cells hold boxes (`#`). Count the different routes to the bottom-right.”\n\nWhich technique fits best?",
+    "choices": [
+      "T8 Grid neighbours with bounds",
+      "T9 Multi-source BFS (spreading)",
+      "T15 Brute force + pruning",
+      "T13 Dynamic programming on a grid / table"
+    ],
+    "answer": 3,
+    "explain": "\"Number of paths\", each cell built from the cell above and the cell to the left: `dp[r][c] = dp[r-1][c] + dp[r][c-1]` (0 on boxes)."
+  },
+  {
+    "id": "techniques-012",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T10"
+    ],
+    "front": "**Problem excerpt:** “Cups stand in a row. In each round, every cup whose neighbours on BOTH sides are empty is removed — all at the same time. Repeat until a round removes nothing. How many rounds happen?”\n\nWhich technique fits best?",
+    "choices": [
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T10 Simulate until stable",
+      "T5 Neighbour comparison",
+      "T6 Runs / streaks & “try every option”"
+    ],
+    "answer": 1,
+    "explain": "\"Repeat until nothing changes\" + \"at the same time\" = simulate until stable: FIND all removals, then APPLY them together."
+  },
+  {
+    "id": "techniques-013",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T15"
+    ],
+    "front": "**Problem excerpt:** “On an N×N board (N ≤ 40), find the largest K such that some K×K block has the same number in all four corners and its border sum is even.”\n\nWhich technique fits best?",
+    "choices": [
+      "T13 Dynamic programming on a grid / table",
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T1 Direct formula / simple loop",
+      "T15 Brute force + pruning"
+    ],
+    "answer": 3,
+    "explain": "\"Largest … such that …\", small N, no clean formula → brute force from the biggest size down, cheap checks first, stop at the first hit."
+  },
+  {
+    "id": "techniques-014",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T1"
+    ],
+    "front": "**Problem excerpt:** “A pyramid of cans has 1 can on top, and each row below has 3 more cans than the row above. How many cans are in R rows?”\n\nWhich technique fits best?",
+    "choices": [
+      "T6 Runs / streaks & “try every option”",
+      "T13 Dynamic programming on a grid / table",
+      "T7 Clamping & tiers",
+      "T1 Direct formula / simple loop"
+    ],
+    "answer": 3,
+    "explain": "Arithmetic sequence → simple loop adding `1, 4, 7, …`, or the formula `R + 3*R*(R-1)//2`."
+  },
+  {
+    "id": "techniques-015",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T8"
+    ],
+    "front": "**Problem excerpt:** “Minesweeper: for each empty cell, print how many of the 8 surrounding cells contain a mine `*`.”\n\nWhich technique fits best?",
+    "choices": [
+      "T9 Multi-source BFS (spreading)",
+      "T5 Neighbour comparison",
+      "T8 Grid neighbours with bounds",
+      "T10 Simulate until stable"
+    ],
+    "answer": 2,
+    "explain": "Fixed neighbour offsets around each grid cell, with the `0 <= nr < R and 0 <= nc < C` bounds check (8 directions here)."
+  },
+  {
+    "id": "techniques-016",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T6"
+    ],
+    "front": "**Problem excerpt:** “A team's season is a string of `W` and `L`. You may change exactly ONE `L` into a `W`. What is the longest winning streak you can get?”\n\nWhich technique fits best?",
+    "choices": [
+      "T7 Clamping & tiers",
+      "T5 Neighbour comparison",
+      "T6 Runs / streaks & “try every option”",
+      "T14 Rotation, wrap-around & bouncing indexes"
+    ],
+    "answer": 2,
+    "explain": "\"Change exactly one, best result\" = try every option (each `L`), measure the longest run, keep the maximum."
+  },
+  {
+    "id": "techniques-017",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T14"
+    ],
+    "front": "**Problem excerpt:** “Write a word in a wave across 3 lines: the 1st letter on line 1, 2nd on line 2, 3rd on line 3, 4th back on line 2, 5th on line 1, and so on. Then read the lines top to bottom.”\n\nWhich technique fits best?",
+    "choices": [
+      "T4 Character shifting (ciphers)",
+      "T14 Rotation, wrap-around & bouncing indexes",
+      "T8 Grid neighbours with bounds",
+      "T3 String processing & classification"
+    ],
+    "answer": 1,
+    "explain": "A row index that goes down then up = bouncing index: flip `step` at row 0 and the last row."
+  },
+  {
+    "id": "techniques-018",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T12"
+    ],
+    "front": "**Problem excerpt:** “Given N daily rainfall amounts, print the largest total over any 7 consecutive days.”\n\nWhich technique fits best?",
+    "choices": [
+      "T7 Clamping & tiers",
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T6 Runs / streaks & “try every option”",
+      "T11 Primes: sieve"
+    ],
+    "answer": 1,
+    "explain": "Fixed-length consecutive block = sliding window: add the entering day, subtract the leaving one."
+  },
+  {
+    "id": "techniques-019",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T1"
+    ],
+    "front": "**Problem excerpt:** “Given N (1 ≤ N ≤ 10^9), print 1 − 2 + 3 − 4 + … ± N.”\n\nWhich technique fits best?",
+    "choices": [
+      "T6 Runs / streaks & “try every option”",
+      "T13 Dynamic programming on a grid / table",
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T1 Direct formula / simple loop"
+    ],
+    "answer": 3,
+    "explain": "With N up to 10^9 a loop is ~100 s in Python — use the closed formula: `(N + 1) // 2` if N is odd, else `-N // 2`."
+  },
+  {
+    "id": "techniques-020",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T2"
+    ],
+    "front": "**Problem excerpt:** “A 6-digit ticket number is \"lucky\" if the sum of its first three digits equals the sum of its last three. Is the ticket lucky? (Ticket numbers may start with 0.)”\n\nWhich technique fits best?",
+    "choices": [
+      "T12 Subarray sums / prefix sums / sliding window",
+      "T2 Digit manipulation",
+      "T5 Neighbour comparison",
+      "T3 String processing & classification"
+    ],
+    "answer": 1,
+    "explain": "Digit manipulation — and read it as a string so a leading 0 is not lost: `sum(map(int, s[:3])) == sum(map(int, s[3:]))`."
+  },
+  {
+    "id": "techniques-021",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T12",
+      "traps"
+    ],
+    "front": "Constraints: **N ≤ 2,000**. Using ~10^7 simple Python operations per second, what is the slowest approach that is still safe?",
+    "choices": [
+      "O(2^N)",
+      "only O(N) is safe",
+      "O(N³)",
+      "O(N²)"
+    ],
+    "answer": 3,
+    "explain": "N² = 4·10^6 steps ≈ 0.4 s. N³ = 8·10^9 → minutes. 2^N is astronomically large.",
+    "refs": [
+      "S06"
+    ]
+  },
+  {
+    "id": "techniques-022",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T11",
+      "traps"
+    ],
+    "front": "Constraints: **N ≤ 10^5**. Which approach is fast enough?",
+    "choices": [
+      "O(N³)",
+      "any — Python is fast",
+      "O(N²) double loop",
+      "O(N log N) or O(N)"
+    ],
+    "answer": 3,
+    "explain": "O(N log N) ≈ 1.7·10^6 steps — instant. O(N²) = 10^10 steps — way over the budget."
+  },
+  {
+    "id": "techniques-023",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T1",
+      "T2"
+    ],
+    "front": "Constraints: **1 ≤ N ≤ 10^9**. What kind of solution is expected?",
+    "choices": [
+      "O(N log N) sort",
+      "O(1) formula or O(number of digits)",
+      "a loop from 1 to N",
+      "a sieve up to N"
+    ],
+    "answer": 1,
+    "explain": "Even a single loop to 10^9 is ~100 seconds in Python. Only work proportional to the digits (≤ 10) or a formula fits.",
+    "refs": [
+      "P06",
+      "S02"
+    ]
+  },
+  {
+    "id": "techniques-024",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T15",
+      "T6"
+    ],
+    "front": "Constraints: **N ≤ 100**. Is a triple-nested loop over N acceptable?",
+    "choices": [
+      "Only if N ≤ 10",
+      "No — 10^9 steps",
+      "Yes — about 10^6 steps",
+      "Only with recursion"
+    ],
+    "answer": 2,
+    "explain": "100³ = 10^6 steps ≈ 0.1 s. Small N is a hint that brute force is intended.",
+    "refs": [
+      "P02"
+    ]
+  },
+  {
+    "id": "techniques-025",
+    "deck": "techniques",
+    "type": "mcq",
+    "tags": [
+      "T15"
+    ],
+    "front": "Constraints: **N ≤ 20** items, and you must check every possible subset. Is that OK?",
+    "choices": [
+      "No — 20^20 subsets",
+      "Only with a sieve",
+      "Yes — 2^20 ≈ 10^6 subsets",
+      "No — 20! subsets"
+    ],
+    "answer": 2,
+    "explain": "2^20 ≈ 10^6 subsets — fine. At N = 40 it would be 10^12 — impossible."
+  },
+  {
+    "id": "techniques-026",
+    "deck": "techniques",
+    "type": "basic",
+    "tags": [
+      "T13",
+      "traps"
+    ],
+    "front": "About how many simple operations per second does Python do? Use it on a 500×500 grid: is visiting every cell a few times OK?",
+    "back": "Roughly **10^7 per second**. 500×500 = 250,000 cells, so a few passes (O(R·C), e.g. DP) take well under a second.",
+    "explain": "Estimate steps from the constraints, divide by 10^7, and keep it under ~1 s. O(R·C) on 500×500 passes; trying every square and scanning its cells does not.",
+    "refs": [
+      "L08"
+    ]
+  }
+]

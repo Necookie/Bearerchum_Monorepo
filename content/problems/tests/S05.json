@@ -1,0 +1,16 @@
+{
+  "samples": [
+    ["III"],
+    ["LVIII"],
+    ["MCMXCIV"]
+  ],
+  "hidden": [
+    {"name": "single symbol I", "input": ["I"]},
+    {"name": "single symbol M", "input": ["M"]},
+    {"name": "subtractive pair IX", "input": ["IX"]},
+    {"name": "subtractive pairs XL and IV", "input": ["XLIV"]},
+    {"name": "subtractive pairs CD and XC", "input": ["CDXC"]},
+    {"name": "largest value 3999", "input": ["MMMCMXCIX"]},
+    {"name": "longest numeral, 15 symbols", "input": ["MMMDCCCLXXXVIII"]}
+  ]
+}

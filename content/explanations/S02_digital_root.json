@@ -1,0 +1,34 @@
+{
+  "file": "S02_digital_root.py",
+  "summary": "Keep replacing the number by the sum of its digits until only one digit is left (T2 — digit manipulation). Turning the number into a string makes \"its digits\" easy to loop over.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the number",
+      "text": "An `int`, because we compare it with 10 below."
+    },
+    {
+      "lines": [
+        3,
+        4
+      ],
+      "title": "Sum the digits until one digit remains",
+      "text": "`while n >= 10` keeps going while there are 2+ digits — summing only once is a common mistake (65536 → 25, but the answer is 7). `str(n)` gives the digit characters and `int(d)` turns each back into a number."
+    },
+    {
+      "lines": [
+        6,
+        7
+      ],
+      "title": "Shortcut and output",
+      "text": "The comment shows the O(1) formula `1 + (n - 1) % 9` (0 stays 0), handy for checking. Then print `Digital Root: 7`."
+    }
+  ],
+  "complexity": "Time O(number of digits) per step and only a few steps — instant even for 2,000,000,000.",
+  "pitfalls": [
+    "Summing the digits only once."
+  ]
+}

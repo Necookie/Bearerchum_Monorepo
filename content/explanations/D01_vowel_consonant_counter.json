@@ -1,0 +1,51 @@
+{
+  "file": "drills/D01_vowel_consonant_counter.py",
+  "summary": "Go through the text once: skip anything that is not a letter, then sort each letter into vowel or consonant (T3 — string classification). Lowercasing first means we only need to check five vowels.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the text",
+      "text": "A plain `input()` — the text may contain spaces, digits and symbols."
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "title": "Two counters",
+      "text": "Both start at 0, so text with no letters at all prints 0 and 0."
+    },
+    {
+      "lines": [
+        4,
+        5
+      ],
+      "title": "Only letters count",
+      "text": "`s.lower()` makes `'A'` and `'a'` the same. `ch.isalpha()` skips digits, spaces and symbols — without it, `'1'` and `'!'` would be counted as consonants."
+    },
+    {
+      "lines": [
+        6,
+        9
+      ],
+      "title": "Vowel or consonant?",
+      "text": "A letter is either in `\"aeiou\"` or it is a consonant. `y` is not in the string, so it counts as a consonant, as the problem says."
+    },
+    {
+      "lines": [
+        11,
+        12
+      ],
+      "title": "Print two lines",
+      "text": "Two separate `print` calls give `Vowels: V` and `Consonants: C` on their own lines."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 1000 characters — instant.",
+  "pitfalls": [
+    "Counting digits or symbols as consonants (no `isalpha()` check).",
+    "Forgetting `.lower()` → uppercase vowels become consonants."
+  ]
+}

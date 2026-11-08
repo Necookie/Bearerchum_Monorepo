@@ -1,0 +1,21 @@
+{
+  "samples": [
+    ["4 2.0", "10 11 13 15"],
+    ["5 3.0", "10 12 20 22 30"],
+    ["4 5.0", "10 20 30 40"]
+  ],
+  "hidden": [
+    {"name": "N = 1: nothing to merge", "input": ["1 2.0", "5"]},
+    {"name": "T = 0: only equal neighbours merge", "input": ["4 0.0", "5 5 7 7"]},
+    {"name": "T = 0 and no equal neighbours", "input": ["3 0.0", "1 2 3"]},
+    {"name": "merges that only become possible in a later pass", "input": ["4 2.0", "1 2 3 4"]},
+    {"name": "odd count: the last element is left alone", "input": ["3 1.0", "1 2 3"]},
+    {"name": "T = 1000 with values far apart", "input": ["4 1000.0", "0 10000 0 10000"]},
+    {"name": "fractional threshold 2.5", "input": ["5 2.5", "0 2 5 7 20"]},
+    {"name": "all values 0", "input": ["6 0.0", "0 0 0 0 0 0"]}
+  ],
+  "generated": [
+    {"name": "N = 100 random values, random threshold", "gen": "n = 100\nlines = [f'{n} {random.randint(0, 300)}.0', ' '.join(str(random.randint(0, 10000)) for _ in range(n))]"},
+    {"name": "N = 100 close values that keep merging", "gen": "n = 100\nlines = [f'{n} 50.0', ' '.join(str(random.randint(1000, 1100)) for _ in range(n))]"}
+  ]
+}

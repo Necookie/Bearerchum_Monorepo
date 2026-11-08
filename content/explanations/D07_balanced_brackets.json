@@ -1,0 +1,67 @@
+{
+  "file": "drills/D07_balanced_brackets.py",
+  "summary": "Use a stack: push every opening bracket, and for every closing bracket check that the top of the stack is its matching opener. At the end the stack must be empty.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the text and the pairs",
+      "text": "`PAIR` maps each closer to the opener it needs, so one lookup checks any bracket type."
+    },
+    {
+      "lines": [
+        4,
+        5
+      ],
+      "title": "Empty stack, assume balanced",
+      "text": "`stack` holds the brackets opened but not closed yet, in order. `ok` turns False at the first problem."
+    },
+    {
+      "lines": [
+        6,
+        8
+      ],
+      "title": "Opening bracket → push",
+      "text": "Every `(`, `[` or `{` waits on the stack for its closer."
+    },
+    {
+      "lines": [
+        9,
+        12
+      ],
+      "title": "Closing bracket → must match the top",
+      "text": "If the stack is empty, this closer has nothing to close (`)(` case). If the top is a different opener, the order is wrong (`([)]`). `not stack` is checked first, so `stack[-1]` never runs on an empty list."
+    },
+    {
+      "lines": [
+        13,
+        13
+      ],
+      "title": "Matched → pop",
+      "text": "The pair is complete, so remove its opener. Other characters (letters, spaces, `+`) fall through both branches and are ignored."
+    },
+    {
+      "lines": [
+        15,
+        16
+      ],
+      "title": "Anything left open?",
+      "text": "Leftover openers like in `((a+b)` were never closed, so the text is not balanced."
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "title": "Print the result",
+      "text": "Exact strings: `Result: Balanced` or `Result: Not Balanced`."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 10⁴ — each character is pushed and popped at most once.",
+  "pitfalls": [
+    "Only counting brackets — `([)]` has equal counts but is not balanced.",
+    "Forgetting to check the stack is empty at the end."
+  ]
+}

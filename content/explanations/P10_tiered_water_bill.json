@@ -1,0 +1,51 @@
+{
+  "file": "P10_tiered_water_bill.py",
+  "summary": "Split the usage into the part inside the first tier (up to 10 m³ at 15 pesos) and the part above it (at 25 pesos), price each part, and add (T7 — tiers).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the usage",
+      "text": "One whole number U."
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "title": "The cheap part",
+      "text": "`min(U, 10)` is how much falls in the first tier: all of U if it is small, otherwise exactly 10."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "The expensive part",
+      "text": "`U - 10` is the usage above the tier. When U < 10 it would be negative, so `max(…, 0)` makes it 0 instead of giving a discount."
+    },
+    {
+      "lines": [
+        5,
+        5
+      ],
+      "title": "Price both parts",
+      "text": "15 pesos for each m³ in the first tier, 25 for each above it: U = 14 → 10·15 + 4·25 = 250."
+    },
+    {
+      "lines": [
+        7,
+        7
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Bill: 250`."
+    }
+  ],
+  "complexity": "Time O(1) — a few calculations.",
+  "pitfalls": [
+    "Forgetting `max(…, 0)` → negative extra for U < 10.",
+    "Charging all of U at 25 once it passes 10."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "samples": [
+    ["7 3", "2 5 1 8 2 9 1"],
+    ["4 4", "1 2 3 4"],
+    ["5 1", "-3 -1 -7 -2 -5"]
+  ],
+  "hidden": [
+    {"name": "N = K = 1", "input": ["1 1", "-5"]},
+    {"name": "best window at the very end", "input": ["5 2", "1 1 1 5 6"]},
+    {"name": "best window at the very start", "input": ["5 2", "9 9 1 1 1"]},
+    {"name": "all negative, K = 3", "input": ["5 3", "-1 -2 -3 -4 -5"]},
+    {"name": "all windows tie", "input": ["4 2", "3 3 3 3"]}
+  ],
+  "generated": [
+    {"name": "N = 100000, K = 50000, random sales", "gen": "n, k = 100000, 50000\nlines = [f'{n} {k}', ' '.join(str(random.randint(-9, 9)) for _ in range(n))]"},
+    {"name": "N = 100000, K = 1", "gen": "n = 100000\nlines = [f'{n} 1', ' '.join(str(random.randint(-9, 9)) for _ in range(n))]"}
+  ]
+}

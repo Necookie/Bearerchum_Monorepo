@@ -1,0 +1,68 @@
+{
+  "file": "L05_cyclic_array_shift.py",
+  "summary": "Shifting by K is the same as shifting by `K % N`, so we shrink K first and then build the answer with two slices (T14 — rotation / wrap-around). We never move one step at a time.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read N and K",
+      "text": "Each is on its own line. K can be huge, which is why the next steps avoid looping K times."
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "title": "Read the direction safely",
+      "text": "`.strip()` removes spaces around the letter and `.upper()` accepts `l` or `r` too. Without them `'L '` would not equal `'L'` and we'd shift the wrong way."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Read the array",
+      "text": "All N numbers on one line."
+    },
+    {
+      "lines": [
+        6,
+        6
+      ],
+      "title": "Remove full turns",
+      "text": "Shifting N times brings the array back to the start, so only `K % N` matters. This also makes the slices below valid for any K."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Left shift",
+      "text": "`A[K:]` is everything after the first K items, then `A[:K]` puts those K items at the end: `[1,2,3,4,5]`, K = 2 → `[3,4,5,1,2]`."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Right shift",
+      "text": "A right shift by K equals a left shift by N − K, so the last K items move to the front."
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "title": "Print without brackets",
+      "text": "`print(\"Shifted array:\", *result)` unpacks the list, so it prints `Shifted array: 3 4 5 1 2`. `print(result)` would show `[3, 4, 5, 1, 2]`."
+    }
+  ],
+  "complexity": "Time O(N) — building two slices — no matter how large K is.",
+  "pitfalls": [
+    "Looping K times (K may be 10¹⁸).",
+    "Printing the list with brackets.",
+    "Not stripping the direction letter."
+  ]
+}

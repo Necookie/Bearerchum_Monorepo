@@ -1,0 +1,14 @@
+# Local production-like run:  docker compose up --build   ->  http://localhost:8080
+# (Coolify deploys the same Dockerfile; this file is only for local use.)
+services:
+  bearerchum:
+    build: .
+    container_name: bearerchum-local
+    ports:
+      - "8080:8000"
+    environment:
+      TEAM_CODE: ${TEAM_CODE:-LOCALDEV}
+    volumes:
+      - bearerchum-data:/data
+volumes:
+  bearerchum-data:

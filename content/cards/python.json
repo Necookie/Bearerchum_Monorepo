@@ -1,0 +1,402 @@
+[
+  {
+    "id": "python-001",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "dlrow olleh",
+    "code": "s = \"hello world\"\nprint(s[::-1])",
+    "explain": "A slice with step `-1` walks the string backwards — the standard reverse. Palindrome test: `s == s[::-1]`."
+  },
+  {
+    "id": "python-002",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "gram",
+    "code": "s = \"Programming\"\nprint(s[3:7])",
+    "explain": "`s[a:b]` starts at index `a` and stops **before** `b`: indexes 3, 4, 5, 6 → `g r a m`."
+  },
+  {
+    "id": "python-003",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "23 [16, 23]",
+    "code": "a = [4, 8, 15, 16, 23]\nprint(a[-1], a[-2:])",
+    "explain": "Negative indexes count from the end: `-1` is the last item, `-2` the second last. `a[-2:]` is the last two."
+  },
+  {
+    "id": "python-004",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "123",
+    "code": "print(\"10203\".replace(\"0\", \"\"))",
+    "explain": "`replace(old, new)` replaces **every** occurrence. Replacing with `\"\"` deletes them."
+  },
+  {
+    "id": "python-005",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "97 c",
+    "code": "print(ord('a'), chr(ord('a') + 2))",
+    "explain": "`ord` gives a character's code (`'a'` = 97), `chr` turns a code back into a character. The basis of every cipher."
+  },
+  {
+    "id": "python-006",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "3 2 -1",
+    "code": "print(\"banana\".count(\"a\"), \"banana\".find(\"n\"), \"banana\".find(\"z\"))",
+    "explain": "`count` counts occurrences; `find` gives the first index, or `-1` when not found (`index` would crash instead)."
+  },
+  {
+    "id": "python-007",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "1 a\n2 b\n3 c",
+    "code": "for i, ch in enumerate(\"abc\", 1):\n    print(i, ch)",
+    "explain": "`enumerate(x, 1)` gives (position, value) pairs starting the count at 1."
+  },
+  {
+    "id": "python-008",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "T5"
+    ],
+    "front": "What does this print?",
+    "back": "[3, 5, 7]",
+    "code": "a = [1, 4, 9, 16]\nprint([y - x for x, y in zip(a, a[1:])])",
+    "explain": "`zip(a, a[1:])` pairs every element with its right neighbour — a clean neighbour comparison with no index errors."
+  },
+  {
+    "id": "python-009",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "sets-sorting"
+    ],
+    "front": "What does this print?",
+    "back": "['fig', 'pear', 'kiwi', 'apple']",
+    "code": "print(sorted([\"pear\", \"fig\", \"apple\", \"kiwi\"], key=len))",
+    "explain": "`key=len` sorts by length. `sorted` is stable, so equal keys keep their original order."
+  },
+  {
+    "id": "python-010",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "sets-sorting"
+    ],
+    "front": "What does this print?",
+    "back": "[('ana', 90), ('cy', 90), ('ben', 85)]",
+    "code": "pairs = [(\"ben\", 85), (\"cy\", 90), (\"ana\", 90)]\nprint(sorted(pairs, key=lambda p: (-p[1], p[0])))",
+    "explain": "A tuple key sorts by the first item, then breaks ties with the next. `-p[1]` = score descending, `p[0]` = name ascending."
+  },
+  {
+    "id": "python-011",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "[0, 4, 16, 36]",
+    "code": "print([x * x for x in range(7) if x % 2 == 0])",
+    "explain": "A comprehension is `[expression for item in iterable if condition]` — map and filter in one line."
+  },
+  {
+    "id": "python-012",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "(3, 2)",
+    "code": "print(divmod(17, 5))",
+    "explain": "`divmod(a, b)` returns `(a // b, a % b)` in one call — handy for hours/minutes or coin change."
+  },
+  {
+    "id": "python-013",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "7 6 12",
+    "code": "import math\nprint(math.isqrt(50), math.gcd(12, 18), math.lcm(4, 6))",
+    "explain": "`isqrt` is the exact integer square root (floor). `gcd` and `lcm` live in `math` (lcm needs Python 3.9+)."
+  },
+  {
+    "id": "python-014",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "counter"
+    ],
+    "front": "What does this print?",
+    "back": "3 0 [('a', 3)]",
+    "code": "from collections import Counter\nc = Counter(\"banana\")\nprint(c[\"a\"], c[\"z\"], c.most_common(1))",
+    "explain": "`Counter` counts every item; `most_common(k)` returns the k biggest as (item, count) pairs."
+  },
+  {
+    "id": "python-015",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "ds"
+    ],
+    "front": "What does this print?",
+    "back": "1 [2, 3, 4]",
+    "code": "from collections import deque\nq = deque([1, 2, 3])\nq.append(4)\nprint(q.popleft(), list(q))",
+    "explain": "`deque` adds and removes at both ends in O(1). `popleft()` is the queue operation used in BFS."
+  },
+  {
+    "id": "python-016",
+    "deck": "python",
+    "type": "code",
+    "tags": [
+      "python",
+      "T2"
+    ],
+    "front": "Write one line that stores the **sum of the digits** of the integer `n` (n ≥ 0) in `digit_sum`.",
+    "back": "digit_sum = sum(int(d) for d in str(n))",
+    "explain": "Treat the number as text: `str(n)` gives the digit characters, `int(d)` converts each back."
+  },
+  {
+    "id": "python-017",
+    "deck": "python",
+    "type": "code",
+    "tags": [
+      "python",
+      "T2",
+      "T3"
+    ],
+    "front": "Write one line that sets `is_pal` to whether the string `s` is a palindrome.",
+    "back": "is_pal = s == s[::-1]",
+    "explain": "A palindrome reads the same reversed, and `s[::-1]` is the reverse. For a number, use `str(n)` first."
+  },
+  {
+    "id": "python-018",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "sets-sorting"
+    ],
+    "front": "What does this print?",
+    "back": "[3, 5, 8] [8, 5, 3]",
+    "code": "a = [5, 3, 8]\na.sort()\nprint(a, sorted(a, reverse=True))",
+    "explain": "`a.sort()` sorts in place (returns `None`); `sorted(...)` returns a new list. `reverse=True` gives descending order."
+  },
+  {
+    "id": "python-019",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "hello",
+    "code": "print(max([\"hi\", \"hello\", \"hey\"], key=len))",
+    "explain": "`max` with `key=len` returns the longest item itself (the first one if there is a tie), not its length."
+  },
+  {
+    "id": "python-020",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "[10, 7, 4, 1]",
+    "code": "print(list(range(10, 0, -3)))",
+    "explain": "`range(start, stop, step)` stops **before** `stop`; a negative step counts down."
+  },
+  {
+    "id": "python-021",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "T8"
+    ],
+    "front": "What does this print?",
+    "back": "[(1, 4), (2, 5), (3, 6)]",
+    "code": "m = [[1, 2, 3], [4, 5, 6]]\nprint(list(zip(*m)))",
+    "explain": "`zip(*m)` takes column 0 of every row, then column 1, … — it transposes the matrix. `zip(*m[::-1])` rotates 90° clockwise."
+  },
+  {
+    "id": "python-022",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "1024 24",
+    "code": "print(2 ** 10, pow(2, 10, 1000))",
+    "explain": "`**` is power. `pow(a, b, m)` computes `a**b % m` quickly without building a huge number."
+  },
+  {
+    "id": "python-023",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "counter"
+    ],
+    "front": "What does this print?",
+    "back": "{'a': 2, 'b': 1, 'c': 1}",
+    "code": "d = {}\nfor ch in \"abca\":\n    d[ch] = d.get(ch, 0) + 1\nprint(d)",
+    "explain": "`d.get(k, 0)` returns 0 for a missing key, so the first `+ 1` works. Dicts keep insertion order."
+  },
+  {
+    "id": "python-024",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "sets-sorting"
+    ],
+    "front": "What does this print?",
+    "back": "3 [1, 2, 3]",
+    "code": "a = [3, 1, 3, 2, 1]\nprint(len(set(a)), sorted(set(a)))",
+    "explain": "A set keeps each value once, so `len(set(a))` is the number of **distinct** values. `sorted(set(a))` lists them in order."
+  },
+  {
+    "id": "python-025",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "T3"
+    ],
+    "front": "What does this print?",
+    "back": "False True True",
+    "code": "print(\"A1 b!\".isalpha(), \"a\".isalpha(), \"7\".isdigit())",
+    "explain": "`isalpha()` is True only if **every** character is a letter (space, digit and `!` fail). `isdigit()` likewise for digits."
+  },
+  {
+    "id": "python-026",
+    "deck": "python",
+    "type": "code",
+    "tags": [
+      "python",
+      "T14"
+    ],
+    "front": "Rotate the list `a` **left by k** places (assume `0 ≤ k < len(a)`), in one line.",
+    "back": "a = a[k:] + a[:k]",
+    "explain": "The items from index k onward come first, then the first k items. Rotating right by k is `a[n-k:] + a[:n-k]`."
+  },
+  {
+    "id": "python-027",
+    "deck": "python",
+    "type": "code",
+    "tags": [
+      "python",
+      "math"
+    ],
+    "front": "Store the **ceiling** of `a / b` (positive integers) in `c` without using floats.",
+    "back": "c = -(-a // b)",
+    "explain": "Floor division of the negative rounds toward −∞, so negating twice gives the ceiling. Floats can lose precision for big numbers."
+  },
+  {
+    "id": "python-028",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "math"
+    ],
+    "front": "What does this print?",
+    "back": "120 10",
+    "code": "import math\nprint(math.factorial(5), math.comb(5, 2))",
+    "explain": "`factorial(n)` = n!, `comb(n, k)` = number of ways to choose k of n (5C2 = 10)."
+  },
+  {
+    "id": "python-029",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "[(1, 2), (1, 3), (2, 3)]",
+    "code": "from itertools import combinations\nprint(list(combinations([1, 2, 3], 2)))",
+    "explain": "`combinations(a, 2)` gives every unordered pair once, in order — use it for \"every pair of …\" problems."
+  },
+  {
+    "id": "python-030",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python"
+    ],
+    "front": "What does this print?",
+    "back": "True False",
+    "code": "a = [3, -1, 2]\nprint(any(x < 0 for x in a), all(x > 0 for x in a))",
+    "explain": "`any` is True if at least one item passes; `all` only if every item passes."
+  },
+  {
+    "id": "python-031",
+    "deck": "python",
+    "type": "output",
+    "tags": [
+      "python",
+      "ds"
+    ],
+    "front": "What does this print?",
+    "back": "{'a': ['apple', 'avocado'], 'b': ['banana']}",
+    "code": "from collections import defaultdict\ng = defaultdict(list)\nfor w in [\"apple\", \"avocado\", \"banana\"]:\n    g[w[0]].append(w)\nprint(dict(g))",
+    "explain": "`defaultdict(list)` creates an empty list the first time a missing key is used, so you can `append` directly."
+  },
+  {
+    "id": "python-032",
+    "deck": "python",
+    "type": "basic",
+    "tags": [
+      "python",
+      "math"
+    ],
+    "front": "Do you need to worry about integer overflow when computing `20!` or values near `10^18` in Python?",
+    "back": "No. Python integers have unlimited size, so `20!` or `10^18` are exact.",
+    "explain": "Python ints grow as needed. Problems written for C (\"use long long\") are just normal ints in Python — floats are the only thing that lose precision."
+  }
+]

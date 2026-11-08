@@ -1,0 +1,51 @@
+{
+  "file": "S04_digit_sum_power_sum.py",
+  "summary": "For every i from 1 to N we take its digit sum and raise it to the number of digits, then add all those values (T2 — digits, inside a T1 loop). N is small enough that the direct loop is fast.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read N",
+      "text": "One whole number."
+    },
+    {
+      "lines": [
+        3,
+        4
+      ],
+      "title": "Loop over 1..N",
+      "text": "`range(1, N + 1)` includes N itself."
+    },
+    {
+      "lines": [
+        5,
+        7
+      ],
+      "title": "Digit sum and digit count",
+      "text": "`str(i)` gives the digits as text. Summing `int(d)` gives the digit sum `S`, and `len` gives the digit count `D`."
+    },
+    {
+      "lines": [
+        8,
+        8
+      ],
+      "title": "Raise and add",
+      "text": "`**` is the power operator. `^` in Python is XOR, which gives a completely different number."
+    },
+    {
+      "lines": [
+        10,
+        10
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Total sum: 434`. Python handles the 13-digit total for N = 100,000."
+    }
+  ],
+  "complexity": "Time O(N · digits) with N ≤ 100,000 → about 600,000 digit operations (~0.13 s).",
+  "pitfalls": [
+    "Using `^` instead of `**`.",
+    "`range(1, N)` misses N."
+  ]
+}

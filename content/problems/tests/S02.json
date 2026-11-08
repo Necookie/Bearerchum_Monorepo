@@ -1,0 +1,15 @@
+{
+  "samples": [
+    ["65536"],
+    ["99"],
+    ["123"]
+  ],
+  "hidden": [
+    {"name": "n = 0", "input": ["0"]},
+    {"name": "already a single digit", "input": ["9"]},
+    {"name": "n = 10", "input": ["10"]},
+    {"name": "largest n = 2000000000", "input": ["2000000000"]},
+    {"name": "n = 1999999999 (two rounds of summing)", "input": ["1999999999"]},
+    {"name": "multiple of 9", "input": ["18"]}
+  ]
+}

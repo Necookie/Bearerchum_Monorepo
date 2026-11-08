@@ -1,0 +1,76 @@
+{
+  "file": "L07_stable_sequence_reduction.py",
+  "summary": "We repeat left-to-right passes: in each pass, a neighbouring pair whose difference is at most T is replaced by its average. When a whole pass merges nothing, the sequence is stable (T10 — simulate until stable).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        3
+      ],
+      "title": "Read N and T from one line",
+      "text": "Both values share one line, so we split it. T can be a decimal like `2.0`, so it must be `float` — `int('2.0')` crashes."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Read the sequence as floats",
+      "text": "Averages produce decimals, and we print with 2 decimals at the end, so we store floats from the start. (N isn't really needed — the list knows its own length.)"
+    },
+    {
+      "lines": [
+        6,
+        9
+      ],
+      "title": "Start a new pass",
+      "text": "Each loop of `while True` is one full pass. `new_seq` collects the result, `merged` remembers whether anything changed, and `i` walks the old sequence."
+    },
+    {
+      "lines": [
+        10,
+        11
+      ],
+      "title": "Can this element merge with the next?",
+      "text": "We use a `while` with our own index because a merge must skip TWO elements, which a `for` loop can't do. `i + 1 < len(seq)` is checked first so the last element never looks past the end."
+    },
+    {
+      "lines": [
+        12,
+        14
+      ],
+      "title": "Merge the pair",
+      "text": "Append the average, jump over both elements with `i += 2`, and note that a merge happened. We compare against the original `seq`, never the new average — the statement continues with the rest of the original numbers."
+    },
+    {
+      "lines": [
+        15,
+        17
+      ],
+      "title": "No merge: keep the element",
+      "text": "Copy the element unchanged and move one step."
+    },
+    {
+      "lines": [
+        18,
+        20
+      ],
+      "title": "Finish the pass",
+      "text": "The new list becomes the sequence for the next pass. If nothing merged in this pass, nothing will ever merge, so we stop."
+    },
+    {
+      "lines": [
+        22,
+        22
+      ],
+      "title": "Print with 2 decimals",
+      "text": "`f\"{x:.2f}\"` turns `10.5` into `10.50`; `\" \".join` puts single spaces between them."
+    }
+  ],
+  "complexity": "Each pass is O(N) and each merging pass shrinks the list, so at most N passes: O(N²), about 10⁴ steps for N = 100.",
+  "pitfalls": [
+    "Reading T with `int`.",
+    "Comparing a fresh average with the next number in the same pass.",
+    "Forgetting the 2-decimal format."
+  ]
+}

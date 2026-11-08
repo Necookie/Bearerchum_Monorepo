@@ -1,0 +1,51 @@
+{
+  "file": "L06_pascals_pyramid.py",
+  "summary": "Each row of Pascal's triangle comes from the row above: a 1, then the sums of neighbouring pairs, then a 1. We keep only the current row and rebuild it N times (T13 — building a table from smaller answers).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read N",
+      "text": "Copy the prompt exactly, including the parentheses: `Enter the number of rows (N): `."
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "title": "Print the header",
+      "text": "The header comes before the rows and includes N: `Pascal's Triangle with 5 rows:`. The f-string's double quotes let the apostrophe sit inside safely."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Start with the top row",
+      "text": "Row 1 is just `[1]`."
+    },
+    {
+      "lines": [
+        5,
+        6
+      ],
+      "title": "Print N rows",
+      "text": "`print(*row)` prints the numbers separated by spaces, with no brackets or commas."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Build the next row",
+      "text": "`row[i] + row[i + 1]` adds each pair of neighbours; `range(len(row) - 1)` stops before `i + 1` runs off the end. Wrapping with `[1] + … + [1]` adds the edges. From `[1]` the middle part is empty, giving `[1, 1]`."
+    }
+  ],
+  "complexity": "Time O(N²) with N ≤ 30 → under 500 additions.",
+  "pitfalls": [
+    "`print(row)` shows brackets and commas.",
+    "Building the next row in place while still reading the old one."
+  ]
+}

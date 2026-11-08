@@ -1,0 +1,16 @@
+{
+  "samples": [
+    ["i love programming in c"],
+    ["extraordinary day"],
+    ["hello"]
+  ],
+  "hidden": [
+    {"name": "single one-letter word", "input": ["a"]},
+    {"name": "longest word is the first word", "input": ["watermelon is good"]},
+    {"name": "longest word is the last word", "input": ["i ate a watermelon"]},
+    {"name": "several words tie for the longest", "input": ["cat dog bat"]},
+    {"name": "all one-letter words", "input": ["a b c d e f g"]},
+    {"name": "one 200-letter word", "input": ["zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"]},
+    {"name": "200 characters with the longest word in the middle", "input": ["ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd"]}
+  ]
+}

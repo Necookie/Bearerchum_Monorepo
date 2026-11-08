@@ -1,0 +1,26 @@
+{
+  "file": "P04_calculator_without_zeros.py",
+  "summary": "The broken calculator just skips every `0` digit, so we treat the number as text and delete the zeros (T2 — digit manipulation). String tools make digit problems one-liners.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Keep the number as a string",
+      "text": "No `int()` here — we only need the digits, and `str.replace` works on text. `.strip()` removes stray spaces so they don't show up in the output."
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "title": "Remove every zero and print",
+      "text": "`n.replace('0', '')` returns a copy with all `'0'` characters removed: `'40507'` → `'457'`. Doing this with `% 10` and `// 10` math works too, but it is longer and easy to rebuild backwards."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 10 digits — instant.",
+  "pitfalls": [
+    "Rebuilding the number with `% 10` math and getting the digits reversed."
+  ]
+}

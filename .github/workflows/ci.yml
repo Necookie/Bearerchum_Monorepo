@@ -1,0 +1,30 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Build + validate content (runs every reference solution)
+        run: python tools/build_content.py --strict
+      - name: API imports
+        run: |
+          pip install -r apps/api/requirements.txt
+          python -c "import sys; sys.path.insert(0, 'apps/api'); import app.main"
+      - name: Web typecheck + build
+        working-directory: apps/web
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build

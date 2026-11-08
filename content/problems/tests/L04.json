@@ -1,0 +1,16 @@
+{
+  "samples": [
+    ["234"],
+    ["12"],
+    ["10"]
+  ],
+  "hidden": [
+    {"name": "N is already one digit", "input": ["7"]},
+    {"name": "smallest N = 1", "input": ["1"]},
+    {"name": "repeated digit only: no pairs, next term is 0", "input": ["55"]},
+    {"name": "largest N = 1000000000 (digits 0 and 1)", "input": ["1000000000"]},
+    {"name": "all nines: one distinct digit", "input": ["999999999"]},
+    {"name": "all nine nonzero digits", "input": ["123456789"]},
+    {"name": "two digits, several steps", "input": ["98"]}
+  ]
+}

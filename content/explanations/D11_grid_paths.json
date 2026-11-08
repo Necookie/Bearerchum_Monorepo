@@ -1,0 +1,67 @@
+{
+  "file": "drills/D11_grid_paths.py",
+  "summary": "`ways[i][j]` = the number of paths from the start to (i, j). Since we can only move right or down, every path into a cell comes from the cell above or the cell to the left, so we add those two (T13 — DP on a grid).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        3
+      ],
+      "title": "Read the grid",
+      "text": "`R C` on one line, then the program prints `Enter the grid:` and reads R rows as strings — we only need to look at each cell."
+    },
+    {
+      "lines": [
+        5,
+        6
+      ],
+      "title": "The DP table",
+      "text": "One number per cell, all 0 to start. Build it with a comprehension so every row is its own list."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Fill row by row",
+      "text": "Going top to bottom and left to right means the cell above and the cell to the left are always finished before we need them."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Blocked cell",
+      "text": "No path can go through `#`, so it stays 0. This is checked first, so a blocked start or end correctly gives 0 paths."
+    },
+    {
+      "lines": [
+        11,
+        12
+      ],
+      "title": "The start",
+      "text": "There is exactly one way to be at the start: stand still."
+    },
+    {
+      "lines": [
+        13,
+        16
+      ],
+      "title": "Add paths from above and from the left",
+      "text": "The `if i > 0` / `if j > 0` guards matter: without them, `ways[-1][j]` on the top row would silently read the BOTTOM row."
+    },
+    {
+      "lines": [
+        18,
+        18
+      ],
+      "title": "Print the answer",
+      "text": "The bottom-right cell holds the total. Answers can be huge, which Python ints handle."
+    }
+  ],
+  "complexity": "Time O(R·C) with 100×100 → 10,000 cells.",
+  "pitfalls": [
+    "No edge guards → `ways[-1]` wraps around to the last row.",
+    "Not checking a blocked start/end."
+  ]
+}

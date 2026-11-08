@@ -1,0 +1,65 @@
+/* Bearerchum design tokens.
+   Own palette (espresso + honey on cream). Layout language: pill buttons, pastel-mesh hero
+   atmospherics, tight display tracking, one filled primary per view. */
+:root {
+  /* brand */
+  --primary: #2f1c14;          /* espresso — filled CTAs, footer band, wordmark */
+  --primary-press: #4a2c1f;
+  --primary-tint: #5c3a29;
+  --honey: #e9a23b;            /* sparing accent: streak flame, highlights */
+  --honey-soft: #fff1d6;
+  --link: #1764a8;
+  --link-hover: #2b5fc4;
+
+  /* surfaces */
+  --canvas: #ffffff;
+  --cream: #f6efe6;
+  --latte: #f1e6da;            /* secondary pill + soft bands */
+  --sand: #fbf7f1;
+  --surface-primary: var(--primary);
+  --hairline: #e9e2d9;
+  --hairline-strong: #d8cdbf;
+
+  /* text */
+  --ink: #1d1d1d;
+  --ink-mute: #6b645d;
+  --on-primary: #ffffff;
+  --on-primary-mute: #d9c6b8;
+
+  /* semantic */
+  --success: #0f7a55;
+  --success-soft: #e3f4ec;
+  --error: #c8431d;
+  --error-soft: #fbe9e3;
+  --warn: #a66a00;
+  --warn-soft: #fff4dc;
+  --easy: #0f7a55;
+  --medium: #a66a00;
+  --hard: #b4232c;
+
+  /* type */
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+
+  /* radius */
+  --r-xs: 2px; --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px; --r-xxl: 48px; --r-pill: 90px;
+
+  /* spacing */
+  --s-xs: 4px; --s-sm: 8px; --s-md: 12px; --s-lg: 16px; --s-xl: 20px; --s-xxl: 24px; --s-huge: 28px;
+
+  /* elevation */
+  --e1: rgba(0, 0, 0, .10) 0 5px 20px 0;
+  --e2: rgba(0, 0, 0, .10) 0 0 32px 0;
+  --e3: rgba(0, 0, 0, .20) 0 1px 10px 0;
+  --focus: 0 0 0 3px rgba(233, 162, 59, .45);
+
+  /* pastel mesh */
+  --mesh:
+    radial-gradient(42% 60% at 12% 18%, #ffe3cf 0%, transparent 70%),
+    radial-gradient(38% 55% at 88% 12%, #e6e0ff 0%, transparent 70%),
+    radial-gradient(45% 60% at 72% 92%, #dcefdf 0%, transparent 70%),
+    radial-gradient(35% 45% at 30% 85%, #fff0c9 0%, transparent 70%),
+    var(--cream);
+
+  --container: 1240px;
+}

@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+**/__pycache__
+**/*.pyc
+apps/web/public/content
+apps/api/data
+reviewer/build/reviewer.html
+.git
+.github
+.env*
+*.db

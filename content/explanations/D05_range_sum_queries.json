@@ -1,0 +1,43 @@
+{
+  "file": "drills/D05_range_sum_queries.py",
+  "summary": "Precompute prefix sums once, so the sum of any range L..R is one subtraction: `prefix[R] - prefix[L-1]` (T12 — prefix sums). That turns up to 10⁵ queries from far too slow into instant.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        3
+      ],
+      "title": "Read the numbers and Q",
+      "text": "N, the numbers on one line, then Q — in the same order as the prompts."
+    },
+    {
+      "lines": [
+        5,
+        8
+      ],
+      "title": "Build the prefix sums",
+      "text": "`prefix[i]` is the sum of the first i numbers, with `prefix[0] = 0`. That extra 0 at the front is what lets a query starting at L = 1 work: `prefix[R] - prefix[0]`."
+    },
+    {
+      "lines": [
+        10,
+        10
+      ],
+      "title": "Print the queries header",
+      "text": "The program prints `Enter queries:` on its own line before reading the query lines, matching the sample."
+    },
+    {
+      "lines": [
+        11,
+        13
+      ],
+      "title": "Answer each query in O(1)",
+      "text": "L and R are 1-based and inclusive, so the sum of positions L..R is everything up to R minus everything before L: `prefix[R] - prefix[L - 1]`. Looping over the range for each query would be up to 10⁵ × 10⁵ = 10¹⁰ steps."
+    }
+  ],
+  "complexity": "Time O(N + Q) with N, Q ≤ 10⁵ → about 200,000 steps.",
+  "pitfalls": [
+    "Summing `a[L-1:R]` for every query — too slow for big inputs.",
+    "Off-by-one: using `prefix[L]` instead of `prefix[L - 1]`."
+  ]
+}

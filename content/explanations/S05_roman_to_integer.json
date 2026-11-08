@@ -1,0 +1,59 @@
+{
+  "file": "S05_roman_to_integer.py",
+  "summary": "Look up each symbol's value in a dict. If a symbol is smaller than the one after it (like the I in IV), subtract it; otherwise add it. This one look-ahead rule covers all six subtractive pairs (T3 — string processing with a dict).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the numeral",
+      "text": "`.strip()` removes stray spaces and `.upper()` accepts lowercase input, so every character is a key in the dict."
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "title": "Symbol values",
+      "text": "A dict maps each symbol to its value in O(1)."
+    },
+    {
+      "lines": [
+        4,
+        6
+      ],
+      "title": "Walk through the symbols",
+      "text": "We loop by index because we need to peek at the NEXT symbol."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Smaller before bigger → subtract",
+      "text": "`i + 1 < len(s)` is checked first: the last symbol has no next one, and `s[i + 1]` would crash. In `IX`, I (1) is before X (10), so we subtract 1 and later add 10 → 9."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Otherwise add",
+      "text": "Normal case: the symbol's value is added."
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Integer value: 1994`."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 15 symbols — instant.",
+  "pitfalls": [
+    "Reading `s[i + 1]` without checking it exists.",
+    "Hard-coding the pairs with `replace` and missing one."
+  ]
+}

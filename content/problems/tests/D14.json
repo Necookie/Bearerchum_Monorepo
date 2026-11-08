@@ -1,0 +1,18 @@
+{
+  "samples": [
+    ["3 3", "1 2 3", "4 5 6", "7 8 9"],
+    ["3 4", "1 2 3 4", "5 6 7 8", "9 10 11 12"],
+    ["3 1", "1", "2", "3"]
+  ],
+  "hidden": [
+    {"name": "1x1 matrix", "input": ["1 1", "5"]},
+    {"name": "single row", "input": ["1 4", "1 2 3 4"]},
+    {"name": "2x2 matrix", "input": ["2 2", "1 2", "3 4"]},
+    {"name": "tall matrix 4x3", "input": ["4 3", "1 2 3", "4 5 6", "7 8 9", "10 11 12"]},
+    {"name": "wide matrix 2x5", "input": ["2 5", "1 2 3 4 5", "6 7 8 9 10"]}
+  ],
+  "generated": [
+    {"name": "100x100 matrix", "gen": "lines = ['100 100'] + [' '.join(str(r * 100 + c) for c in range(100)) for r in range(100)]"},
+    {"name": "100x37 matrix", "gen": "lines = ['100 37'] + [' '.join(str(random.randint(0, 99)) for _ in range(37)) for _ in range(100)]"}
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "file": "P07_warmer_than_yesterday.py",
+  "summary": "Compare every day with the day before it and count the strictly warmer ones (T5 — neighbour comparison). The first day has no yesterday, so the loop starts at day 2.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read N and the temperatures",
+      "text": "N is on its own line; all temperatures come on ONE line, so we `split()` it and turn every piece into an `int`. Without `int`, `'9' > '10'` would be compared as text and give the wrong answer."
+    },
+    {
+      "lines": [
+        4,
+        7
+      ],
+      "title": "Count the warmer days",
+      "text": "The loop starts at `i = 1` so `temps[i - 1]` is always a real day. Starting at 0 would compare day 1 with `temps[-1]` — the LAST day. We use `>` because an equal temperature is not warmer. If N = 1 the loop simply never runs and the answer is 0."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Short version and output",
+      "text": "The comment shows the same count with `zip(temps, temps[1:])`, which pairs each day with the next. Then print `Warmer days: 3`."
+    }
+  ],
+  "complexity": "Time O(N) with N ≤ 50 — instant.",
+  "pitfalls": [
+    "Starting the loop at 0 → compares with the last day.",
+    "Using `>=` — equal days are not warmer."
+  ]
+}

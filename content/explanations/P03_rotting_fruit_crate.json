@@ -1,0 +1,84 @@
+{
+  "file": "P03_rotting_fruit_crate.py",
+  "summary": "We simulate the crate minute by minute: find every fresh fruit touching a rotten one, then rot them all at once, and stop when a minute changes nothing (T10 — simulate until stable, with T8 grid neighbours). The key rule is \"mark first, change later\" so rot spreads only one step per minute.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the grid size from one line",
+      "text": "`R` and `C` are typed on the SAME line (`3 3`), so we `split()` it and convert both parts with `map(int, …)`. Two separate `input()` calls would wait for a line that never comes."
+    },
+    {
+      "lines": [
+        2,
+        2
+      ],
+      "title": "Print the crate header",
+      "text": "The sample shows the program printing `Enter the crate:` on its own line before the rows. Without this line the transcript does not match, even with the right answer."
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "title": "Read the rows as lists of characters",
+      "text": "Each row like `FFR` becomes `['F', 'F', 'R']`. We need lists because we change cells later, and Python strings cannot be changed in place. The rows have no prompt, so it is a plain `input()`."
+    },
+    {
+      "lines": [
+        5,
+        7
+      ],
+      "title": "Start a new minute",
+      "text": "`minutes` counts the minutes in which something new rotted. Each pass of `while True` is one minute. `to_rot` only **collects** the fruits that will rot — if we changed the grid while scanning, a fruit that just rotted would spread again in the same minute."
+    },
+    {
+      "lines": [
+        8,
+        10
+      ],
+      "title": "Look at every fresh fruit",
+      "text": "Two nested loops visit every cell; only a fresh `'F'` can become rotten, so the rest are skipped."
+    },
+    {
+      "lines": [
+        11,
+        15
+      ],
+      "title": "Does it touch a rotten fruit?",
+      "text": "The four `(dr, dc)` pairs mean up, down, left and right. The bounds check `0 <= nr < R and 0 <= nc < C` comes before `grid[nr][nc]`: without it, `nr = -1` reads the last row in Python. One rotten neighbour is enough, so we mark the fruit and `break` to avoid adding it twice."
+    },
+    {
+      "lines": [
+        16,
+        17
+      ],
+      "title": "Nothing new? Stop",
+      "text": "If no fruit was marked, the crate is stable and this minute is **not** counted. This also handles a crate with no rotten fruit at all (answer 0)."
+    },
+    {
+      "lines": [
+        18,
+        20
+      ],
+      "title": "Rot them all at once",
+      "text": "Now every marked fruit turns `'R'` together, and we count the minute. Applying all changes after the scan is what makes them simultaneous."
+    },
+    {
+      "lines": [
+        22,
+        22
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Minutes: 4`."
+    }
+  ],
+  "complexity": "At most R·C minutes, each scanning R·C cells × 4 neighbours; with a 10×10 grid that is ≤ 100 × 100 × 4 = 40,000 checks.",
+  "pitfalls": [
+    "Changing cells during the scan → rot jumps several cells in one minute → answer too small.",
+    "No bounds check → `grid[-1]` silently reads the last row.",
+    "Forgetting `print(\"Enter the crate:\")`."
+  ]
+}

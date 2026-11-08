@@ -1,0 +1,417 @@
+[
+  {
+    "id": "problems-001",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T6",
+      "traps"
+    ],
+    "front": "**Fix One Street Lamp**: why must the lamp row be read as a string, not with `int(input())`?",
+    "choices": [
+      "`int()` cannot read 0 and 1",
+      "Strings are faster to loop over",
+      "`int()` deletes leading zeros, so lamps at the start vanish",
+      "The row may be longer than an int can hold"
+    ],
+    "answer": 2,
+    "explain": "`int(\"0111\")` is `111` — the broken lamp at the left end disappears, and the hidden test `0111 → 4` fails.",
+    "refs": [
+      "P02"
+    ]
+  },
+  {
+    "id": "problems-002",
+    "deck": "problems",
+    "type": "basic",
+    "tags": [
+      "T6"
+    ],
+    "front": "**Fix One Street Lamp**: the input is `0000`. What is the answer, and what formula gives it for a repaired lamp?",
+    "back": "**1**. For each `0`: left run of `1`s + **1** + right run of `1`s; keep the maximum.",
+    "explain": "Every lamp may be broken (a constraint bullet = hidden test). Forgetting the `+ 1` for the repaired lamp itself is the classic slip.",
+    "refs": [
+      "P02"
+    ]
+  },
+  {
+    "id": "problems-003",
+    "deck": "problems",
+    "type": "basic",
+    "tags": [
+      "T10",
+      "T8"
+    ],
+    "front": "**Rotting Fruit Crate**: why must you FIND all new rotten cells before changing any of them?",
+    "back": "If you change cells during the scan, a fruit that rotted this minute spreads again in the same minute, so the minute count comes out too small.",
+    "explain": "\"At the same time\" means a minute's changes are based on the old grid. Simulate-until-stable: find, then apply, then count the minute.",
+    "refs": [
+      "P03"
+    ]
+  },
+  {
+    "id": "problems-004",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T8",
+      "traps"
+    ],
+    "front": "**Rotting Fruit Crate**: you check `grid[r-1][c]` for the top row without a bounds check. What happens?",
+    "choices": [
+      "Nothing — it is safe",
+      "It reads an empty row",
+      "It silently reads the last row — wrong answer",
+      "IndexError"
+    ],
+    "answer": 2,
+    "explain": "`grid[-1]` is the LAST row, so rot can \"wrap\" from top to bottom. Always test `0 <= nr < R and 0 <= nc < C` first.",
+    "refs": [
+      "P03"
+    ]
+  },
+  {
+    "id": "problems-005",
+    "deck": "problems",
+    "type": "output",
+    "tags": [
+      "T2"
+    ],
+    "front": "**Calculator Without Zeros** in one line. What does this print?",
+    "back": "Display: 1",
+    "code": "n = \"1000000000\"\nprint(f\"Display: {n.replace('0', '')}\")",
+    "explain": "Anything about digits → treat the number as a string. `replace` removes every `0`; no `% 10` arithmetic needed.",
+    "refs": [
+      "P04"
+    ]
+  },
+  {
+    "id": "problems-006",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T1",
+      "traps"
+    ],
+    "front": "**Round to the Nearest Ten**: which hidden input catches a solution that uses `round(n, -1)`?",
+    "choices": [
+      "N = 100",
+      "N = 23",
+      "N = 5",
+      "N = 47"
+    ],
+    "answer": 2,
+    "explain": "`round(5, -1)` is `0` (half-to-even) but the rule says 5 rounds up to 10. Use `(n + 5) // 10 * 10`.",
+    "refs": [
+      "P06"
+    ]
+  },
+  {
+    "id": "problems-007",
+    "deck": "problems",
+    "type": "output",
+    "tags": [
+      "T1",
+      "math"
+    ],
+    "front": "**Round to the Nearest Ten** with integer math. What does this print?",
+    "back": "0\n10\n1000",
+    "code": "for n in [4, 5, 999]:\n    print((n + 5) // 10 * 10)",
+    "explain": "`(n + 5) // 10 * 10` rounds half up — and 999 becomes 1000 (the extra digit the constraints warn about).",
+    "refs": [
+      "P06"
+    ]
+  },
+  {
+    "id": "problems-008",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T5",
+      "traps"
+    ],
+    "front": "**Warmer Than Yesterday**: which loop is correct for counting days warmer than the previous day?",
+    "choices": [
+      "`for i in range(1, n): if t[i] >= t[i-1]`",
+      "`for i in range(n - 1): if t[i] > t[i-1]`",
+      "`for i in range(n): if t[i] > t[i-1]`",
+      "`for i in range(1, n): if t[i] > t[i-1]`"
+    ],
+    "answer": 3,
+    "explain": "Day 0 has no previous day. Starting at 0 compares with `t[-1]` (the last day). And equal temperatures are not warmer: use `>`.",
+    "refs": [
+      "P07"
+    ]
+  },
+  {
+    "id": "problems-009",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T7"
+    ],
+    "front": "**Library Late Fines**: ₱5 per day beyond day 7, at most ₱50 **per book**. Which expression is the fine for one book kept `d` days?",
+    "choices": [
+      "`min(50, max(0, d - 7) * 5)`",
+      "`min(50, (d - 7) * 5)`",
+      "`max(50, min(0, d - 7) * 5)`",
+      "`(d - 7) * 5`"
+    ],
+    "answer": 0,
+    "explain": "`max(0, …)` stops on-time books from going negative; `min(50, …)` caps each book. Capping the total instead is a classic mistake.",
+    "refs": [
+      "P08"
+    ]
+  },
+  {
+    "id": "problems-010",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T1"
+    ],
+    "front": "**Plus-Minus Range Sum** (A − (A+1) + (A+2) − … up to B): what decides whether a term is added or subtracted?",
+    "choices": [
+      "whether B is even",
+      "its position from A (1st +, 2nd −, …)",
+      "whether the number is odd",
+      "whether it is bigger than B/2"
+    ],
+    "answer": 1,
+    "explain": "The first term is always added, whatever its parity. Keep `sign = 1` and flip it every step; `x % 2` breaks when A is even.",
+    "refs": [
+      "P09"
+    ]
+  },
+  {
+    "id": "problems-011",
+    "deck": "problems",
+    "type": "output",
+    "tags": [
+      "T7"
+    ],
+    "front": "**Tiered Water Bill** (first 10 m³ at ₱15, the rest at ₱25). What does this print?",
+    "back": "0\n150\n175",
+    "code": "for u in [0, 10, 11]:\n    print(min(u, 10) * 15 + max(u - 10, 0) * 25)",
+    "explain": "Split into the part inside the tier `min(u, 10)` and above it `max(u - 10, 0)`. The `max` keeps the extra from going negative when u < 10.",
+    "refs": [
+      "P10"
+    ]
+  },
+  {
+    "id": "problems-012",
+    "deck": "problems",
+    "type": "basic",
+    "tags": [
+      "T3",
+      "T5"
+    ],
+    "front": "**Alternating Character Pattern**: the input contains no letters at all (e.g. `123 !!`). What is printed, and what must you do to each letter before checking vowels?",
+    "back": "`Result: Alternating`. Filter to letters only, then `.lower()` each before `ch in \"aeiou\"`.",
+    "explain": "With fewer than two letters there is no violating pair, so it alternates. The vowel test must be case-insensitive.",
+    "refs": [
+      "L01"
+    ]
+  },
+  {
+    "id": "problems-013",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T11",
+      "T2"
+    ],
+    "front": "**Palindromic Prime Counter** with `L = 1`. Which mistake does this hidden test catch?",
+    "choices": [
+      "Reading L and R with two `input()`s",
+      "Treating 1 as prime",
+      "Using a sieve",
+      "`range(L, R)` missing R"
+    ],
+    "answer": 1,
+    "explain": "1 is not prime — set `is_p[0] = is_p[1] = False` in the sieve. (Also: loop `range(L, R + 1)` and read L R from one line.)",
+    "refs": [
+      "L03"
+    ]
+  },
+  {
+    "id": "problems-014",
+    "deck": "problems",
+    "type": "output",
+    "tags": [
+      "T14"
+    ],
+    "front": "**Cyclic Array Shift**: shift RIGHT by K = 7. What does this print?",
+    "back": "Shifted array: 4 5 1 2 3",
+    "code": "a = [1, 2, 3, 4, 5]\nn = len(a)\nk = 7 % n\nprint(\"Shifted array:\", *(a[n - k:] + a[:n - k]))",
+    "explain": "`k %= n` (7 % 5 = 2) handles huge K, then `a[n-k:] + a[:n-k]` moves the last k items to the front.",
+    "refs": [
+      "L05"
+    ]
+  },
+  {
+    "id": "problems-015",
+    "deck": "problems",
+    "type": "output",
+    "tags": [
+      "T13"
+    ],
+    "front": "**Pascal's Triangle**: build the next row. What does this print?",
+    "back": "1 4 6 4 1",
+    "code": "row = [1, 3, 3, 1]\nrow = [1] + [row[k] + row[k + 1] for k in range(len(row) - 1)] + [1]\nprint(*row)",
+    "explain": "Each inner value is the sum of the two above it; the ends are always 1. Print rows with `print(*row)`, not `print(row)`.",
+    "refs": [
+      "L06"
+    ]
+  },
+  {
+    "id": "problems-016",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T10",
+      "traps"
+    ],
+    "front": "**Stable Sequence Reduction**: the first line is `N T` where T can be `0.5`. What is the main input trap?",
+    "choices": [
+      "T must be read as a string",
+      "T must be read with `float`, not `int`",
+      "T is always an integer",
+      "N and T are on separate lines"
+    ],
+    "answer": 1,
+    "explain": "Use `int(p[0])` and `float(p[1])`; `map(int, …)` or `int(\"0.5\")` raises `ValueError`. Output each value with `:.2f`.",
+    "refs": [
+      "L07"
+    ]
+  },
+  {
+    "id": "problems-017",
+    "deck": "problems",
+    "type": "code",
+    "tags": [
+      "T13"
+    ],
+    "front": "**Maximal Square of Ones**: write the DP update for cell `(i, j)` when `mat[i][j] == 1` and `i, j > 0`.",
+    "back": "dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])",
+    "explain": "`dp[i][j]` = side of the biggest all-1 square whose bottom-right corner is (i, j). It is limited by the smallest of its three neighbours. Row 0 / column 0 cells are just `mat[i][j]` — no `dp[-1]`!",
+    "refs": [
+      "L08"
+    ]
+  },
+  {
+    "id": "problems-018",
+    "deck": "problems",
+    "type": "output",
+    "tags": [
+      "T2"
+    ],
+    "front": "**Digital Root**: what does this print?",
+    "back": "Digital Root: 2",
+    "code": "n = 9875\nwhile n >= 10:\n    n = sum(int(d) for d in str(n))\nprint(f\"Digital Root: {n}\")",
+    "explain": "9+8+7+5 = 29 → 2+9 = 11 → 1+1 = 2. Summing only once (29) is the classic mistake — loop `while n >= 10`.",
+    "refs": [
+      "S02"
+    ]
+  },
+  {
+    "id": "problems-019",
+    "deck": "problems",
+    "type": "output",
+    "tags": [
+      "T4"
+    ],
+    "front": "**Positional Cipher**: shift the letter BACK by a large amount. What does this print?",
+    "back": "y",
+    "code": "ch = 'b'\nshift = 29\nprint(chr((ord(ch) - ord('a') - shift) % 26 + ord('a')))",
+    "explain": "`% 26` handles any shift size, and Python's `%` is never negative: (1 − 29) % 26 = 24 → `y`.",
+    "refs": [
+      "S03"
+    ]
+  },
+  {
+    "id": "problems-020",
+    "deck": "problems",
+    "type": "code",
+    "tags": [
+      "T3",
+      "ds"
+    ],
+    "front": "**Roman to Integer**: given the dict `val` and the string `s`, write the loop that computes `total` using the look-ahead rule.",
+    "back": "total = 0\nfor i in range(len(s)):\n    v = val[s[i]]\n    if i + 1 < len(s) and v < val[s[i + 1]]:\n        total -= v\n    else:\n        total += v",
+    "explain": "A symbol smaller than the next one is subtracted (`IV`, `CM`); otherwise added. One rule covers all six subtractive pairs.",
+    "refs": [
+      "S05"
+    ]
+  },
+  {
+    "id": "problems-021",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T12",
+      "ds"
+    ],
+    "front": "**Smallest Missing Subarray Sum**: why is sorting the array first wrong?",
+    "choices": [
+      "Sorting removes duplicates",
+      "It is fine — sums don't depend on order",
+      "Sorting is too slow for N = 2000",
+      "It changes which contiguous subarrays exist"
+    ],
+    "answer": 3,
+    "explain": "Subarrays are contiguous, so order matters. Sorting changes which subarrays exist (that would be the different **subset** problem). Use the O(N²) running-sum double loop and store sums in a set.",
+    "refs": [
+      "S06"
+    ]
+  },
+  {
+    "id": "problems-022",
+    "deck": "problems",
+    "type": "mcq",
+    "tags": [
+      "T14"
+    ],
+    "front": "**ZigZag Conversion**: which input crashes a bouncing-row solution that has no special case?",
+    "choices": [
+      "numRows = 2",
+      "an odd-length string",
+      "numRows = 1",
+      "a string with spaces"
+    ],
+    "answer": 2,
+    "explain": "With one row, `step` flips at row 0 and the last row at once, so the index runs past the end. If `rows == 1` (or rows ≥ length), print the string unchanged.",
+    "refs": [
+      "S07"
+    ]
+  },
+  {
+    "id": "problems-023",
+    "deck": "problems",
+    "type": "basic",
+    "tags": [
+      "T15",
+      "T8"
+    ],
+    "front": "**Largest Symmetric Subgrid**: in which order do you try block sizes, and how do you test \"same after 180° rotation\"?",
+    "back": "From **largest to smallest** — the first symmetric block found is the answer. 180° rotation = reverse the row order **and** reverse each row; compare with the original block.",
+    "explain": "Searching from big to small lets you stop at the first hit. A 1×1 block is always symmetric, so the answer is at least 1.",
+    "refs": [
+      "S08"
+    ]
+  },
+  {
+    "id": "problems-024",
+    "deck": "problems",
+    "type": "basic",
+    "tags": [
+      "T2"
+    ],
+    "front": "**Digit Product Sum Series**: name the two easy-to-miss details.",
+    "back": "(1) Add **N itself** to the total. (2) Use **distinct** digits when forming pairs.",
+    "explain": "e.g. `55` has one distinct digit → no pairs → next term 0. Use `itertools.combinations(sorted(set(digits)), 2)`.",
+    "refs": [
+      "L04"
+    ]
+  }
+]

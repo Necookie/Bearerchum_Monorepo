@@ -1,0 +1,20 @@
+{
+  "samples": [
+    ["4 5", "1 0 1 1 1", "1 1 1 1 1", "1 1 1 1 1", "1 0 1 1 0"],
+    ["3 3", "0 0 0", "0 0 0", "0 0 0"],
+    ["1 5", "0 1 1 0 1"]
+  ],
+  "hidden": [
+    {"name": "1x1 matrix with a 0", "input": ["1 1", "0"]},
+    {"name": "1x1 matrix with a 1", "input": ["1 1", "1"]},
+    {"name": "single column of ones", "input": ["4 1", "1", "1", "1", "1"]},
+    {"name": "all ones in a 3x5 matrix", "input": ["3 5", "1 1 1 1 1", "1 1 1 1 1", "1 1 1 1 1"]},
+    {"name": "the example matrix from the statement (answer 2)", "input": ["4 5", "1 0 1 0 0", "1 0 1 1 1", "1 1 1 1 1", "1 0 0 1 0"]},
+    {"name": "square in the middle, not touching any edge", "input": ["5 5", "0 0 0 0 0", "0 1 1 1 0", "0 1 1 1 0", "0 1 1 1 0", "0 0 0 0 0"]},
+    {"name": "a single 0 in the centre breaks the big square", "input": ["3 3", "1 1 1", "1 0 1", "1 1 1"]}
+  ],
+  "generated": [
+    {"name": "N = 500 rows x 290 columns, about 97% ones", "gen": "n, m = 500, 290\nlines = [f'{n} {m}'] + [' '.join('1' if random.random() < 0.97 else '0' for _ in range(m)) for _ in range(n)]"},
+    {"name": "290 rows x M = 500 columns, all ones", "gen": "n, m = 290, 500\nlines = [f'{n} {m}'] + [' '.join(['1'] * m) for _ in range(n)]"}
+  ]
+}

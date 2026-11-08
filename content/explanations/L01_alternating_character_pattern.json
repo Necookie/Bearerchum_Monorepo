@@ -1,0 +1,59 @@
+{
+  "file": "L01_alternating_character_pattern.py",
+  "summary": "First keep only the letters (lowercased), then check every neighbouring pair: a vowel must be followed by a consonant and vice versa (T3 — string classification + T5 — neighbour comparison). One bad pair is enough to say \"Not Alternating\".",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the text and name the vowels",
+      "text": "A plain `input()` keeps spaces and symbols — we filter them next. `VOWELS` is a string, so `ch in VOWELS` asks \"is this a vowel?\"."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Keep only the letters, in lowercase",
+      "text": "`ch.isalpha()` drops digits, spaces and symbols, so the pattern continues across them (`h3ll0` → `h l l`). `.lower()` matters because `'A' in 'aeiou'` is False."
+    },
+    {
+      "lines": [
+        6,
+        6
+      ],
+      "title": "Assume it alternates",
+      "text": "`ok` starts True; the loop below only has to find ONE counter-example to make it False."
+    },
+    {
+      "lines": [
+        7,
+        9
+      ],
+      "title": "Classify each neighbouring pair",
+      "text": "`i` starts at 1 so `letters[i - 1]` always exists. For each pair we turn both letters into True/False: \"is it a vowel?\". With 0 or 1 letters the loop never runs, so the answer is Alternating."
+    },
+    {
+      "lines": [
+        10,
+        12
+      ],
+      "title": "Same type twice in a row → fail",
+      "text": "If both are vowels or both are consonants, the two booleans are equal. We set `ok = False` and `break` — no need to check the rest."
+    },
+    {
+      "lines": [
+        14,
+        14
+      ],
+      "title": "Print the result",
+      "text": "Exact strings: `Result: Alternating` or `Result: Not Alternating`."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 1000 characters — instant.",
+  "pitfalls": [
+    "Forgetting `.lower()` → uppercase vowels count as consonants.",
+    "Checking word by word — the pattern runs across spaces."
+  ]
+}

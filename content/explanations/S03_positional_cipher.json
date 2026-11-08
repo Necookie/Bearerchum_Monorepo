@@ -1,0 +1,67 @@
+{
+  "file": "S03_positional_cipher.py",
+  "summary": "Each letter was shifted forward by key + its position, so we shift it back by the same amount, wrapping around the alphabet with `% 26` (T4 — character shifting). Case is kept and non-letters stay as they are.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the text and the key",
+      "text": "The text stays a string; the key is converted to `int` because we do math with it."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Collect the decoded characters",
+      "text": "We append characters to a list and join it once at the end — clean and fast."
+    },
+    {
+      "lines": [
+        5,
+        6
+      ],
+      "title": "Work out the shift for this position",
+      "text": "`enumerate` gives the 0-based index `i` with each character. The shift grows by one per position: `key + i`. The index counts every character, including spaces and symbols."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Shift a lowercase letter back",
+      "text": "`ord(ch) - ord('a')` turns `a..z` into 0..25. We subtract the shift, wrap with `% 26`, and add `ord('a')` back. In Python `%` never gives a negative result, so `(3 - 5) % 26` is 24 — no `+ 26` needed like in C."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Shift an uppercase letter back",
+      "text": "Same formula with `'A'` as the base, so uppercase stays uppercase."
+    },
+    {
+      "lines": [
+        11,
+        12
+      ],
+      "title": "Leave other characters alone",
+      "text": "Digits, spaces and symbols are copied unchanged."
+    },
+    {
+      "lines": [
+        14,
+        14
+      ],
+      "title": "Join and print",
+      "text": "`''.join(out)` glues the list into one string: `Decoded string: hello`."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 1000 characters — instant.",
+  "pitfalls": [
+    "Shifting forward instead of back.",
+    "Losing the case by always using `'a'` as the base."
+  ]
+}

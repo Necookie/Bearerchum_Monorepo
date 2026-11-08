@@ -1,0 +1,433 @@
+# Problem breakdowns. Every code block and sample run is produced from the tested files in /solutions.
+P = []
+
+
+def add(**kw):
+    P.append(kw)
+
+
+# =============================================================== PRACTICE SET
+add(id="P01", group="practice", src="Practice · Item 1", title="Theater Seat Total", level="Easy",
+    tags=["T1 Formula / loop"], file="P01_theater_seat_total.py",
+    samples=[["10", "4"], ["1", "1"], ["5", "2"]],
+    asks="Add up R numbers: S, S+2, S+4, … (each row has 2 more seats than the one before).",
+    io=[("in", "`Enter seats in first row: ` → S (read FIRST)"), ("in", "`Enter number of rows: ` → R"),
+        ("out", "`Total seats: T`")],
+    pattern="“every row after it has **2 more** than the row in front” = an **arithmetic sequence**. "
+            "Either loop R times, or use the formula.",
+    hidden=["R = 1 → answer is just S", "S = 1, R = 1 → 1", "max: S = 1000, R = 1000 → 1,999,000 (no overflow in Python)"],
+    approach=["Read S, then R (same order as the prompts).", "Start `seats = S`, `total = 0`.",
+              "Repeat R times: `total += seats`, then `seats += 2`.", "Print `Total seats: {total}`."],
+    trace="S = 10, R = 4\nrow 1: 10   total = 10\nrow 2: 12   total = 22\nrow 3: 14   total = 36\nrow 4: 16   total = 52\n"
+          "formula check: S*R + R*(R-1) = 40 + 12 = 52  ✓",
+    speed="R ≤ 1000 → 1000 steps. Instant.",
+    mistakes=["Reading R before S — the prompt order is S first.", "`range(R + 1)` adds one extra row.",
+              "Printing `Total seats:52` (missing space)."],
+    variations=["“each row has K more” → `S*R + K*R*(R-1)//2`.",
+                "“each row has double the seats” → geometric: loop with `seats *= 2`."])
+
+add(id="P02", group="practice", src="Practice · Item 2", title="Fix One Street Lamp", level="Medium",
+    tags=["T6 Runs / try every option"], file="P02_fix_one_street_lamp.py",
+    samples=[["1011100111101"], ["111011101110111"], ["0000"]],
+    asks="Turn exactly one `0` into `1` so that the longest block of consecutive `1`s is as long as possible.",
+    io=[("in", "`Enter lamps: ` → one word like `1011100111101`"), ("out", "`Longest lit stretch: L`")],
+    pattern="“repair **exactly one** … with the **best choice**” = **try every option, keep the best**. "
+            "Only 100 lamps, so brute force is safe. The statement's tip even gives the method: left run + 1 + right run.",
+    hidden=["every lamp broken `0000` → 1", "broken lamp at either end `0111` → 4, `1110` → 4",
+            "a single lamp `0` → 1", "several repairs tie (answer is still just the length)"],
+    approach=["Keep the input as a **string** (never `int()` — `0011` would become `11`).",
+              "For every position `i` where the lamp is `0`:",
+              "count consecutive `1`s going left from `i-1`, and going right from `i+1`.",
+              "candidate = left + 1 + right; keep the maximum.", "Print the maximum."],
+    trace="lamps: 1 0 1 1 1 0 0 1 1 1 1 0 1      (lamp numbers 1..13)\n"
+          "repair lamp 2  : left 1, right 3  -> 1+1+3 = 5\n"
+          "repair lamp 6  : left 3, right 0  -> 3+1+0 = 4\n"
+          "repair lamp 7  : left 0, right 4  -> 0+1+4 = 5\n"
+          "repair lamp 12 : left 4, right 1  -> 4+1+1 = 6   <- best",
+    extra=[("Even shorter brute force (fine for N ≤ 100)",
+            'lamps = input("Enter lamps: ").strip()\nbest = 0\nfor i, ch in enumerate(lamps):\n    if ch == \'0\':\n'
+            '        fixed = lamps[:i] + \'1\' + lamps[i + 1:]\n        best = max(best, max(len(run) for run in fixed.split(\'0\')))\n'
+            'print(f"Longest lit stretch: {best}")')],
+    speed="O(N²) worst case, N = 100 → 10,000 steps.",
+    mistakes=["`int(input())` destroys leading zeros.", "Forgetting the `+ 1` for the repaired lamp itself.",
+              "No bounds check → `lamps[-1]` reads the LAST lamp (Python negative index) instead of stopping."],
+    variations=["“repair up to K lamps” → sliding window that allows at most K zeros.",
+                "“no repair, just the longest stretch” → `max(len(x) for x in s.split('0'))`."])
+
+add(id="P03", group="practice", src="Practice · Item 3", title="Rotting Fruit Crate", level="Medium–Hard",
+    tags=["T8 Grid", "T10 Simulate until stable", "T9 BFS"], file="P03_rotting_fruit_crate.py",
+    samples=[["3 3", "FFF", "FFF", "RFF"], ["2 2", "RF", "FF"], ["2 3", "FFF", "FFF"]],
+    asks="Rot spreads up/down/left/right once per minute. Count how many minutes have at least one new rotten fruit.",
+    io=[("in", "`Enter rows and columns: ` → `R C` on one line"),
+        ("in", "program prints `Enter the crate:` on its own line, then reads R lines (no prompt)"),
+        ("out", "`Minutes: M`")],
+    pattern="grid + “each minute it spreads to neighbours” + “**at the same time**” = **simultaneous simulation** "
+            "(the tip literally gives the algorithm) or **multi-source BFS**.",
+    hidden=["no rotten fruit → 0", "everything already rotten → 0", "single row or single column (bounds!)",
+            "several rotten fruits spreading at once and meeting"],
+    approach=["Read the grid as a list of lists of characters.",
+              "Loop: scan every cell; collect each `F` that has an `R` neighbour into a list. **Don't change the grid yet.**",
+              "If the list is empty → stop. Otherwise turn all of them into `R` and add 1 to minutes.",
+              "Print minutes."],
+    trace="Start   Min 1   Min 2   Min 3   Min 4\nFFF     FFF     RFF     RRF     RRR\nFFF     RFF     RRF     RRR     RRR\n"
+          "RFF     RRF     RRR     RRR     RRR\nMinute 5: nothing new -> stop.  Answer 4",
+    extra=[("Faster version: multi-source BFS (use when the grid is big)", None, "P03b_rotting_fruit_bfs.py")],
+    speed="Grid ≤ 10×10. Simulation: ≤ 100 minutes × 100 cells. BFS is O(R·C) — needed only for big grids.",
+    mistakes=["Changing cells **during** the scan → a fruit that just rotted spreads in the same minute → answer too small.",
+              "Neighbour `r-1 = -1` → `grid[-1]` is the LAST row in Python. Always check `0 <= nr < R`.",
+              "Reading `3 3` with two `input()` calls — they are on ONE line.",
+              "Forgetting `print(\"Enter the crate:\")`."],
+    variations=["empty cells `.` and “print -1 if some fruit never rots” → BFS, then check for leftover `F`.",
+                "8 directions → add the 4 diagonal moves to DIRS."])
+
+add(id="P04", group="practice", src="Practice · Item 4", title="Calculator Without Zeros", level="Easy",
+    tags=["T2 Digits / string"], file="P04_calculator_without_zeros.py",
+    samples=[["40507"], ["1000000000"], ["98765"]],
+    asks="Print N with every `0` digit removed.",
+    io=[("in", "`Enter number: ` → N"), ("out", "`Display: D`")],
+    pattern="Anything about **digits** → treat the number as a **string**.",
+    hidden=["no zeros → unchanged", "`1000000000` → `1`", "zeros in the middle, at the end, in long runs"],
+    approach=["Read N as a string.", "`s.replace('0', '')`.", "Print."],
+    trace="'40507'.replace('0', '') -> '457'",
+    speed="At most 10 characters.",
+    mistakes=["Doing it with `% 10` math and rebuilding the number backwards — slower to write, easy to reverse by accident."],
+    variations=["remove a given digit d → `replace(str(d), '')`.",
+                "“largest number after removing one digit” → try every removal: `max(int(s[:i] + s[i+1:]) for i in range(len(s)))`."])
+
+add(id="P05", group="practice", src="Practice · Item 5", title="Longest Word Length", level="Easy",
+    tags=["T3 Strings"], file="P05_longest_word_length.py",
+    samples=[["i love programming in c"], ["extraordinary day"], ["hello"]],
+    asks="Length of the longest word in a sentence.",
+    io=[("in", "`Enter sentence: ` → a line with spaces"), ("out", "`Longest word length: X`")],
+    pattern="“words separated by spaces” → `split()`.",
+    hidden=["single word, no spaces", "longest word is the first or the last", "ties between words"],
+    approach=["`words = sentence.split()`", "`max(len(w) for w in words)`", "Print."],
+    trace="['i', 'love', 'programming', 'in', 'c'] -> lengths 1, 4, 11, 2, 1 -> 11",
+    speed="200 characters. Instant.",
+    mistakes=["C-style manual counting that forgets the LAST word (no space after it). `split()` avoids this.",
+              "`split(' ')` returns empty strings if there are double spaces."],
+    variations=["print the longest word itself → `max(words, key=len)` (returns the first one on ties).",
+                "count words → `len(words)`; shortest → `min(...)`."])
+
+add(id="P06", group="practice", src="Practice · Item 6", title="Round to the Nearest Ten", level="Easy",
+    tags=["T1 Formula", "Python trap"], file="P06_round_to_nearest_ten.py",
+    samples=[["247"], ["5"], ["1234"]],
+    asks="Round N to the nearest multiple of 10; last digit 5 rounds up.",
+    io=[("in", "`Enter number: ` → N"), ("out", "`Rounded: R`")],
+    pattern="Rounding with a **fixed rule** → integer math. **Never** Python's `round()` here.",
+    hidden=["N < 5 → 0", "N = 5 → 10", "already a multiple of 10 → unchanged", "999 → 1000 (extra digit)"],
+    approach=["Add 5, then drop the last digit: `(N + 5) // 10 * 10`.",
+              "Or follow the statement: if `N % 10 >= 5` → `N - N % 10 + 10`, else `N - N % 10`."],
+    trace="247 + 5 = 252 -> 252 // 10 = 25 -> 25 * 10 = 250\n  5 + 5 = 10  -> 1 -> 10\n1234 + 5 = 1239 -> 123 -> 1230",
+    speed="O(1).",
+    mistakes=["`round(25, -1)` gives **20** and `round(5, -1)` gives **0** in Python (round-half-to-even). Hidden test N = 5 fails."],
+    variations=["nearest hundred → `(N + 50) // 100 * 100`.", "always round down → `N // 10 * 10`; always up → `-(-N // 10) * 10`."])
+
+add(id="P07", group="practice", src="Practice · Item 7", title="Warmer Than Yesterday", level="Easy",
+    tags=["T5 Neighbours"], file="P07_warmer_than_yesterday.py",
+    samples=[["6", "28 30 29 29 31 33"], ["1", "25"], ["5", "-2 0 4 5 9"]],
+    asks="Count days whose temperature is strictly higher than the previous day.",
+    io=[("in", "`Enter N: ` → N"), ("in", "`Enter the temperatures: ` → N numbers on one line"), ("out", "`Warmer days: W`")],
+    pattern="“higher than the day **before**” = compare each element with its left neighbour.",
+    hidden=["N = 1 → 0", "equal days do NOT count", "negative temperatures"],
+    approach=["Loop `i` from 1 to N-1.", "If `t[i] > t[i-1]` add 1.", "Print the count."],
+    trace="28 30 29 29 31 33\n   +     -  =  +  +   -> 3",
+    speed="N ≤ 50.",
+    mistakes=["Starting at `i = 0` → compares day 1 with `t[-1]` (the last day!).", "Using `>=` — equal is not warmer."],
+    variations=["longest warming streak (drill D03).", "biggest one-day jump → `max(b - a for a, b in zip(t, t[1:]))`."])
+
+add(id="P08", group="practice", src="Practice · Item 8", title="Library Late Fines", level="Easy",
+    tags=["T7 Clamping"], file="P08_library_late_fines.py",
+    samples=[["5", "3 9 7 20 12"], ["3", "2 7 5"], ["1", "17"]],
+    asks="Each book: 5 pesos per day beyond day 7, capped at 50 per book. Print the total.",
+    io=[("in", "`Enter number of books: ` → N"), ("in", "`Enter days kept: ` → N numbers"), ("out", "`Total fine: F`")],
+    pattern="“no fine if ≤ 7” = floor at 0 → `max(0, …)`. “never more than 50” = cap → `min(50, …)`.",
+    hidden=["exactly 7 days → 0", "17 or more days → exactly 50", "all books on time → 0", "N = 1"],
+    approach=["For each D: `fine = min(50, max(0, D - 7) * 5)`.", "Add to total, print."],
+    trace="3 -> 0 | 9 -> 2*5 = 10 | 7 -> 0 | 20 -> 65 capped 50 | 12 -> 25    total 85",
+    speed="N ≤ 100.",
+    mistakes=["`(D - 7) * 5` for D < 7 is **negative** and lowers the total.", "Capping the TOTAL instead of each book."],
+    variations=["cap on the total → `min(cap, total)` at the end.", "second tier (e.g. 10 pesos/day after day 14) → like the water bill."])
+
+add(id="P09", group="practice", src="Practice · Item 9", title="Plus-Minus Range Sum", level="Easy",
+    tags=["T1 Loop"], file="P09_plus_minus_range_sum.py",
+    samples=[["3", "7"], ["8", "8"], ["2", "9"]],
+    asks="A − (A+1) + (A+2) − … up to B.",
+    io=[("in", "`Enter start: ` → A"), ("in", "`Enter end: ` → B"), ("out", "`Alternating sum: S`")],
+    pattern="Alternating signs → keep a `sign` variable and flip it each step.",
+    hidden=["A = B → just A", "result negative", "B = 1,000,000 (loop is still OK in Python: ~0.1 s)"],
+    approach=["`sign = 1`; for x in A..B: `total += sign * x`; `sign = -sign`."],
+    trace="2 - 3 + 4 - 5 + 6 - 7 + 8 - 9 = -4",
+    speed="10⁶ iterations ≈ 0.1 s. Fine.",
+    mistakes=["Deciding the sign with `x % 2` — that only works when A is odd. The sign depends on the **position**, not the number. Sample 3 (A = 2) catches this."],
+    variations=["Alternating Factorial Sum (S01) — same pattern with factorials."])
+
+add(id="P10", group="practice", src="Practice · Item 10", title="Tiered Water Bill", level="Easy",
+    tags=["T7 Tiers"], file="P10_tiered_water_bill.py",
+    samples=[["14"], ["0"], ["10"]],
+    asks="First 10 m³ cost 15 each, the rest 25 each.",
+    io=[("in", "`Enter cubic meters used: ` → U"), ("out", "`Bill: B`")],
+    pattern="Tiered pricing → split U into “inside tier” `min(U, 10)` and “above tier” `max(U - 10, 0)`.",
+    hidden=["U = 0 → 0", "U ≤ 10 (no 25-peso part)", "U = 10 → 150, U = 11 → 175"],
+    approach=["`bill = min(U, 10) * 15 + max(U - 10, 0) * 25`"],
+    trace="U = 14 -> 10*15 + 4*25 = 150 + 100 = 250",
+    speed="O(1).",
+    mistakes=["`(U - 10) * 25` without `max(…, 0)` gives a negative extra when U < 10."],
+    variations=["three tiers → handle each band: `min(max(U - lo, 0), hi - lo) * rate`."])
+
+# =============================================================== LAST YEAR — PRELIMS
+add(id="L01", group="prelims", src="Last year · Prelims #1", title="Alternating Character Pattern", level="Easy–Medium",
+    tags=["T3 Strings", "T5 Neighbours"], file="L01_alternating_character_pattern.py",
+    samples=[["bAnAnA"], ["apple"], ["h3ll0 W0rld!"]],
+    asks="Ignoring non-letters, do the letters alternate vowel / consonant (case-insensitive)?",
+    io=[("in", "`Enter string: ` → may contain spaces and symbols"),
+        ("out", "`Result: Alternating` or `Result: Not Alternating`")],
+    pattern="Filter the letters first, then do a **neighbour comparison** on “is it a vowel?”.",
+    hidden=["no letters at all → Alternating", "exactly one letter → Alternating", "uppercase vowels (`A`)",
+            "symbols/digits/spaces between letters are skipped"],
+    approach=["`letters = [c.lower() for c in s if c.isalpha()]`",
+              "For each neighbouring pair: if both vowels or both consonants → Not Alternating.",
+              "Otherwise Alternating."],
+    trace="'h3ll0 W0rld!' -> letters h l l w r l d\nh(C) l(C) -> same type -> Not Alternating",
+    speed="1000 characters.",
+    mistakes=["Forgetting `.lower()` → `'A' in 'aeiou'` is False.", "Splitting into words — the pattern continues across spaces."],
+    variations=["longest alternating run → streak counter (T6)."])
+
+add(id="L02", group="prelims", src="Last year · Prelims #2", title="Peak-Valley Difference", level="Easy–Medium",
+    tags=["T5 Neighbours"], file="L02_peak_valley_difference.py",
+    samples=[["7", "10 50 20 80 30 90 40"], ["5", "1 2 3 4 5"]],
+    asks="Sum of peaks − sum of valleys (strictly bigger/smaller than both neighbours; ends never count).",
+    io=[("in", "`Enter array size: ` → N"), ("in", "`Enter array elements: ` → N numbers"), ("out", "`Result: X`")],
+    pattern="“both immediate neighbours” → loop `i` from 1 to N-2.",
+    hidden=["strictly increasing / decreasing → 0", "plateaus (equal neighbours) are neither", "N = 3"],
+    approach=["For i in 1..N-2: if bigger than both → add to peaks; elif smaller than both → add to valleys.",
+              "Print `peaks - valleys`."],
+    trace="10 [50] (20) [80] (30) [90] 40\npeaks 50+80+90 = 220, valleys 20+30 = 50 -> 170",
+    speed="N ≤ 100.",
+    mistakes=["`>=` instead of `>` (strictly).", "Including index 0 or N-1."],
+    variations=["count peaks; print positions of peaks."])
+
+add(id="L03", group="prelims", src="Last year · Prelims #3", title="Palindromic Prime Counter", level="Medium",
+    tags=["T11 Sieve", "T2 Digits"], file="L03_palindromic_prime_counter.py",
+    samples=[["1 10"], ["11 20"], ["100 200"]],
+    asks="How many numbers in [L, R] are both prime and palindromes?",
+    io=[("in", "`Enter L and R: ` → two numbers on ONE line"), ("out", "`Count: X`")],
+    pattern="“prime” + range up to 100,000 → **Sieve of Eratosthenes**. Palindrome → `str(x) == str(x)[::-1]`.",
+    hidden=["L = 1 (1 is NOT prime)", "L = R", "a range with no answers → 0", "R = 100000"],
+    approach=["Build `is_prime` up to R with a sieve.", "Loop x from L to R; count if prime and palindrome."],
+    trace="1..10   -> 2, 3, 5, 7                 = 4\n100..200 -> 101, 131, 151, 181, 191  = 5",
+    extra=[("Alternative: cheap check first (only ~1000 palindromes ≤ 100000)",
+            'def is_prime(x):\n    if x < 2:\n        return False\n    for d in range(2, int(x ** 0.5) + 1):\n'
+            '        if x % d == 0:\n            return False\n    return True\n\n'
+            'L, R = map(int, input("Enter L and R: ").split())\n'
+            'count = sum(1 for x in range(L, R + 1) if str(x) == str(x)[::-1] and is_prime(x))\n'
+            'print(f"Count: {count}")')],
+    speed="Sieve to 10⁵: ~0.05 s. Trial-dividing EVERY number would be ~10⁷ steps — avoid, or check palindrome first.",
+    mistakes=["Treating 1 as prime.", "`range(L, R)` misses R.", "Reading L and R with two `input()` calls."],
+    variations=["count primes whose digit sum is prime; twin primes (p and p+2)."])
+
+add(id="L04", group="prelims", src="Last year · Prelims #4", title="Digit Product Sum Series", level="Medium",
+    tags=["T2 Digits", "itertools"], file="L04_digit_product_sum_series.py",
+    samples=[["234"], ["12"], ["10"]],
+    asks="Repeatedly replace N by the sum of products of every pair of its distinct digits until one digit is left; print the sum of all terms.",
+    io=[("in", "`Enter N: `"), ("out", "`Total sum of sequence: X`")],
+    pattern="“repeat until single digit” → `while cur >= 10`. “pairs of digits” → `itertools.combinations(digits, 2)`.",
+    hidden=["N already one digit → total = N", "a 0 digit (10 → products 0 → sequence 10, 0 → 10)",
+            "repeated digits (55 → only one distinct digit → no pairs → 0)",
+            "the PDF lost superscripts: “1 ≤ N ≤ 10” is really 10⁹ or similar — Python handles big ints"],
+    approach=["`total = N`, `cur = N`.", "While `cur >= 10`: digits = `set(str(cur))`; `cur = sum(a*b for pairs)`; `total += cur`.",
+              "Print total."],
+    trace="234 -> 2*3 + 2*4 + 3*4 = 26\n26  -> 2*6 = 12\n12  -> 1*2 = 2  (single digit, stop)\n234 + 26 + 12 + 2 = 274",
+    speed="Values shrink very fast (at most 870 after the first step).",
+    mistakes=["Forgetting to add N itself.", "Using all digits instead of distinct digits.",
+              "Ambiguity: if two pairs give the same product (1·6 = 2·3), “unique products” might mean count it once. "
+              "Our code sums every pair; if hidden tests fail, try `sum(set(products))`."],
+    variations=["sum of digit squares until 1 (happy numbers)."])
+
+add(id="L05", group="prelims", src="Last year · Prelims #5", title="Cyclic Array Shift", level="Easy–Medium",
+    tags=["T14 Rotation / modulo"], file="L05_cyclic_array_shift.py",
+    samples=[["5", "2", "L", "1 2 3 4 5"], ["5", "2", "R", "1 2 3 4 5"], ["7", "10", "L", "-5 0 12 34 -99 100 7"]],
+    asks="Rotate the array K places left or right (wrap around).",
+    io=[("in", "`Enter array size: ` → N"), ("in", "`Enter shift amount K: ` → K (can be HUGE)"),
+        ("in", "`Enter shift direction (L/R): ` → L or R"), ("in", "`Enter array elements: ` → N numbers"),
+        ("out", "`Shifted array: …` space-separated")],
+    pattern="“wrap around” + “K can be larger than N” → `K %= N` then **slice**.",
+    hidden=["K = 0", "K a multiple of N → unchanged", "K > N", "N = 1", "negative numbers"],
+    approach=["`K %= N`", "Left: `A[K:] + A[:K]`.  Right: `A[N-K:] + A[:N-K]`.", "`print(\"Shifted array:\", *result)`"],
+    trace="K = 10, N = 7 -> K % 7 = 3\nleft 3: [-5, 0, 12 | 34, -99, 100, 7] -> 34 -99 100 7 -5 0 12",
+    speed="O(N). Never shift one step at a time K times — K may be 10¹⁸.",
+    mistakes=["Looping K times.", "Printing the list with brackets (`print(result)`).", "Not stripping the direction character."],
+    variations=["rotate a string (same slicing); rotate a matrix (drill D10)."])
+
+add(id="L06", group="prelims", src="Last year · Prelims #6", title="Pascal's Triangle", level="Easy–Medium",
+    tags=["T13 DP (row building)"], file="L06_pascals_pyramid.py",
+    samples=[["1"], ["5"]],
+    asks="Print the first N rows of Pascal's triangle.",
+    io=[("in", "`Enter the number of rows (N): `"), ("out", "`Pascal's Triangle with N rows:` then N lines")],
+    pattern="Each row is built from the previous one → keep `row`, build `next_row`.",
+    hidden=["N = 1", "N = 30 → biggest value 77,558,760 (fine in Python)"],
+    approach=["`row = [1]`", "Repeat N times: print the row; next = `[1] + [row[i] + row[i+1] …] + [1]`."],
+    trace="[1] -> [1,1] -> [1,2,1] -> [1,3,3,1] -> [1,4,6,4,1]",
+    speed="30 rows.",
+    mistakes=["`print(row)` prints `[1, 2, 1]` with brackets → use `print(*row)`.",
+              "The PDF's samples 2–3 show a double space (`rows  (N)`), sample 1 shows a single space. "
+              "When samples disagree, follow the statement/first sample, and test both if allowed."],
+    variations=["print only row N; centred pyramid → `print(' ' * (N - i - 1) + ' '.join(...))`."])
+
+add(id="L07", group="prelims", src="Last year · Prelims #7", title="Stable Sequence Reduction", level="Medium",
+    tags=["T10 Simulate until stable"], file="L07_stable_sequence_reduction.py",
+    samples=[["4 2.0", "10 11 13 15"], ["5 3.0", "10 12 20 22 30"], ["4 5.0", "10 20 30 40"]],
+    asks="Repeatedly merge neighbouring pairs whose difference ≤ T into their average (left-to-right passes) until a pass merges nothing.",
+    io=[("in", "`Enter the number of elements and the threshold: ` → `N T` on one line (T is a float!)"),
+        ("in", "`Enter the sequence: `"), ("out", "`Final stable sequence: …` each with 2 decimals")],
+    pattern="“repeat until no more merges in a full pass” → `while True` + `merged` flag. "
+            "Merging skips ahead 2 → use a **while loop with an index**, not `for`.",
+    hidden=["T = 0 → only equal neighbours merge", "N = 1", "nothing merges → print originals as `.00`",
+            "merges that only become possible in pass 2, 3, …"],
+    approach=["One pass: `i = 0`; if `i+1` exists and `|s[i]-s[i+1]| <= T` → append average, `i += 2`; else append `s[i]`, `i += 1`.",
+              "Repeat passes until a pass makes no merge.", "Print with `f\"{x:.2f}\"`."],
+    trace="pass 1: (10,11) -> 10.5 | (13,15) -> 14     => [10.5, 14]\npass 2: |10.5 - 14| = 3.5 > 2 -> no merge -> stop",
+    speed="Each pass shrinks the list or stops → ≤ N passes × N = 10⁴.",
+    mistakes=["`int(\"2.0\")` crashes — read T with `float`.", "Comparing a fresh average with the next number in the SAME pass (the statement continues with the rest of the original).",
+              "Forgetting the 2-decimal format."],
+    variations=["merge into the sum instead of the average; merge only equal neighbours (like 2048)."])
+
+add(id="L08", group="prelims", src="Last year · Prelims #8", title="Maximal Square of Ones", level="Hard",
+    tags=["T13 2D DP"], file="L08_maximal_square_of_ones.py",
+    samples=[["4 5", "1 0 1 1 1", "1 1 1 1 1", "1 1 1 1 1", "1 0 1 1 0"], ["1 5", "0 1 1 0 1"]],
+    asks="Side length of the biggest all-1 square in a 0/1 matrix (up to 500×500).",
+    io=[("in", "`Enter rows and cols: ` → `N M`"), ("in", "program prints `Enter the matrix:`, then N lines of space-separated 0/1"),
+        ("out", "`Largest square side: K`")],
+    pattern="“largest square” + 500×500 → brute force is too slow → classic **DP**: "
+            "`dp[i][j]` = biggest square ending (bottom-right corner) at (i, j).",
+    hidden=["all zeros → 0", "a single row → 0 or 1", "all ones → min(N, M)", "500×500"],
+    approach=["If `grid[i][j] == 1`: `dp[i][j] = 1` on the first row/column, else `1 + min(top, left, top-left)`.",
+              "Track the maximum while filling.", "Print it."],
+    trace="grid          dp\n1 0 1 1 1     1 0 1 1 1\n1 1 1 1 1     1 1 1 2 2\n1 1 1 1 1     1 2 2 2 3\n1 0 1 1 0     1 0 1 2 0\n"
+          "biggest value in dp = 3",
+    speed="O(N·M) = 250,000 cells ≈ 0.15 s. Checking every square directly would be ~10¹⁰ — too slow.",
+    mistakes=["Reading rows as strings when they are space-separated numbers.",
+              "No `i == 0 or j == 0` case → `dp[-1]` silently reads the last row.",
+              "Returning 1 for an all-zero grid (start `best = 0`)."],
+    variations=["count ALL squares of ones → `sum` of all dp values.", "largest square of any one value."])
+
+# =============================================================== LAST YEAR — SEMIS
+add(id="S01", group="semis", src="Last year · Semifinals #1", title="Alternating Factorial Sum", level="Easy",
+    tags=["T1 Loop"], file="S01_alternating_factorial_sum.py",
+    samples=[["1"], ["3"], ["4"]],
+    asks="1! − 2! + 3! − 4! + … ± N!",
+    io=[("in", "`Enter a positive integer N: `"), ("out", "`The alternating factorial sum is: X`")],
+    pattern="Running product (`fact *= k`) + alternating sign.",
+    hidden=["N = 1", "N = 20 → about −2.3 × 10¹⁸ (overflows in C, fine in Python)", "negative answers"],
+    approach=["`fact = 1`; for k in 1..N: `fact *= k`; add if k odd, subtract if k even."],
+    trace="1 - 2 + 6 - 24 = -19",
+    speed="20 steps.",
+    mistakes=["Recomputing the factorial from scratch each time (works, but slower to write).", "Wrong sign on even k."],
+    variations=["sum of factorials of the digits (strong numbers)."])
+
+add(id="S02", group="semis", src="Last year · Semifinals #2", title="Digital Root", level="Easy",
+    tags=["T2 Digits"], file="S02_digital_root.py",
+    samples=[["65536"], ["99"], ["123"]],
+    asks="Keep summing the digits until one digit remains.",
+    io=[("in", "`Enter a number: `"), ("out", "`Digital Root: X`")],
+    pattern="“repeat until single digit” → `while n >= 10`.",
+    hidden=["n = 0 → 0", "already one digit", "n = 2,000,000,000 → 2"],
+    approach=["While n ≥ 10: `n = sum(int(d) for d in str(n))`.", "Print n."],
+    trace="65536 -> 6+5+5+3+6 = 25 -> 2+5 = 7",
+    speed="A few steps. O(1) shortcut: `0 if n == 0 else 1 + (n - 1) % 9`.",
+    mistakes=["Only summing once (25 instead of 7)."],
+    variations=["count how many steps it takes (additive persistence)."])
+
+add(id="S03", group="semis", src="Last year · Semifinals #3", title="Positional Cipher", level="Medium",
+    tags=["T4 Cipher"], file="S03_positional_cipher.py",
+    samples=[["kiqrv", "3"], ["Mzpr", "10"], ["sfeuiy", "0"]],
+    asks="Shift each letter BACK by key + its index (0-based), wrapping a↔z; keep case; leave other characters alone.",
+    io=[("in", "`Enter the encoded string: `"), ("in", "`Enter the key: `"), ("out", "`Decoded string: …`")],
+    pattern="letter shifting + wrap-around → `ord`/`chr` with `% 26`.",
+    hidden=["uppercase stays uppercase", "non-letters unchanged", "shift > 26 (key 100 + index 999) → `% 26` handles it", "key 0"],
+    approach=["For each `(i, ch)`: shift = key + i.", "Lowercase: `chr((ord(ch) - 97 - shift) % 26 + 97)`; uppercase with 65.",
+              "Otherwise keep ch."],
+    trace="k(10)-3=7 h | i(8)-4=4 e | q(16)-5=11 l | r(17)-6=11 l | v(21)-7=14 o  -> hello",
+    speed="1000 characters.",
+    mistakes=["In C you need `+ 26` before `%`; in Python `%` is already non-negative — don't over-complicate.",
+              "Losing the case. Ambiguity: does the index count spaces? We use the position in the whole string."],
+    variations=["encode instead (shift forward, `+ shift`); fixed-shift Caesar; Vigenère (shift from a key word)."])
+
+add(id="S04", group="semis", src="Last year · Semifinals #4", title="Digit Sum Power Sum", level="Easy–Medium",
+    tags=["T2 Digits", "T1 Loop"], file="S04_digit_sum_power_sum.py",
+    samples=[["1"], ["9"], ["20"]],
+    asks="For i = 1..N add (digit sum of i) ^ (number of digits of i).",
+    io=[("in", "`Enter N: `"), ("out", "`Total sum: X`")],
+    pattern="Per-number digit work inside a loop; N ≤ 100,000 → direct loop is fine.",
+    hidden=["N = 1", "N = 100000 → a 13-digit answer (fine in Python)"],
+    approach=["For each i: `s = str(i)`; add `sum(digits) ** len(s)`."],
+    trace="1..9 -> 45\n10..19 -> 1² + 2² + … + 10² = 385\n20 -> 2² = 4\ntotal = 434",
+    speed="10⁵ numbers × ≤ 6 digits ≈ 0.13 s.",
+    mistakes=["`^` is XOR in Python — power is `**`."],
+    variations=["Armstrong numbers (drill D13)."])
+
+add(id="S05", group="semis", src="Last year · Semifinals #5", title="Roman to Integer", level="Easy–Medium",
+    tags=["T3 Strings", "dict"], file="S05_roman_to_integer.py",
+    samples=[["III"], ["LVIII"], ["MCMXCIV"]],
+    asks="Convert a Roman numeral to an integer.",
+    io=[("in", "`Enter Roman numeral: `"), ("out", "`Integer value: X`")],
+    pattern="symbol → value lookup = **dict**. Subtractive rule = “a smaller value **before** a bigger one is subtracted”.",
+    hidden=["single symbol", "every subtractive pair (IV IX XL XC CD CM)", "3999 = MMMCMXCIX"],
+    approach=["For each position: if the next symbol is bigger, subtract this one; else add it."],
+    trace="M +1000 | C<M -100 | M +1000 | X<C -10 | C +100 | I<V -1 | V +5  = 1994",
+    speed="15 characters.",
+    mistakes=["Hard-coding all 6 pairs with `replace` — works, but easy to miss one. The look-ahead rule covers all."],
+    variations=["integer → Roman: greedy over `[(1000,'M'),(900,'CM'),(500,'D'),…]`."])
+
+add(id="S06", group="semis", src="Last year · Semifinals #6", title="Smallest Missing Subarray Sum", level="Hard",
+    tags=["T12 Subarray sums", "set"], file="S06_smallest_missing_subarray_sum.py",
+    samples=[["4", "3 1 2 7"], ["3", "10 2 8"], ["4", "1 2 3 4"]],
+    asks="Smallest positive integer that is NOT the sum of any contiguous subarray.",
+    io=[("in", "`Enter array size: `"), ("in", "`Enter the array elements: `"), ("out", "`Smallest Missing Sum: X`")],
+    pattern="“**contiguous** subarray sums” + N ≤ 2000 → O(N²) double loop with a running sum, store sums in a **set**.",
+    hidden=["no 1 in the array → answer 1", "all ones (N = 2000) → 2001", "huge values"],
+    approach=["For each start i: running sum s over j = i..N-1; add s to a set.",
+              "Pruning: all numbers are positive, so s only grows — once s passes N(N+1)/2 + 1 (the most the answer can be), break.",
+              "Answer: start at 1 and go up while it is in the set."],
+    trace="[3, 1, 2, 7]\nsums: 3 4 6 13 | 1 3 10 | 2 9 | 7  -> {1,2,3,4,6,7,9,10,13}\n1 2 3 4 present, 5 missing -> 5",
+    speed="≤ 2 million additions ≈ 0.35 s with the break.",
+    mistakes=["**Sorting** the array — that's the different *subset* problem; it changes which subarrays exist.",
+              "Storing sums in a list and using `in` → O(N²) lookups each → far too slow."],
+    variations=["subset (not contiguous) version: sort, keep `reach`; if `a > reach + 1` answer is `reach + 1`."])
+
+add(id="S07", group="semis", src="Last year · Semifinals #7", title="ZigZag Conversion", level="Medium",
+    tags=["T14 Bouncing index"], file="S07_zigzag_conversion.py",
+    samples=[["PAYPALISHIRING", "3"], ["THISISATEST", "8"]],
+    asks="Write the string down-and-up across numRows rows, then read row by row.",
+    io=[("in", "`Enter string: `"), ("in", "`Enter number of rows: `"), ("out", "`Converted string: …`")],
+    pattern="Simulate the pen: a row index that **bounces** between 0 and numRows−1.",
+    hidden=["numRows = 1 → unchanged", "numRows ≥ length → unchanged", "numRows = 2"],
+    approach=["`rows = [''] * numRows`; r = 0, step = 1.", "For each char: append to rows[r]; flip step at the top/bottom; `r += step`.",
+              "Join the rows."],
+    trace="P   A   H   N      row 0: PAHN\nA P L S I I G      row 1: APLSIIG\nY   I   R          row 2: YIR\n-> PAHNAPLSIIGYIR",
+    speed="1000 characters.",
+    mistakes=["numRows = 1 without the special case → the index runs off the end (IndexError)."],
+    variations=["print the zigzag picture itself; reverse it (decode)."])
+
+add(id="S08", group="semis", src="Last year · Semifinals #8", title="Largest Symmetric Subgrid", level="Hard",
+    tags=["T15 Brute force + pruning", "T8 Grid"], file="S08_largest_symmetric_subgrid.py",
+    samples=[["4", "1 2 3 4", "5 6 7 8", "8 7 6 5", "4 3 2 1"],
+             ["5", "9 1 2 3 9", "8 1 2 1 8", "7 4 5 4 7", "6 1 2 1 6", "5 1 2 3 5"]],
+    asks="Biggest k×k block that looks the same after a 180° rotation.",
+    io=[("in", "`Enter size of matrix: ` → N"), ("in", "program prints `Enter matrix elements:`, then N rows"),
+        ("out", "`Largest symmetric subgrid size: k`")],
+    pattern="“largest … such that …” → try sizes from **biggest to smallest**; the first symmetric block found is the answer. "
+            "180° rotation = reverse the row order AND reverse each row.",
+    hidden=["N = 1 → 1", "every value equal → N", "nothing bigger than 1 → 1 (a 1×1 block is always symmetric)"],
+    approach=["For k = N down to 1, for every top-left (r, c):",
+              "cheap check: the two opposite corners must be equal;",
+              "full check: row i of the block == row (k-1-i) of the block, reversed.",
+              "Print the first k that works."],
+    trace="5×5: corners 9 vs 5 -> no.  size 4: no block works.\nsize 3 at (1,1):  1 2 1      rotated 180°:  1 2 1\n"
+          "                  4 5 4                     4 5 4\n                  1 2 1                     1 2 1   -> 3",
+    extra=[("Easiest-to-write check (slower, good for partial points)",
+            'def symmetric(r, c, k):\n    block = [A[i][c:c + k] for i in range(r, r + k)]\n'
+            '    return block == [row[::-1] for row in block[::-1]]')],
+    speed="Worst case we measured: random 0/1 250×250 → 1.5 s. Most blocks fail at the first corner check.",
+    mistakes=["Checking only the main diagonal or only one pair of rows.", "Searching from small to big (then you can't stop early)."],
+    variations=["mirror symmetry (left-right) → each row is a palindrome; 90° symmetry → `block == rot90(block)`."])

@@ -1,0 +1,59 @@
+{
+  "file": "L04_digit_product_sum_series.py",
+  "summary": "Each new term is the sum of products of every pair of distinct digits of the current term. We keep going until the term is a single digit, adding every term (including N) to a total (T2 — digit manipulation, with `itertools.combinations`).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Import the pair generator",
+      "text": "`combinations(items, 2)` gives every pair exactly once, in order — no double loop and no pair counted twice."
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "title": "Read N",
+      "text": "One whole number. Python ints have no size limit, so big N is fine."
+    },
+    {
+      "lines": [
+        5,
+        7
+      ],
+      "title": "Compute the next term",
+      "text": "`set(str(x))` keeps each digit once (the problem says distinct digits, so 55 has no pairs → 0). `sorted` just gives a fixed order. The digits are characters, so each one goes through `int()` before multiplying."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Start the total with N itself",
+      "text": "N is the first term of the sequence, so it is counted before any step. Forgetting it is the most common wrong answer here."
+    },
+    {
+      "lines": [
+        11,
+        13
+      ],
+      "title": "Repeat until a single digit",
+      "text": "`while cur >= 10` means \"while it still has 2 or more digits\". Each new term is added to the total, including the final single digit."
+    },
+    {
+      "lines": [
+        15,
+        15
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Total sum of sequence: 274`."
+    }
+  ],
+  "complexity": "Very fast: after one step the value is at most 870, so only a handful of steps run.",
+  "pitfalls": [
+    "Forgetting to add N itself.",
+    "Using all digits instead of distinct digits."
+  ]
+}

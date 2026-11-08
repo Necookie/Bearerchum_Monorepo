@@ -1,0 +1,51 @@
+{
+  "file": "drills/D09_run_length_encoding.py",
+  "summary": "Walk through the text one run at a time: from the run's start, move forward while the character stays the same, then write the character and the run length (T6 — runs / streaks).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read the text",
+      "text": "`.strip()` removes stray spaces at the ends so they don't become a run."
+    },
+    {
+      "lines": [
+        3,
+        4
+      ],
+      "title": "Output pieces and a start index",
+      "text": "`out` collects pieces like `'a3'`; `i` is where the current run starts."
+    },
+    {
+      "lines": [
+        5,
+        8
+      ],
+      "title": "Walk to the end of this run",
+      "text": "`j` moves right while it sees the same character as `s[i]`. `j < len(s)` is checked first so `s[j]` never runs past the end. When the loop stops, `j` is the first character of the NEXT run."
+    },
+    {
+      "lines": [
+        9,
+        10
+      ],
+      "title": "Write the run and jump",
+      "text": "The run length is `j - i`; an f-string writes it in full, so a run of 12 becomes `z12` (not `z1` + `2`). Then `i = j` jumps straight to the next run."
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "title": "Print the encoding",
+      "text": "`''.join(out)` glues the pieces: `Encoded: a3b1c2d4`."
+    }
+  ],
+  "complexity": "Time O(L) with L ≤ 1000 — each character is visited once by `j`.",
+  "pitfalls": [
+    "Forgetting the last run (common with a `for` loop that only writes when the character changes).",
+    "Assuming run lengths are a single digit."
+  ]
+}

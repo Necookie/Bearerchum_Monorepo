@@ -1,0 +1,43 @@
+{
+  "file": "P09_plus_minus_range_sum.py",
+  "summary": "We add A, subtract A+1, add A+2, … up to B. A `sign` variable that flips every step keeps track of plus or minus (T1 — simple loop).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the range",
+      "text": "A and B are on two separate lines, so two `input()` calls."
+    },
+    {
+      "lines": [
+        4,
+        5
+      ],
+      "title": "Set up total and sign",
+      "text": "`sign = 1` means the first number is added. The sign depends on the number's **position** in the range, not on whether it is odd — that is why we don't use `x % 2` (it breaks when A is even)."
+    },
+    {
+      "lines": [
+        6,
+        8
+      ],
+      "title": "Add with the current sign, then flip",
+      "text": "`range(A, B + 1)` includes B. `sign * x` adds or subtracts x, and `sign = -sign` switches between +1 and -1 for the next number."
+    },
+    {
+      "lines": [
+        10,
+        10
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Alternating sum: -4`."
+    }
+  ],
+  "complexity": "Time O(B − A) with up to 10⁶ numbers → about 0.1 s in Python.",
+  "pitfalls": [
+    "Using `x % 2` for the sign — wrong when A is even.",
+    "`range(A, B)` misses B."
+  ]
+}

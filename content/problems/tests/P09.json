@@ -1,0 +1,15 @@
+{
+  "samples": [
+    ["3", "7"],
+    ["8", "8"],
+    ["2", "9"]
+  ],
+  "hidden": [
+    {"name": "A = B = 1", "input": ["1", "1"]},
+    {"name": "two numbers: result is negative", "input": ["2", "3"]},
+    {"name": "A = B = 1000000", "input": ["1000000", "1000000"]},
+    {"name": "last two numbers 999999 to 1000000", "input": ["999999", "1000000"]},
+    {"name": "odd count of numbers, ends with a plus", "input": ["10", "20"]},
+    {"name": "full range 1 to 1000000", "input": ["1", "1000000"]}
+  ]
+}

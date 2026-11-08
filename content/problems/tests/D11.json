@@ -1,0 +1,19 @@
+{
+  "samples": [
+    ["3 3", "...", "...", "..."],
+    ["3 3", "...", ".#.", "..."],
+    ["2 2", "#.", ".."]
+  ],
+  "hidden": [
+    {"name": "1x1 open grid", "input": ["1 1", "."]},
+    {"name": "1x1 blocked grid", "input": ["1 1", "#"]},
+    {"name": "the end cell is blocked", "input": ["2 2", "..", ".#"]},
+    {"name": "a wall blocks every path", "input": ["3 3", "..#", ".#.", "#.."]},
+    {"name": "single row with a block", "input": ["1 4", "..#."]},
+    {"name": "single column, all open", "input": ["4 1", ".", ".", ".", "."]}
+  ],
+  "generated": [
+    {"name": "100x100 open grid (huge answer)", "gen": "lines = ['100 100'] + ['.' * 100 for _ in range(100)]"},
+    {"name": "100x100 grid with random blocks", "gen": "rows = [''.join('#' if random.random() < 0.1 else '.' for _ in range(100)) for _ in range(100)]\nrows[0] = '.' + rows[0][1:]\nrows[-1] = rows[-1][:-1] + '.'\nlines = ['100 100'] + rows"}
+  ]
+}

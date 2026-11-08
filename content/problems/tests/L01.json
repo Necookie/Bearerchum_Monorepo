@@ -1,0 +1,17 @@
+{
+  "samples": [
+    ["bAnAnA"],
+    ["apple"],
+    ["h3ll0 W0rld!"]
+  ],
+  "hidden": [
+    {"name": "no letters at all", "input": ["12345 !!"]},
+    {"name": "exactly one letter", "input": ["a"]},
+    {"name": "one letter surrounded by symbols", "input": ["**z**"]},
+    {"name": "uppercase vowels count as vowels", "input": ["AbEcI"]},
+    {"name": "letters separated by symbols and spaces", "input": ["b-a n_a#n a"]},
+    {"name": "two vowels in a row", "input": ["aa"]},
+    {"name": "y is a consonant", "input": ["yay"]},
+    {"name": "1000 characters alternating", "input": ["babababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababa"]}
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "file": "drills/D04_island_counter.py",
+  "summary": "Scan the map; every time we find land we haven't visited yet, it is a new island, so we count it and flood-fill all land connected to it with a BFS (T9 — BFS flood fill, with T8 grid neighbours). The `seen` table makes sure each island is counted once.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Import a fast queue",
+      "text": "`deque.popleft()` is O(1); `list.pop(0)` would be slow."
+    },
+    {
+      "lines": [
+        3,
+        5
+      ],
+      "title": "Read the map",
+      "text": "`R C` on one line, then the program prints `Enter the map:` and reads R rows with no prompt. We keep the rows as strings because we never change them — visited cells are tracked separately."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Visited table and counter",
+      "text": "`seen[r][c]` becomes True once a land cell belongs to a counted island. Build it with a comprehension — `[[False] * C] * R` would share one row."
+    },
+    {
+      "lines": [
+        9,
+        11
+      ],
+      "title": "Find land we haven't visited",
+      "text": "Check every cell. `'#'` that is not `seen` yet must be the start of a brand-new island."
+    },
+    {
+      "lines": [
+        12,
+        14
+      ],
+      "title": "Count it and start the flood",
+      "text": "Add 1 to the island count, mark the cell seen **before** putting it in the queue, and start the BFS from it. Marking when adding (not when removing) stops cells from being queued twice."
+    },
+    {
+      "lines": [
+        15,
+        16
+      ],
+      "title": "Take the next cell",
+      "text": "Keep going until the queue is empty — then the whole island is marked."
+    },
+    {
+      "lines": [
+        17,
+        21
+      ],
+      "title": "Spread to connected land",
+      "text": "Only up, down, left and right — diagonals do NOT connect. The bounds check comes first so `grid[-1]` never wraps to the last row. Each new land cell is marked and queued."
+    },
+    {
+      "lines": [
+        23,
+        23
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Islands: 3`."
+    }
+  ],
+  "complexity": "Time O(R·C): every cell is visited a constant number of times; with 100×100 that is 10,000 cells.",
+  "pitfalls": [
+    "Adding diagonal directions — they must NOT connect.",
+    "Marking cells seen only when popped → the same cell is queued many times.",
+    "No bounds check → `grid[-1]` wraps around."
+  ]
+}

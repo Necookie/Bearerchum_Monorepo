@@ -1,0 +1,271 @@
+[
+  {
+    "id": "io-001",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io"
+    ],
+    "front": "Write the line that reads **one integer** after the prompt `Enter number: `.",
+    "back": "n = int(input(\"Enter number: \"))",
+    "explain": "The prompt text is part of the judged output, so copy it exactly — including the space after the colon. `input()` returns a string; wrap it in `int()`."
+  },
+  {
+    "id": "io-002",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io"
+    ],
+    "front": "The sample shows `Enter rows and columns: 3 4`. Write the line that reads **R and C**.",
+    "back": "R, C = map(int, input(\"Enter rows and columns: \").split())",
+    "explain": "Both numbers are typed on ONE line, so one `input()` call. Two `input()` calls would wait for a second line that never comes."
+  },
+  {
+    "id": "io-003",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io"
+    ],
+    "front": "Write the line that reads **N integers on one line** after the prompt `Enter scores: ` into a list.",
+    "back": "scores = list(map(int, input(\"Enter scores: \").split()))",
+    "explain": "`split()` cuts the line into words, `map(int, …)` converts each, `list(…)` lets you index and loop more than once."
+  },
+  {
+    "id": "io-004",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io",
+      "traps"
+    ],
+    "front": "The sample shows `Enter N and T: 4 2.5` — an **int and a float on one line**. Read them into `n` and `t`.",
+    "back": "p = input(\"Enter N and T: \").split()\nn = int(p[0])\nt = float(p[1])",
+    "explain": "`map(int, …)` would crash on `2.5`. Split first, then convert each part with the right type."
+  },
+  {
+    "id": "io-005",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io"
+    ],
+    "front": "Read a whole **sentence** (keep its spaces) after the prompt `Enter sentence: `.",
+    "back": "s = input(\"Enter sentence: \")",
+    "explain": "Do not split when you need the original text — spaces and punctuation may matter. Split later only if you need words."
+  },
+  {
+    "id": "io-006",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io",
+      "T8"
+    ],
+    "front": "The statement says: “the program prints `Enter the map:` on its own line, then reads R lines of characters.”Write it (R is already read).",
+    "back": "print(\"Enter the map:\")\ngrid = [list(input().strip()) for _ in range(R)]",
+    "explain": "The header is a `print`, not an `input` prompt, so it ends with a newline. Each row is then read with a bare `input()` (no prompt). `list(...)` makes each row an editable list of characters."
+  },
+  {
+    "id": "io-007",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io",
+      "T8"
+    ],
+    "front": "After the header `Enter the matrix:` is printed, read **R rows of space-separated integers** into `mat`.",
+    "back": "mat = [list(map(int, input().split())) for _ in range(R)]",
+    "explain": "One comprehension: each row is its own `input()` line converted with `map(int, …split())`."
+  },
+  {
+    "id": "io-008",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io",
+      "traps"
+    ],
+    "front": "Read a single direction character `L` or `R` after the prompt `Enter direction (L/R): ` so that `' l'` or `'R '` still work.",
+    "back": "d = input(\"Enter direction (L/R): \").strip().upper()",
+    "explain": "Hidden inputs may carry stray spaces, `\\r`, or lowercase. `strip()` removes the whitespace, `upper()` normalises the case."
+  },
+  {
+    "id": "io-009",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io"
+    ],
+    "front": "N numbers might be spread over **several lines**. Read exactly N integers into the list `a`.",
+    "back": "a = []\nwhile len(a) < n:\n    a += map(int, input().split())",
+    "explain": "Keep reading lines until you have N numbers. `a += map(...)` extends the list with every number on the line."
+  },
+  {
+    "id": "io-010",
+    "deck": "io",
+    "type": "code",
+    "tags": [
+      "io"
+    ],
+    "front": "The output format is `Total: T`. Print it for the variable `total`.",
+    "back": "print(f\"Total: {total}\")",
+    "explain": "f-strings put the value exactly where you want it; the space after the colon is part of the expected output."
+  },
+  {
+    "id": "io-011",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "Shifted array: 3 4 5",
+    "code": "lst = [3, 4, 5]\nprint(\"Shifted array:\", *lst)",
+    "explain": "`print` puts ONE space between its arguments, and `*lst` unpacks the list into separate arguments — no brackets, no commas."
+  },
+  {
+    "id": "io-012",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io",
+      "traps"
+    ],
+    "front": "What does this print?",
+    "back": "[1, 2, 1]",
+    "code": "row = [1, 2, 1]\nprint(row)",
+    "explain": "Printing a list directly shows Python's list syntax. CodeChum expects `1 2 1` — use `print(*row)`."
+  },
+  {
+    "id": "io-013",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "1,2,3",
+    "code": "print(*[1, 2, 3], sep=\",\")",
+    "explain": "`sep` replaces the default single space between arguments."
+  },
+  {
+    "id": "io-014",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "Average: 10.50",
+    "code": "x = 10.5\nprint(f\"Average: {x:.2f}\")",
+    "explain": "`:.2f` always shows exactly two decimals, padding with zeros."
+  },
+  {
+    "id": "io-015",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "ab",
+    "code": "print(\"a\", end=\"\")\nprint(\"b\")",
+    "explain": "`end=\"\"` stops `print` from adding the newline, so the next print continues on the same line."
+  },
+  {
+    "id": "io-016",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "Total: 52 pesos",
+    "code": "t = 52\nprint(\"Total:\", t, \"pesos\")",
+    "explain": "The comma form adds one space between each argument, so `\"Total:\"` and `52` are separated by exactly one space."
+  },
+  {
+    "id": "io-017",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io",
+      "T8"
+    ],
+    "front": "What does this print?",
+    "back": "RRF\nFRF",
+    "code": "grid = [[\"R\", \"R\", \"F\"], [\"F\", \"R\", \"F\"]]\nfor row in grid:\n    print(\"\".join(row))",
+    "explain": "`\"\".join(row)` glues the characters with nothing in between — the usual way to print a grid of characters."
+  },
+  {
+    "id": "io-018",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io"
+    ],
+    "front": "What does this print?",
+    "back": "5 10 15",
+    "code": "print(\" \".join(map(str, [5, 10, 15])))",
+    "explain": "`join` only accepts strings, so convert numbers first with `map(str, …)`."
+  },
+  {
+    "id": "io-019",
+    "deck": "io",
+    "type": "output",
+    "tags": [
+      "io"
+    ],
+    "front": "What does this print? (mind the spaces)",
+    "back": "[   7]",
+    "code": "print(f\"[{7:>4}]\")",
+    "explain": "`:>4` right-aligns in a field 4 characters wide (3 spaces + `7`). `:<4` would left-align."
+  },
+  {
+    "id": "io-020",
+    "deck": "io",
+    "type": "mcq",
+    "tags": [
+      "io"
+    ],
+    "front": "A CodeChum sample box shows:\n\n```\nEnter number: 40507\nDisplay: 457\n```\n\nWhat must **your program** print before reading?",
+    "choices": [
+      "`Enter number: 40507`",
+      "`Enter number:` (no space)",
+      "Nothing — prompts are not judged",
+      "`Enter number: ` (with the trailing space)"
+    ],
+    "answer": 3,
+    "explain": "`40507` is what the user typed. Your program prints only the prompt `Enter number: ` (with its trailing space); `input(\"Enter number: \")` does exactly that."
+  },
+  {
+    "id": "io-021",
+    "deck": "io",
+    "type": "mcq",
+    "tags": [
+      "io"
+    ],
+    "front": "The statement says: “the program prints `Enter the crate:` on its own line, then reads R lines.”Which is correct?",
+    "choices": [
+      "Skip it — headers are optional",
+      "`input(\"Enter the crate:\")` for the first row",
+      "`print(\"Enter the crate: \", end=\"\")`, then `input()`",
+      "`print(\"Enter the crate:\")`, then `input()` for each row"
+    ],
+    "answer": 3,
+    "explain": "\"On its own line\" means the header ends with a newline, so it is a `print`. `input(\"Enter the crate:\")` would put the first row on the same line as the header — wrong transcript."
+  },
+  {
+    "id": "io-022",
+    "deck": "io",
+    "type": "basic",
+    "tags": [
+      "io"
+    ],
+    "front": "The Constraints section says: **“There may be no rotten fruit; the answer is then 0.”**What should you do with this bullet?",
+    "back": "Treat it as a **hidden test case**: write that input (a grid with no `R`) and run it before submitting. Every constraint bullet = one test you must pass.",
+    "explain": "CodeChum shows only 2–3 samples but grades on hidden tests, and the extra constraint bullets describe those hidden tests. Running them yourself first catches edge-case bugs before they cost points."
+  }
+]

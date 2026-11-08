@@ -1,0 +1,14 @@
+{
+  "samples": [
+    ["1"],
+    ["9"],
+    ["20"]
+  ],
+  "hidden": [
+    {"name": "N = 2", "input": ["2"]},
+    {"name": "N = 10 (first two-digit number)", "input": ["10"]},
+    {"name": "N = 99", "input": ["99"]},
+    {"name": "N = 100 (first three-digit number)", "input": ["100"]},
+    {"name": "largest N = 100000", "input": ["100000"]}
+  ]
+}

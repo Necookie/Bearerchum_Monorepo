@@ -1,0 +1,17 @@
+{
+  "samples": [
+    ["1011100111101"],
+    ["111011101110111"],
+    ["0000"]
+  ],
+  "hidden": [
+    {"name": "a single lamp that is broken", "input": ["0"]},
+    {"name": "broken lamp at the left end", "input": ["0111"]},
+    {"name": "broken lamp at the right end", "input": ["1110"]},
+    {"name": "100 lamps, all broken", "input": ["0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"]},
+    {"name": "100 lamps, only the last one broken", "input": ["1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110"]},
+    {"name": "repair in the middle joins two long stretches (100 lamps)", "input": ["1111111111111111111111111111111111111111111111111101111111111111111111111111111111111111111111111111"]},
+    {"name": "alternating lamps 0101010101", "input": ["0101010101"]},
+    {"name": "several repairs tie for the best", "input": ["1101011"]}
+  ]
+}

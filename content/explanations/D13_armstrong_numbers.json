@@ -1,0 +1,51 @@
+{
+  "file": "drills/D13_armstrong_numbers.py",
+  "summary": "For every number in the range, raise each digit to the number of digits and compare the sum with the number itself (T2 — digit manipulation). Turning the number into a string gives both the digits and their count.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        1
+      ],
+      "title": "Read L and R from one line",
+      "text": "Both numbers are on ONE line, so `split()` + `map(int, …)`."
+    },
+    {
+      "lines": [
+        3,
+        3
+      ],
+      "title": "Collect the matches",
+      "text": "We gather them in a list so we can print them on one line — or print `None` if there are none."
+    },
+    {
+      "lines": [
+        4,
+        6
+      ],
+      "title": "Digits and the power",
+      "text": "`range(L, R + 1)` includes R. `str(x)` gives the digits; `len` gives how many there are, which is the power."
+    },
+    {
+      "lines": [
+        7,
+        8
+      ],
+      "title": "Is it an Armstrong number?",
+      "text": "Sum every digit raised to the power and compare with x. Every 1-digit number passes (5¹ = 5)."
+    },
+    {
+      "lines": [
+        10,
+        13
+      ],
+      "title": "Print the list or None",
+      "text": "`print(\"Armstrong numbers:\", *found)` prints the numbers separated by spaces. An empty list must print `Armstrong numbers: None` instead of an empty line."
+    }
+  ],
+  "complexity": "Time O((R − L) × digits) with R ≤ 10⁵ → about 500,000 digit operations.",
+  "pitfalls": [
+    "Using a fixed power of 3 instead of the digit count.",
+    "Printing nothing when there are no matches."
+  ]
+}

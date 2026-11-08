@@ -1,0 +1,67 @@
+{
+  "file": "S06_smallest_missing_subarray_sum.py",
+  "summary": "Collect the sum of every contiguous subarray in a set with a double loop and a running sum, then count up from 1 until a number is missing (T12 — subarray sums). Because all numbers are positive, a running sum that grows too big can be cut off early.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the array",
+      "text": "N on one line, the elements on the next, as `int`s. Do NOT sort — that changes which subarrays exist."
+    },
+    {
+      "lines": [
+        4,
+        5
+      ],
+      "title": "The answer can't be bigger than LIMIT",
+      "text": "There are only N(N+1)/2 subarrays, so at most that many different sums. So among 1, 2, …, N(N+1)/2 + 1 at least one is missing, and the answer is ≤ `LIMIT`."
+    },
+    {
+      "lines": [
+        7,
+        7
+      ],
+      "title": "Store sums in a set",
+      "text": "A set answers `ans in sums` instantly. A list would scan up to millions of items for every check."
+    },
+    {
+      "lines": [
+        8,
+        11
+      ],
+      "title": "Running sum for every start",
+      "text": "For each start `i`, `s` grows by one element at a time, so `s` is always `sum(arr[i..j])` — no need to re-add the whole subarray each time."
+    },
+    {
+      "lines": [
+        12,
+        14
+      ],
+      "title": "Stop early when the sum is too big",
+      "text": "All numbers are positive, so the running sum only grows. Once it passes `LIMIT` it can never be the answer, and neither can any longer subarray from this start, so we `break`."
+    },
+    {
+      "lines": [
+        16,
+        18
+      ],
+      "title": "Find the smallest missing number",
+      "text": "Start at 1 and step up while the number is in the set. This always stops by `LIMIT`."
+    },
+    {
+      "lines": [
+        20,
+        20
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Smallest Missing Sum: 5`."
+    }
+  ],
+  "complexity": "Time O(N²) with N ≤ 2000 → at most about 2 million additions (~0.35 s), usually far fewer thanks to the break.",
+  "pitfalls": [
+    "Sorting the array — that solves a different (subset) problem.",
+    "Using a list instead of a set for the sums."
+  ]
+}

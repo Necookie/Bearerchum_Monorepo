@@ -1,0 +1,274 @@
+[
+  {
+    "id": "ds-001",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "sets-sorting"
+    ],
+    "front": "You must answer \"have I seen this value before?\" 100,000 times. Which structure?",
+    "choices": [
+      "string",
+      "tuple",
+      "list",
+      "set"
+    ],
+    "answer": 3,
+    "explain": "`x in set` is O(1) on average; `x in list` is O(N). Sets also remove duplicates for free."
+  },
+  {
+    "id": "ds-002",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "T9"
+    ],
+    "front": "Which structure is the right queue for BFS, and why?",
+    "choices": [
+      "set — fast membership",
+      "list with `pop(0)` — simplest",
+      "dict — keyed by distance",
+      "`collections.deque` with `popleft()` — O(1) at the front"
+    ],
+    "answer": 3,
+    "explain": "BFS takes from the front. `list.pop(0)` shifts every remaining item (O(N)); `deque.popleft()` is O(1)."
+  },
+  {
+    "id": "ds-003",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "stack"
+    ],
+    "front": "Check whether `(`, `[`, `{` in an expression are closed in the correct order. Which structure?",
+    "choices": [
+      "Counter",
+      "queue (deque)",
+      "stack (list with append/pop)",
+      "set"
+    ],
+    "answer": 2,
+    "explain": "The most recently opened bracket must close first — last in, first out = stack. In Python: a list with `append`, `pop`, `st[-1]`.",
+    "refs": [
+      "D07"
+    ]
+  },
+  {
+    "id": "ds-004",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "counter"
+    ],
+    "front": "Find which word appears most often in a sentence. Which tool fits best?",
+    "choices": [
+      "`heapq`",
+      "`collections.Counter`",
+      "`deque`",
+      "a sorted list + `bisect`"
+    ],
+    "answer": 1,
+    "explain": "`Counter(words)` counts everything in one line; `most_common()` or `max` with a key picks the winner.",
+    "refs": [
+      "D08"
+    ]
+  },
+  {
+    "id": "ds-005",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "T12"
+    ],
+    "front": "N = 10^5 numbers and Q = 10^5 questions \"sum from L to R\". Which idea makes it fast?",
+    "choices": [
+      "sort the array first",
+      "loop from L to R for each query",
+      "a set of all sums",
+      "prefix sums"
+    ],
+    "answer": 3,
+    "explain": "Precompute `pre[i+1] = pre[i] + a[i]` once (O(N)); each question is then `pre[R+1] - pre[L]` in O(1). A loop per query is up to 10^10 steps.",
+    "refs": [
+      "D05"
+    ]
+  },
+  {
+    "id": "ds-006",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds"
+    ],
+    "front": "You repeatedly need to take out the **smallest** item while also adding new items. Which tool?",
+    "choices": [
+      "`set`",
+      "`list.sort()` each time",
+      "`heapq`",
+      "`deque`"
+    ],
+    "answer": 2,
+    "explain": "`heapq.heappush` / `heappop` are O(log N). Re-sorting or `min()` + `remove` each time is O(N) per step."
+  },
+  {
+    "id": "ds-007",
+    "deck": "ds",
+    "type": "basic",
+    "tags": [
+      "ds"
+    ],
+    "front": "Cost of `x in my_list` vs `x in my_set` vs `d[key]`?",
+    "back": "`x in list`: **O(N)**. `x in set` and `d[key]`: **O(1)** on average.",
+    "explain": "Lists are scanned item by item; sets and dicts use hashing. Inside a loop, that difference is O(N²) vs O(N)."
+  },
+  {
+    "id": "ds-008",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds"
+    ],
+    "front": "Which of these operations is **O(N)**, not O(1)?",
+    "choices": [
+      "`a.pop(0)`",
+      "`s.add(x)`",
+      "`d[k]`",
+      "`a.pop()`"
+    ],
+    "answer": 0,
+    "explain": "Removing from the front of a list moves every other element down one place. `pop()` from the end, dict lookup and set add are O(1)."
+  },
+  {
+    "id": "ds-009",
+    "deck": "ds",
+    "type": "output",
+    "tags": [
+      "ds",
+      "T12"
+    ],
+    "front": "What does this print?",
+    "back": "[0, 3, 4, 8, 9, 14] 6",
+    "code": "a = [3, 1, 4, 1, 5]\npre = [0]\nfor x in a:\n    pre.append(pre[-1] + x)\nprint(pre, pre[4] - pre[1])",
+    "explain": "`pre[i]` is the sum of the first i items, so the sum of `a[L..R]` (0-based) is `pre[R+1] - pre[L]`: here 1 + 4 + 1."
+  },
+  {
+    "id": "ds-010",
+    "deck": "ds",
+    "type": "output",
+    "tags": [
+      "ds"
+    ],
+    "front": "What does this print?",
+    "back": "1 2",
+    "code": "import heapq\nh = [5, 1, 4]\nheapq.heapify(h)\nheapq.heappush(h, 2)\nprint(heapq.heappop(h), heapq.heappop(h))",
+    "explain": "`heapify` turns a list into a min-heap in place; `heappop` always returns the smallest remaining item."
+  },
+  {
+    "id": "ds-011",
+    "deck": "ds",
+    "type": "code",
+    "tags": [
+      "ds",
+      "T12"
+    ],
+    "front": "Sliding window of size `k`: `s` holds the sum of `a[i-k .. i-1]`. Write the one line that moves the window to end at index `i`.",
+    "back": "s += a[i] - a[i - k]",
+    "explain": "Add the new item entering on the right, subtract the one leaving on the left — O(1) per step instead of re-summing k items.",
+    "refs": [
+      "D06"
+    ]
+  },
+  {
+    "id": "ds-012",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "T8"
+    ],
+    "front": "You track visited grid cells in a set. Which line works?",
+    "choices": [
+      "`seen[r][c] = True` on a set",
+      "`seen.add((r, c))`",
+      "`seen.add([r, c])`",
+      "`seen.append((r, c))`"
+    ],
+    "answer": 1,
+    "explain": "Set elements must be hashable (immutable). Tuples are; lists are not (`TypeError: unhashable type: 'list'`)."
+  },
+  {
+    "id": "ds-013",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "T3"
+    ],
+    "front": "Convert Roman symbols (`I`, `V`, `X`, …) to their values. Which structure?",
+    "choices": [
+      "set",
+      "deque",
+      "dict",
+      "a long if/elif chain"
+    ],
+    "answer": 2,
+    "explain": "A fixed key → value lookup table is exactly what a dict is: `val = {\"I\": 1, \"V\": 5, …}`.",
+    "refs": [
+      "S05"
+    ]
+  },
+  {
+    "id": "ds-014",
+    "deck": "ds",
+    "type": "output",
+    "tags": [
+      "ds",
+      "sets-sorting"
+    ],
+    "front": "What does this print?",
+    "back": "1 3",
+    "code": "import bisect\na = [1, 3, 3, 7]\nprint(bisect.bisect_left(a, 3), bisect.bisect_right(a, 3))",
+    "explain": "`bisect_left` gives the first position where x could go (before equal items), `bisect_right` the position after them. Their difference counts x."
+  },
+  {
+    "id": "ds-015",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "sets-sorting"
+    ],
+    "front": "Roughly how long does `sorted(a)` take for 10^6 items in Python?",
+    "choices": [
+      "~1 ms",
+      "~1 minute",
+      "~1 second",
+      "too slow to ever use"
+    ],
+    "answer": 2,
+    "explain": "Sorting is O(N log N) and implemented in C — about a second for a million items. Fine once; not inside another loop."
+  },
+  {
+    "id": "ds-016",
+    "deck": "ds",
+    "type": "mcq",
+    "tags": [
+      "ds",
+      "python"
+    ],
+    "front": "You build a 10^6-character answer one character at a time. What is the safe way?",
+    "choices": [
+      "`print(ch)` each time",
+      "append to a list `parts`, then `\"\".join(parts)`",
+      "`ans = ch + ans`",
+      "`ans += ch` in the loop"
+    ],
+    "answer": 1,
+    "explain": "Collect pieces in a list and glue once with `\"\".join(parts)`; that is O(total length). Repeated `+=` on a huge string can copy it again and again."
+  }
+]

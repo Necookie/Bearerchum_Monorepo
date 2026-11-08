@@ -1,0 +1,67 @@
+{
+  "file": "S08_largest_symmetric_subgrid.py",
+  "summary": "Try block sizes from the biggest down; the first k×k block that looks the same after a 180° rotation is the answer (T15 — brute force + pruning). A cheap corner check throws away most blocks before the full check.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        3
+      ],
+      "title": "Read the matrix",
+      "text": "N on one line; the program prints `Enter matrix elements:` itself, then reads N rows of numbers without a prompt."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Pre-reverse every row once",
+      "text": "A 180° rotation reverses the row order AND each row. Storing reversed rows in `REV` up front lets the check read a reversed piece directly, instead of reversing again for every block."
+    },
+    {
+      "lines": [
+        6,
+        9
+      ],
+      "title": "Cheap check: opposite corners",
+      "text": "After a 180° turn the top-left cell lands on the bottom-right, so they must be equal. Most blocks fail here immediately, which is what makes brute force fast enough."
+    },
+    {
+      "lines": [
+        10,
+        15
+      ],
+      "title": "Full check: row i vs row k−1−i reversed",
+      "text": "Row i of the block must equal row (k−1−i) of the block read backwards. Columns c..c+k−1 of a row appear at positions N−c−k..N−c−1 of its reversed copy, hence the `REV` slice. We only need the top half plus the middle row (`k // 2 + 1`), because the bottom half repeats the same pairs."
+    },
+    {
+      "lines": [
+        16,
+        16
+      ],
+      "title": "All rows matched",
+      "text": "If no row pair failed, the block is symmetric."
+    },
+    {
+      "lines": [
+        18,
+        24
+      ],
+      "title": "Biggest size first",
+      "text": "Looping k from N down means the first symmetric block found is the largest, so we can stop right there. `return` inside a function exits all three loops at once (a `break` would only leave the innermost one). A 1×1 block is always symmetric, so `return 1` is just a safety net."
+    },
+    {
+      "lines": [
+        26,
+        26
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Largest symmetric subgrid size: 3`."
+    }
+  ],
+  "complexity": "Worst case is many blocks × k² work, but the corner check rejects most blocks at once; a random 250×250 grid ran in about 1.5 s.",
+  "pitfalls": [
+    "Searching small to big — then you can't stop at the first hit.",
+    "Only checking the diagonal or one pair of rows."
+  ]
+}

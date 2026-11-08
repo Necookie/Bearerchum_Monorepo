@@ -1,0 +1,59 @@
+{
+  "file": "drills/D03_longest_warming_streak.py",
+  "summary": "Keep a running streak: it grows by 1 when today is warmer than yesterday and resets to 1 otherwise. Track the best streak seen (T6 — runs / streaks, using T5 neighbour comparison).",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read the temperatures",
+      "text": "N on its own line, then N numbers on one line."
+    },
+    {
+      "lines": [
+        4,
+        4
+      ],
+      "title": "Start at 1, not 0",
+      "text": "A single day already counts as a streak of 1, so both `best` and `cur` start at 1. Starting at 0 would print 0 for N = 1."
+    },
+    {
+      "lines": [
+        5,
+        7
+      ],
+      "title": "Warmer than yesterday → the streak grows",
+      "text": "`i` starts at 1 so `t[i - 1]` is a real day. Strictly `>` — an equal day breaks the streak."
+    },
+    {
+      "lines": [
+        8,
+        9
+      ],
+      "title": "Otherwise restart",
+      "text": "The streak starts over at 1 — today itself is the first day of the new streak."
+    },
+    {
+      "lines": [
+        10,
+        10
+      ],
+      "title": "Update the best every day",
+      "text": "Doing this inside the loop (not only when a streak breaks) makes sure a streak that runs to the very last day is counted."
+    },
+    {
+      "lines": [
+        12,
+        12
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Longest streak: 4`."
+    }
+  ],
+  "complexity": "Time O(N) with N ≤ 10⁵ → 100,000 steps, instant.",
+  "pitfalls": [
+    "Resetting to 0 instead of 1.",
+    "Updating `best` only when the streak breaks — misses a streak at the end."
+  ]
+}

@@ -1,0 +1,49 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--canvas); color: var(--ink);
+  font: 400 16px/1.55 var(--font); letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: none; box-shadow: var(--focus); border-radius: 6px; }
+::selection { background: #ffe0a8; }
+
+h1, h2, h3, h4 { margin: 0; color: var(--ink); }
+.display-xxl { font-size: 64px; font-weight: 700; line-height: 1.12; letter-spacing: -0.768px; }
+.display-xl  { font-size: 50px; font-weight: 700; line-height: 1.12; letter-spacing: -0.6px; }
+.display-md  { font-size: 32px; font-weight: 700; line-height: 1.25; letter-spacing: -0.256px; }
+.heading-lg  { font-size: 24px; font-weight: 700; line-height: 1.33; letter-spacing: -0.096px; }
+.heading-md  { font-size: 20px; font-weight: 650; line-height: 1.4; }
+.heading-sm  { font-size: 17px; font-weight: 650; line-height: 1.5; }
+.body-lg { font-size: 18px; line-height: 1.55; }
+.caption { font-size: 14px; line-height: 1.43; color: var(--ink-mute); }
+.micro-cap { font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: .96px; text-transform: uppercase; }
+.mute { color: var(--ink-mute); }
+
+/* no ligatures: students must see ">=" and "!=" exactly as they type them */
+code, pre, kbd, .cm-editor, .cm-content { font-family: var(--mono); font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+:not(pre) > code {
+  font-size: .86em; background: var(--sand); border: 1px solid var(--hairline);
+  padding: 1px 5px; border-radius: 5px; color: #6b2f12; white-space: break-spaces;
+}
+kbd {
+  font-size: 12px; border: 1px solid var(--hairline-strong); border-bottom-width: 2px;
+  border-radius: 5px; padding: 0 5px; background: #fff; color: var(--ink-mute);
+}
+
+.container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+.stack > * + * { margin-top: var(--s-lg); }
+.row { display: flex; gap: var(--s-md); align-items: center; flex-wrap: wrap; }
+.spacer { flex: 1; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (max-width: 767px) {
+  .display-xxl { font-size: 40px; letter-spacing: -0.5px; }
+  .display-xl { font-size: 34px; }
+  .display-md { font-size: 26px; }
+  .container { padding: 0 16px; }
+}

@@ -1,0 +1,15 @@
+{
+  "samples": [
+    ["kiqrv", "3"],
+    ["Mzpr", "10"],
+    ["sfeuiy", "0"]
+  ],
+  "hidden": [
+    {"name": "wrap around: 'a' shifted back by 1 becomes 'z'", "input": ["a", "1"]},
+    {"name": "uppercase letters stay uppercase", "input": ["HELLO", "5"]},
+    {"name": "spaces, digits and punctuation stay unchanged", "input": ["Ab, 9 c!d", "2"]},
+    {"name": "key 26 at index 0 changes nothing for the first letter", "input": ["zz", "26"]},
+    {"name": "largest key 100", "input": ["Programming", "100"]},
+    {"name": "1000 characters with key 100 (shift up to 1099)", "input": ["abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!abcXYZ 12!", "100"]}
+  ]
+}

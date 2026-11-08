@@ -1,0 +1,20 @@
+{
+  "samples": [
+    ["4", "1 2 3 4", "5 6 7 8", "8 7 6 5", "4 3 2 1"],
+    ["5", "9 1 2 3 9", "8 1 2 1 8", "7 4 5 4 7", "6 1 2 1 6", "5 1 2 3 5"],
+    ["3", "1 2 3", "4 5 6", "7 8 9"]
+  ],
+  "hidden": [
+    {"name": "N = 1", "input": ["1", "7"]},
+    {"name": "every value equal", "input": ["4", "5 5 5 5", "5 5 5 5", "5 5 5 5", "5 5 5 5"]},
+    {"name": "2x2 symmetric", "input": ["2", "1 2", "2 1"]},
+    {"name": "2x2 not symmetric", "input": ["2", "1 2", "3 4"]},
+    {"name": "values 0 and 1000000000", "input": ["3", "0 1000000000 0", "1000000000 0 1000000000", "0 1000000000 0"]},
+    {"name": "symmetric 3x3 block in the bottom-right corner", "input": ["4", "9 8 7 6", "5 1 2 3", "4 4 0 4", "3 3 2 1"]}
+  ],
+  "generated": [
+    {"name": "N = 250, fully symmetric matrix", "gen": "n = 250\na = [[0] * n for _ in range(n)]\nfor i in range(n):\n    for j in range(n):\n        if (i, j) <= (n - 1 - i, n - 1 - j):\n            a[i][j] = a[n - 1 - i][n - 1 - j] = random.randint(0, 999)\nlines = [str(n)] + [' '.join(map(str, r)) for r in a]"},
+    {"name": "N = 250, random values 0..999 (answer is small)", "gen": "n = 250\nlines = [str(n)] + [' '.join(str(random.randint(0, 999)) for _ in range(n)) for _ in range(n)]"},
+    {"name": "N = 250, random 0/1 values", "gen": "n = 250\nlines = [str(n)] + [' '.join(str(random.randint(0, 1)) for _ in range(n)) for _ in range(n)]"}
+  ]
+}

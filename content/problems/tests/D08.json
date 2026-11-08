@@ -1,0 +1,14 @@
+{
+  "samples": [
+    ["the cat and the dog and the bird"],
+    ["b a b a"],
+    ["Hello hello World"]
+  ],
+  "hidden": [
+    {"name": "a single word", "input": ["Python"]},
+    {"name": "every word appears once: alphabetically first wins", "input": ["zebra apple mango"]},
+    {"name": "uppercase and lowercase are the same word", "input": ["B b A"]},
+    {"name": "tie between capitalised words", "input": ["Dog cat dog Cat"]},
+    {"name": "one word repeated", "input": ["go go go go"]}
+  ]
+}

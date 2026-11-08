@@ -1,0 +1,43 @@
+{
+  "file": "drills/D06_best_k_day_sales.py",
+  "summary": "Keep the total of a window of K days and slide it one day at a time: add the new day, drop the oldest (T12 — sliding window). Each slide is O(1), so we never re-add K numbers.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Read N, K and the sales",
+      "text": "N and K are on ONE line, so split them. Sales come on the next line."
+    },
+    {
+      "lines": [
+        4,
+        5
+      ],
+      "title": "The first window",
+      "text": "`sum(sales[:K])` is days 1..K. `best` starts at this window, NOT at 0 — sales can be negative, so the true best total might be below 0."
+    },
+    {
+      "lines": [
+        6,
+        8
+      ],
+      "title": "Slide the window",
+      "text": "Moving one day right adds `sales[i]` and removes `sales[i - K]`, the day that just left the window. Keep the maximum. If K = N the loop never runs and the first window is the answer."
+    },
+    {
+      "lines": [
+        10,
+        10
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Best total: 19`."
+    }
+  ],
+  "complexity": "Time O(N) with N ≤ 10⁵ — instant. Re-summing every window would be O(N·K), up to 10¹⁰.",
+  "pitfalls": [
+    "Starting `best` at 0 when all sales are negative.",
+    "Dropping the wrong day (`sales[i - K + 1]`)."
+  ]
+}

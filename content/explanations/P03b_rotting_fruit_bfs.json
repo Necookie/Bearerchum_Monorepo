@@ -1,0 +1,68 @@
+{
+  "file": "P03b_rotting_fruit_bfs.py",
+  "summary": "The same problem solved with a multi-source BFS (T9): every rotten fruit starts in the queue at minute 0, and the rot spreads outward one layer per minute. Each cell is handled once, so this stays fast even on huge grids.",
+  "blocks": [
+    {
+      "lines": [
+        1,
+        2
+      ],
+      "title": "Import a fast queue",
+      "text": "`deque` lets us take items from the front in O(1). A plain list with `pop(0)` would shift every element each time and get slow on big grids."
+    },
+    {
+      "lines": [
+        4,
+        6
+      ],
+      "title": "Read the crate",
+      "text": "Same input as the simulation version: `R C` on one line, the `Enter the crate:` header, then R rows read without a prompt."
+    },
+    {
+      "lines": [
+        8,
+        9
+      ],
+      "title": "Prepare the distance table and the queue",
+      "text": "`dist[r][c]` will hold the minute when fruit (r, c) rots; `-1` means \"not reached yet\". Build it with a list comprehension — `[[-1] * C] * R` would make R copies of the SAME row."
+    },
+    {
+      "lines": [
+        10,
+        14
+      ],
+      "title": "Every rotten fruit is a starting point",
+      "text": "All rotten fruits go into the queue at minute 0 together. That is what \"multi-source\" means: they all spread at the same time. Starting from only one rotten fruit would make the far fruits rot too late."
+    },
+    {
+      "lines": [
+        16,
+        18
+      ],
+      "title": "Process cells in minute order",
+      "text": "`minutes` stays 0 if nothing ever spreads. BFS takes cells from the front of the queue, so all minute-1 cells are handled before minute-2 cells, and so on."
+    },
+    {
+      "lines": [
+        19,
+        24
+      ],
+      "title": "Spread to fresh neighbours",
+      "text": "For each of the four neighbours: it must be inside the grid, a fresh `'F'`, and not reached yet (`dist == -1`), otherwise it would be counted twice. Its minute is one more than the current cell's. `minutes` keeps the largest minute seen — the last minute in which something rotted."
+    },
+    {
+      "lines": [
+        26,
+        26
+      ],
+      "title": "Print the answer",
+      "text": "Exact format: `Minutes: 4` — the same output as the simulation version."
+    }
+  ],
+  "complexity": "Time O(R·C): each cell enters the queue at most once, so even a 1000×1000 grid is about a million steps.",
+  "pitfalls": [
+    "Putting only ONE rotten fruit in the queue at the start.",
+    "Forgetting `dist[nr][nc] == -1` → cells are added again and again.",
+    "`[[-1] * C] * R` shares one row between all rows."
+  ]
+}
