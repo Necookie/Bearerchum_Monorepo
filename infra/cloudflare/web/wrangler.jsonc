@@ -1,0 +1,27 @@
+/**
+ * Bearerchum edge Worker — static site + private /api forwarding.
+ * Build first:  python tools/build_content.py --strict && (cd apps/web && npm run build)
+ *               cp reviewer/CodeBearers_NPC2026_Python_Reviewer.pdf apps/web/dist/reviewer.pdf
+ * Deploy:       npx wrangler deploy --config infra/cloudflare/web/wrangler.jsonc
+ * (or simply:   node infra/scripts/deploy-web.mjs)
+ */
+{
+  "$schema": "../../../apps/web/node_modules/wrangler/config-schema.json",
+  "name": "bearerchum-web",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "account_id": "668f78c5a9581c5051bd60a4985d6166",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "bearerchum.necookie.dev", "custom_domain": true }],
+  "assets": {
+    "directory": "../../../apps/web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  // Workers VPC service -> dedicated tunnel "bearerchum-api" -> bearerchum-web:8000 (Docker DNS).
+  // Uncomment once the tunnel + VPC service exist (see infra/cloudflare/README.md):
+  // "vpc_services": [{ "binding": "API", "service_id": "<vpc-service-id>" }],
+  "observability": { "enabled": true }
+}

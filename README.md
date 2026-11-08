@@ -61,7 +61,15 @@ Production-like run: `docker compose up --build`, then open http://localhost:808
 - **Cards:** append to `content/cards/<deck>.json`. Card ids are permanent because progress is
   stored by id, so add new ids at the end and never renumber.
 
-## Deployment (Coolify on `necore`)
+## Deployment
+
+- **Frontend:** Cloudflare Worker `bearerchum-web` on `bearerchum.necookie.dev`, with static assets
+  plus `/api` forwarding. Deploy with `node infra/scripts/deploy-web.mjs`. See
+  [`infra/cloudflare/README.md`](infra/cloudflare/README.md).
+- **Backend + database:** Coolify on `necore`, reached privately through Workers VPC and a tunnel
+  that has no public hostname.
+
+### Backend (Coolify on `necore`)
 
 Same isolation pattern as the other stacks on `necore`: one Coolify project (**Bearerchum**) with
 one "Docker Compose" application. Use Base Directory `/infra/coolify` and Compose file
@@ -70,7 +78,7 @@ one "Docker Compose" application. Use Base Directory `/infra/coolify` and Compos
 | Service | What it does |
 |---|---|
 | `bearerchum-web` | FastAPI + built site on :8000 (internal only, no host port) |
-| `bearerchum-tunnel` | dedicated Cloudflare Tunnel: `bearerchum.necookie.dev` → `http://bearerchum-web:8000` |
+| `bearerchum-tunnel` | private Cloudflare Tunnel connector (no public hostname), used by the Workers VPC service |
 | `bearerchum-backup` | nightly SQLite online backup to `/data/backups` (03:00 Manila, keeps 14 days) |
 
 - Volume `bearerchum-data` (mounted at `/data`) holds `bearerchum.db` and its backups.

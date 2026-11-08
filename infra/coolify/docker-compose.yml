@@ -2,9 +2,9 @@
 #
 # Coolify settings: Base Directory = /infra/coolify, Docker Compose Location = /docker-compose.yml
 # Everything here belongs to Bearerchum only: its own volume, network, backups and Cloudflare
-# Tunnel. Nothing is published on host ports and the shared Coolify proxy is not used — public
-# traffic arrives only through the dedicated tunnel (public hostname bearerchum.necookie.dev
-# -> http://bearerchum-web:8000).
+# Tunnel. Nothing is published on host ports and the shared Coolify proxy is not used. The tunnel
+# is a PRIVATE connector (no public hostname): the edge Worker on bearerchum.necookie.dev reaches
+# bearerchum-web:8000 through a Workers VPC service bound to it (see infra/cloudflare/README.md).
 #
 # Required environment (set in Coolify → Environment Variables; never commit values):
 #   TEAM_CODE, CLOUDFLARE_TUNNEL_TOKEN
