@@ -201,7 +201,7 @@ def cover():
     ])}
   </div>
   <div class="cover-foot">Every solution in this PDF was run against every sample shown, cross-checked against brute force on random inputs,
-  and timed at the maximum input size. Source files: <code>content/solutions/</code> · Online: <code>bearerchum.necookie.dev</code>.</div>
+  and timed at the maximum input size. Source files: <code>content/solutions/</code> · Online: <code>bearerchum.dheynorlanda.me</code>.</div>
 </div>"""
 
 

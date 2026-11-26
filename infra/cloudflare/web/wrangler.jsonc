@@ -13,7 +13,7 @@
   "account_id": "668f78c5a9581c5051bd60a4985d6166",
   "workers_dev": false,
   "preview_urls": false,
-  "routes": [{ "pattern": "bearerchum.necookie.dev", "custom_domain": true }],
+  "routes": [{ "pattern": "bearerchum.dheynorlanda.me", "custom_domain": true }],
   "assets": {
     "directory": "../../../apps/web/dist",
     "binding": "ASSETS",

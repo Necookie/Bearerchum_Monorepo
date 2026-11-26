@@ -1,5 +1,5 @@
 /**
- * Bearerchum edge Worker (bearerchum.necookie.dev).
+ * Bearerchum edge Worker (bearerchum.dheynorlanda.me).
  *
  * - Static site (React build + content bundle + PDF) is served from Workers static assets, with
  *   SPA fallback to index.html for client-side routes.

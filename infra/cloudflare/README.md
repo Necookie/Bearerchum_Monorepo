@@ -1,4 +1,4 @@
-# Cloudflare (account `668f78c5…`, zone `necookie.dev`)
+# Cloudflare (account `668f78c5…`, zone `dheynorlanda.me`)
 
 All resources are new and Bearerchum-specific. No existing DNS record, tunnel or Worker is
 modified. This is the same design as Money Money: the backend is never published on the
@@ -6,12 +6,12 @@ internet.
 
 | Resource | Purpose | Status |
 |---|---|---|
-| Worker `bearerchum-web` + custom domain `bearerchum.necookie.dev` | Static site (Workers assets, SPA fallback) and `/api/*` forwarding. Source: [`web/`](web) | deployed |
+| Worker `bearerchum-web` + custom domain `bearerchum.dheynorlanda.me` | Static site (Workers assets, SPA fallback) and `/api/*` forwarding. Source: [`web/`](web) | deployed |
 | Tunnel `bearerchum-api` (remotely managed, **no public hostname / ingress rules**) | Private connector run by the `bearerchum-tunnel` container inside the Coolify stack | to create |
 | Workers VPC service `bearerchum-api` | HTTP to hostname `bearerchum-web`, port 8000, through that tunnel. cloudflared resolves the name with Docker DNS on `bearerchum-network` | to create |
 
 ```text
-browser ──HTTPS──▶ Worker bearerchum-web (bearerchum.necookie.dev)
+browser ──HTTPS──▶ Worker bearerchum-web (bearerchum.dheynorlanda.me)
                      ├─ static assets (React app, /content, /reviewer.pdf, /py-worker.js)
                      └─ /api/*  env.API.fetch()  (Workers VPC)
                                    ▼

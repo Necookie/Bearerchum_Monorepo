@@ -1,7 +1,7 @@
 # Bearerchum
 
 **CodeBearers' study camp for the CodeChum National Programming Challenge (Python).**
-Live at **https://bearerchum.necookie.dev**
+Live at **https://bearerchum.dheynorlanda.me**
 
 - **Daily review**: 143 spaced-repetition cards (I/O idioms, Python built-ins, traps, data
   structures, "spot the technique", problem insights). The scheduler is contest-aware: intervals
@@ -63,7 +63,7 @@ Production-like run: `docker compose up --build`, then open http://localhost:808
 
 ## Deployment
 
-- **Frontend:** Cloudflare Worker `bearerchum-web` on `bearerchum.necookie.dev`, with static assets
+- **Frontend:** Cloudflare Worker `bearerchum-web` on `bearerchum.dheynorlanda.me`, with static assets
   plus `/api` forwarding. Deploy with `node infra/scripts/deploy-web.mjs`. See
   [`infra/cloudflare/README.md`](infra/cloudflare/README.md).
 - **Backend + database:** Coolify on `necore`, reached privately through Workers VPC and a tunnel
